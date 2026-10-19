@@ -1,0 +1,311 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<div style="display:flex;flex-direction:column;gap:16px">
+    <div style="background:#fff;border:1px solid #DDE3E9;border-radius:10px;padding:10px 16px;display:flex;flex-wrap:wrap;gap:8px 16px;align-items:center">
+      <span style="font-size:11px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:#536271">Scenario</span>
+      <div style="display:flex;border:1px solid #CBD4DC;border-radius:6px;overflow:hidden;background:#fff">
+        <sc-for list="{{ stockOpts }}" as="o" hint-placeholder-count="2"><button onClick="{{ o.pick }}" style="cursor:pointer;border:0;padding:6px 12px;font-size:13px;font-weight:500;white-space:nowrap;background:{{ o.bg }};color:{{ o.fg }}">{{ o.label }}</button></sc-for>
+      </div>
+      <label style="display:flex;align-items:center;gap:6px;font-size:12px;color:#536271">Outbreak starts
+        <input type="date" value="{{ start }}" onChange="{{ onStart }}" style="font-size:13px;padding:5px 8px;border:1px solid #CBD4DC;border-radius:6px;background:#fff;color:#14212E">
+      </label>
+      <label style="display:flex;align-items:center;gap:6px;font-size:12px;color:#536271">Treatment beds per country
+        <input type="number" min="1" value="{{ bedsAll }}" onChange="{{ onBedsAll }}" style="width:70px;font-size:13px;padding:5px 8px;border:1px solid #CBD4DC;border-radius:6px;background:#fff;color:#14212E">
+      </label>
+      <span style="font-size:12px;color:#536271">Average stay {{ avgStay }} days · fatality {{ cfrNoPct }} without care → {{ cfrCarePct }} with care</span>
+    </div>
+
+    <div style="background:#14212E;border-radius:12px;padding:20px 24px;color:#fff;display:flex;gap:20px 40px;flex-wrap:wrap;align-items:center">
+      <div style="display:flex;flex-direction:column;gap:4px;flex:none;max-width:300px">
+        <span style="font-size:11px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:#7CC4EC">Estimated lives saved · estimate</span>
+        <span style="font-size:52px;font-weight:600;letter-spacing:-.02em;line-height:1">{{ hero.lives }}</span>
+        <span style="font-size:13px;color:#C9D3DC;line-height:1.45;text-wrap:pretty">{{ hero.scope }}</span>
+      </div>
+      <div style="flex:1 1 520px;min-width:0;display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:16px 20px">
+        <sc-for list="{{ hero.stats }}" as="s" hint-placeholder-count="6">
+          <div style="display:flex;flex-direction:column;gap:2px;min-width:0;border-left:1px solid #2F4152;padding-left:12px">
+            <span style="font-size:24px;font-weight:600;letter-spacing:-.01em">{{ s.v }}</span>
+            <span style="font-size:12px;font-weight:600;color:#fff">{{ s.label }}</span>
+            <span style="font-size:11px;color:#AEBBC7;line-height:1.35">{{ s.sub }}</span>
+          </div>
+        </sc-for>
+      </div>
+    </div>
+
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,560px),1fr));gap:16px;align-items:start">
+      <div style="background:#fff;border:1px solid #DDE3E9;border-radius:10px;overflow:hidden">
+        <div style="padding:12px 16px;border-bottom:1px solid #DDE3E9;display:flex;justify-content:space-between;gap:8px;flex-wrap:wrap;align-items:baseline">
+          <span style="font-size:11px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:#536271">Impact by country</span>
+          <span style="font-size:11px;color:#536271">Beds are editable · click a country for its runway</span>
+        </div>
+        <div style="overflow-x:auto">
+          <div style="min-width:640px">
+            <div style="display:grid;grid-template-columns:minmax(120px,1.3fr) 56px 64px minmax(120px,1.4fr) 70px 60px 70px 76px;gap:10px;padding:8px 16px;font-size:11px;font-weight:600;color:#536271;border-bottom:1px solid #EEF2F5;background:#FBFCFD">
+              <span>Country</span><span style="text-align:right">Pop. (M)</span><span>Beds</span><span>ETC runway · limited by</span><span style="text-align:right">Patients</span><span style="text-align:right">Lives</span><span style="text-align:right">PCR /10k</span><span style="text-align:right">Expires unused</span>
+            </div>
+            <sc-for list="{{ rows }}" as="r" hint-placeholder-count="10">
+              <div style="display:grid;grid-template-columns:minmax(120px,1.3fr) 56px 64px minmax(120px,1.4fr) 70px 60px 70px 76px;gap:10px;padding:8px 16px;font-size:13px;align-items:center;border-bottom:1px solid #EEF2F5;background:{{ r.bg }}">
+                <button onClick="{{ r.pick }}" style="cursor:pointer;border:0;background:transparent;padding:0;text-align:left;font-size:13px;font-weight:600;color:#0071B8">{{ r.name }}</button>
+                <span style="text-align:right;color:#536271;font-variant-numeric:tabular-nums">{{ r.pop }}</span>
+                <input type="number" min="1" value="{{ r.beds }}" onChange="{{ r.onBeds }}" style="width:60px;font-size:13px;padding:3px 6px;border:1px solid #CBD4DC;border-radius:5px;background:#fff;color:#14212E">
+                <span style="display:flex;flex-direction:column;gap:3px;min-width:0">
+                  <span style="height:8px;border-radius:4px;background:#EEF2F5;overflow:hidden;position:relative;display:flex">
+                    <span style="width:{{ r.wD }};background:#0071B8"></span><span style="width:{{ r.wP }};background:#7CC4EC"></span>
+                    <span style="position:absolute;left:50%;top:0;bottom:0;width:1px;background:#14212E;opacity:.35"></span>
+                  </span>
+                  <span style="font-size:11px;color:{{ r.runFg }};white-space:nowrap;overflow:hidden;text-overflow:ellipsis">{{ r.runLabel }}</span>
+                </span>
+                <span style="text-align:right;font-variant-numeric:tabular-nums">{{ r.patients }}</span>
+                <span style="text-align:right;font-weight:600;font-variant-numeric:tabular-nums">{{ r.lives }}</span>
+                <span style="text-align:right;font-variant-numeric:tabular-nums">{{ r.tests }}</span>
+                <span style="text-align:right;color:{{ r.wasteFg }};font-variant-numeric:tabular-nums">{{ r.waste }}</span>
+              </div>
+            </sc-for>
+          </div>
+        </div>
+        <div style="padding:10px 16px;display:flex;gap:14px;flex-wrap:wrap;font-size:11px;color:#536271">
+          <span style="display:flex;align-items:center;gap:5px"><span style="width:9px;height:9px;border-radius:2px;background:#0071B8"></span>Delivered stock</span>
+          <span style="display:flex;align-items:center;gap:5px"><span style="width:9px;height:9px;border-radius:2px;background:#7CC4EC"></span>In pipeline (forecast arrival)</span>
+          <span style="display:flex;align-items:center;gap:5px"><span style="width:1px;height:10px;background:#14212E"></span>90-day planning period</span>
+        </div>
+      </div>
+
+      <div style="background:#fff;border:1px solid #DDE3E9;border-radius:10px;overflow:hidden">
+        <div style="padding:12px 16px;border-bottom:1px solid #DDE3E9;display:flex;flex-direction:column;gap:2px">
+          <span style="font-size:11px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:#536271">{{ rw.title }}</span>
+          <span style="font-size:12px;color:#536271;text-wrap:pretty">{{ rw.sub }}</span>
+        </div>
+        <div style="padding:12px 16px;display:flex;flex-direction:column;gap:9px">
+          <div style="display:grid;grid-template-columns:150px minmax(0,1fr) 92px;gap:10px;font-size:10px;color:#536271">
+            <span></span>
+            <span style="display:flex;justify-content:space-between"><span>{{ rw.ax0 }}</span><span>{{ rw.ax1 }}</span><span>{{ rw.ax2 }}</span></span>
+            <span></span>
+          </div>
+          <sc-for list="{{ rw.bars }}" as="b" hint-placeholder-count="8">
+            <div style="display:grid;grid-template-columns:150px minmax(0,1fr) 92px;gap:10px;align-items:center;font-size:12px">
+              <span style="display:flex;flex-direction:column;min-width:0"><span style="font-weight:{{ b.weight }};white-space:nowrap;overflow:hidden;text-overflow:ellipsis">{{ b.label }}</span><span style="font-size:10px;color:#536271">{{ b.sub }}</span></span>
+              <span style="height:12px;border-radius:3px;background:#EEF2F5;display:flex;overflow:hidden;position:relative">
+                <span style="width:{{ b.wD }};background:#0071B8"></span><span style="width:{{ b.wP }};background:#7CC4EC"></span><span style="width:{{ b.wX }};background:repeating-linear-gradient(135deg,#B42318 0 3px,#F6C9C4 3px 6px)"></span>
+                <span style="position:absolute;left:50%;top:0;bottom:0;width:1px;background:#14212E;opacity:.4"></span>
+              </span>
+              <span style="text-align:right;font-variant-numeric:tabular-nums;color:{{ b.fg }};font-weight:600">{{ b.days }}</span>
+            </div>
+          </sc-for>
+          <sc-if value="{{ rw.hasEq }}" hint-placeholder-val="{{ false }}">
+            <div style="margin-top:6px;padding-top:10px;border-top:1px solid #EEF2F5;display:flex;flex-direction:column;gap:6px">
+              <span style="font-size:11px;font-weight:600;color:#536271">Reusable kit and equipment · beds it can equip</span>
+              <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:6px 14px">
+                <sc-for list="{{ rw.eq }}" as="q" hint-placeholder-count="4">
+                  <span style="display:flex;justify-content:space-between;gap:8px;font-size:12px"><span style="color:#3F4B57">{{ q.label }}</span><strong style="font-weight:600;color:{{ q.fg }};font-variant-numeric:tabular-nums">{{ q.v }}</strong></span>
+                </sc-for>
+              </div>
+            </div>
+          </sc-if>
+          <sc-if value="{{ rw.empty }}" hint-placeholder-val="{{ false }}"><div style="padding:18px 0;font-size:13px;color:#536271">No Ebola supplies recorded for this country yet. Every outcome above is zero until stock is released.</div></sc-if>
+        </div>
+      </div>
+    </div>
+
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,420px),1fr));gap:16px;align-items:start">
+      <div style="background:#fff;border:1px solid #DDE3E9;border-radius:10px;overflow:hidden">
+        <div style="padding:12px 16px;border-bottom:1px solid #DDE3E9;display:flex;justify-content:space-between;gap:8px;flex-wrap:wrap;align-items:baseline">
+          <span style="font-size:11px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:#536271">WHO standard kits · beneficiaries</span>
+          <span style="font-size:11px;color:#536271">Same per-kit rates and arrived/pipeline split as the OSL Kits Impact dashboard</span>
+        </div>
+        <div style="display:grid;grid-template-columns:minmax(0,1fr) 84px 70px 70px;gap:10px;padding:6px 16px;font-size:10px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:#536271;background:#F7F9FA"><span>Kit · units × per unit</span><span></span><span style="text-align:right">Arrived</span><span style="text-align:right">Pipeline</span></div>
+        <sc-for list="{{ kitGroups }}" as="g" hint-placeholder-count="2">
+          <div style="padding:8px 16px 4px;font-size:11px;font-weight:600;color:#0071B8">{{ g.title }}</div>
+          <sc-for list="{{ g.rows }}" as="k" hint-placeholder-count="2">
+            <div style="display:grid;grid-template-columns:minmax(0,1fr) 84px 70px 70px;gap:10px;padding:8px 16px;font-size:12px;border-bottom:1px solid #EEF2F5;align-items:center">
+              <span style="display:flex;flex-direction:column;min-width:0;gap:1px"><span style="font-weight:600">{{ k.label }}</span><span style="color:#3F4B57">{{ k.unit }}</span><span style="font-size:11px;color:#536271">{{ k.where }}</span></span>
+              <span style="text-align:right;font-family:'IBM Plex Mono',monospace;font-size:11px;color:#536271">{{ k.qty }}</span>
+              <span style="text-align:right;font-weight:600;font-variant-numeric:tabular-nums;color:#1D5636">{{ k.arr }}</span>
+              <span style="text-align:right;font-weight:600;font-variant-numeric:tabular-nums;color:#7A5410">{{ k.pipe }}</span>
+            </div>
+          </sc-for>
+        </sc-for>
+        <sc-if value="{{ noKits }}" hint-placeholder-val="{{ false }}"><div style="padding:14px 16px;font-size:12px;color:#536271">No WHO standard kits in this selection.</div></sc-if>
+      </div>
+
+      <div style="background:#fff;border:1px solid #DDE3E9;border-radius:10px;overflow:hidden">
+        <div style="padding:12px 16px;border-bottom:1px solid #DDE3E9;display:flex;justify-content:space-between;gap:8px;flex-wrap:wrap;align-items:baseline">
+          <span style="font-size:11px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:#536271">Impact by source hub</span>
+          <span style="font-size:11px;color:#536271">Patients · lives · PCR tests · value</span>
+        </div>
+        <sc-for list="{{ hubRows }}" as="h" hint-placeholder-count="4">
+          <div style="display:grid;grid-template-columns:minmax(0,1.4fr) minmax(0,1fr) 56px 50px 56px 60px;gap:10px;padding:8px 16px;font-size:12px;border-bottom:1px solid #EEF2F5;align-items:center">
+            <span style="font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">{{ h.name }}</span>
+            <span style="height:8px;border-radius:4px;background:#EEF2F5;overflow:hidden;display:flex"><span style="width:{{ h.w }};background:#0071B8"></span></span>
+            <span style="text-align:right;font-variant-numeric:tabular-nums">{{ h.patients }}</span>
+            <span style="text-align:right;font-weight:600;font-variant-numeric:tabular-nums">{{ h.lives }}</span>
+            <span style="text-align:right;font-variant-numeric:tabular-nums">{{ h.tests }}</span>
+            <span style="text-align:right;color:#536271;font-variant-numeric:tabular-nums">{{ h.val }}</span>
+          </div>
+        </sc-for>
+      </div>
+
+      <div style="background:#fff;border:1px solid #DDE3E9;border-radius:10px;overflow:hidden">
+        <div style="padding:12px 16px;border-bottom:1px solid #DDE3E9;display:flex;justify-content:space-between;gap:8px;flex-wrap:wrap;align-items:baseline">
+          <span style="font-size:11px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:#536271">Expiry risk</span>
+          <span style="font-size:12px;color:#536271">{{ exp.sum }}</span>
+        </div>
+        <div style="max-height:320px;overflow:auto">
+          <sc-for list="{{ exp.rows }}" as="x" hint-placeholder-count="5">
+            <div style="display:grid;grid-template-columns:minmax(0,1fr) 84px 90px 70px;gap:10px;padding:8px 16px;font-size:12px;border-bottom:1px solid #EEF2F5;align-items:center">
+              <span style="display:flex;flex-direction:column;min-width:0"><span style="font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">{{ x.item }}</span><span style="font-size:11px;color:#536271">{{ x.where }}</span></span>
+              <span style="font-family:'IBM Plex Mono',monospace;font-size:11px;color:{{ x.expFg }}">{{ x.exp }}</span>
+              <span style="text-align:right;font-variant-numeric:tabular-nums">{{ x.units }}</span>
+              <span style="text-align:right;font-weight:600;color:#B42318;font-variant-numeric:tabular-nums">{{ x.val }}</span>
+            </div>
+          </sc-for>
+          <sc-if value="{{ exp.none }}" hint-placeholder-val="{{ false }}"><div style="padding:16px;font-size:13px;color:#2F855A;font-weight:500">All stock is used before it expires at this bed count.</div></sc-if>
+        </div>
+      </div>
+
+      <div style="font-size:12px;color:#536271;line-height:1.5">{{ coverage }} Methods and sources are in the Glossary tab.</div>
+    </div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;cfrNo&quot;:{&quot;editor&quot;:&quot;range&quot;,&quot;default&quot;:0.5,&quot;min&quot;:0.2,&quot;max&quot;:0.9,&quot;step&quot;:0.05,&quot;tsType&quot;:&quot;number&quot;,&quot;section&quot;:&quot;Assumptions&quot;},&quot;cfrCare&quot;:{&quot;editor&quot;:&quot;range&quot;,&quot;default&quot;:0.35,&quot;min&quot;:0.1,&quot;max&quot;:0.8,&quot;step&quot;:0.05,&quot;tsType&quot;:&quot;number&quot;,&quot;section&quot;:&quot;Assumptions&quot;},&quot;avgStay&quot;:{&quot;editor&quot;:&quot;int&quot;,&quot;default&quot;:7,&quot;min&quot;:3,&quot;max&quot;:21,&quot;tsType&quot;:&quot;number&quot;,&quot;section&quot;:&quot;Assumptions&quot;},&quot;defaultBeds&quot;:{&quot;editor&quot;:&quot;int&quot;,&quot;default&quot;:20,&quot;min&quot;:5,&quot;max&quot;:200,&quot;tsType&quot;:&quot;number&quot;,&quot;section&quot;:&quot;Assumptions&quot;},&quot;includePipeline&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Assumptions&quot;}}">
+class Component extends DCLogic {
+  state = { d: null, country: '', pipe: null, start: null, beds: {}, bedsAll: null };
+  componentDidMount() { fetch('data/impact.json').then(r => r.json()).then(d => this.setState({ d })); }
+  renderVals() {
+    const P = this.props, S = this.state, d = S.d;
+    const cfrNo = P.cfrNo ?? 0.482, cfrCare = P.cfrCare ?? 0.30, pcrRun = P.pcrRunSize ?? 32, pcrCtl = P.pcrControls ?? 2, pcrF = Math.max(0, pcrRun - pcrCtl) / pcrRun, stay = P.avgStay ?? 7;
+    const C0 = this.props.country ?? S.country;
+    const pipe = S.pipe ?? (P.includePipeline ?? true);
+    const bedsAll = S.bedsAll ?? (P.defaultBeds ?? 20);
+    const pct = v => (v * 100).toFixed(1).replace(/\.0$/, '') + '%';
+    const small = (v, d) => v > 0 && +v.toFixed(d) === 0 ? '<' + (1 / Math.pow(10, d)).toFixed(d) : v.toFixed(d);
+    const nf = v => v >= 1e6 ? (v / 1e6).toFixed(1).replace(/\.0$/, '') + 'M' : v >= 1e4 ? Math.round(v / 1e3) + 'k' : Math.round(v).toLocaleString('en-US');
+    const usd = v => v >= 1e6 ? '$' + (v / 1e6).toFixed(1) + 'M' : v >= 1e3 ? '$' + Math.round(v / 1e3) + 'k' : '$' + Math.round(v);
+    const base = { asOf: d ? d.asOf : '', avgStay: stay, cfrNoPct: pct(cfrNo), cfrCarePct: pct(cfrCare), bedsAll, country: C0,
+      onCountry: e => this.setState({ country: e.target.value }),
+      onBedsAll: e => { const v = Math.max(1, +e.target.value || 1); this.setState({ bedsAll: v, beds: {} }); },
+      onStart: e => this.setState({ start: e.target.value }),
+      stockOpts: [['Delivered', false], ['Delivered + pipeline', true]].map(([label, v]) => ({ label, bg: pipe === v ? '#14212E' : '#fff', fg: pipe === v ? '#fff' : '#14212E', pick: () => this.setState({ pipe: v }) })) };
+    if (!d) return { ...base, start: '', countryOpts: [], rows: [], hero: { lives: '—', scope: 'Loading…', stats: [] }, hubRows: [], kitRows: [], kitGroups: [], noKits: false, rw: { title: 'Supply runway', sub: '', bars: [], eq: [], hasEq: false, empty: false, ax0: '', ax1: '', ax2: '' }, exp: { rows: [], sum: '', none: false }, coverage: '' };
+    const PR = this.props.priority, CS = PR && PR.length ? d.countries.filter(c => PR.includes(c.iso)) : d.countries;
+    const C = CS.some(c => c.iso === C0) ? C0 : '';
+    const start = S.start || d.asOf, T0 = +new Date(start), DAY = 864e5;
+    const add = (iso, n) => new Date(+new Date(iso) + n * DAY).toISOString().slice(0, 10);
+    const FC = { greenlight: 14, ptaeo: 21, ready: 3 };
+    const fam = Object.fromEntries(d.fam.map(f => [f.id, f]));
+    const CORE = ['coverall', 'gloveExam', 'respirator'];
+    const AX = 180;
+    const calc = c => {
+      const beds = S.beds[c.iso] ?? bedsAll;
+      const ls = d.lines.filter(l => l.c === c.iso && (l.f || l.kit) && (l.st === 'delivered' || pipe));
+      const by = {};
+      ls.forEach(l => { if (!l.f) return; (by[l.f] = by[l.f] || []).push({ ...l, at: l.st === 'delivered' ? T0 : Math.max(T0, +new Date(l.arr && l.arr > d.asOf ? l.arr : add(d.asOf, l.fc ?? 7))) }); });
+      const runs = {}, wasteLots = [];
+      Object.entries(by).forEach(([fid, lots]) => {
+        const f = fam[fid]; if (!f.pm) return;
+        const rate = f.pm * beds / 30;
+        lots.sort((a, b) => a.at - b.at || (a.exp || '9').localeCompare(b.exp || '9'));
+        let t = T0, dD = 0, dP = 0, wU = 0, gap = false; const hub = {};
+        lots.forEach(l => {
+          const s0 = Math.max(t, l.at); if (s0 > t + DAY) gap = true;
+          const ex = l.exp ? +new Date(l.exp) : Infinity;
+          const use = ex <= s0 ? 0 : Math.min(l.units, (ex - s0) / DAY * rate);
+          const w = l.units - use;
+          if (w > 0.5) { wU += w; wasteLots.push({ l, w, val: l.val * w / l.units }); }
+          const days = use / rate;
+          if (l.st === 'delivered') dD += days; else dP += days; hub[l.hub] = (hub[l.hub] || 0) + days;
+          t = s0 + days * DAY;
+        });
+        runs[fid] = { dD, dP, days: (t - T0) / DAY, wDays: wU / rate, gap, hub, units: lots.reduce((a, l) => a + l.units, 0) };
+      });
+      const core = CORE.map(id => ({ id, days: runs[id] ? runs[id].dD + runs[id].dP : 0 }));
+      const bind = core.reduce((a, b) => b.days < a.days ? b : a);
+      const has = ls.length > 0;
+      const bedDays = bind.days * beds, patients = bedDays / stay, lives = patients * Math.max(0, cfrNo - cfrCare);
+      const sumU = id => ls.filter(l => l.f === id).reduce((a, l) => a + l.units, 0);
+      const tests = sumU('pcr') * pcrF;
+      const kitN = {}; ls.filter(l => l.kit).forEach(l => { const k = kitN[l.kit] = kitN[l.kit] || { qty: 0, n: 0, arr: 0, pipe: 0 }; k.qty += l.qty; k.n += l.kitN; if (l.st === 'delivered') k.arr += l.kitN; else k.pipe += l.kitN; });
+      const people = kitN.iehkB ? kitN.iehkB.n : 0;
+      return { c, beds, kitN, ls, runs, bind, has, patients, lives, tests, people, burials: sumU('bodybag'), water: sumU('nadcc') * 5 + sumU('hth'),
+        entries: runs.coverall ? Math.min(runs.coverall.dD + runs.coverall.dP, bind.days) * 170 * beds / 30 : 0,
+        wasteLots, waste: wasteLots.reduce((a, w) => a + w.val, 0), sumU,
+        hubP: (() => { const r = runs[bind.id]; const o = {}; if (!r || bind.days <= 0) return o; const tot = r.dD + r.dP; Object.entries(r.hub).forEach(([h, v]) => { o[h] = patients * Math.min(v, tot) / tot; }); return o; })(),
+        hubT: ls.filter(l => l.f === 'pcr').reduce((o, l) => (o[l.hub] = (o[l.hub] || 0) + l.units * pcrF, o), {}) };
+    };
+    const all = CS.map(calc);
+    const sel = C ? all.filter(x => x.c.iso === C) : all;
+    const tot = k => sel.reduce((a, x) => a + x[k], 0);
+    const popM = sel.reduce((a, x) => a + x.c.popM, 0);
+    const withStock = sel.filter(x => x.has).length;
+    const hero = {
+      lives: '≈ ' + nf(tot('lives')),
+      scope: (C ? sel[0].c.name : withStock + ' of ' + sel.length + ' priority countries hold Ebola stock; ' + sel.filter(x => x.bind.days > 0).length + ' can run a treatment centre') + '. ' + nf(tot('patients')) + ' patients treatable at ' + (C ? sel[0].beds : bedsAll) + ' beds per country, ' + ((cfrNo - cfrCare) * 100).toFixed(1).replace(/\.0$/, '') + ' percentage points lower fatality with care.',
+      stats: [
+        { v: nf(tot('patients')), label: 'Patients treatable', sub: 'Bed-days ÷ ' + stay + '-day stay' },
+        { v: nf(tot('entries')), label: 'Red-zone entries protected', sub: 'One coverall per entry by health workers' },
+        { v: nf(sel.reduce((a, x) => a + x.beds * (x.bind.days > 0 ? 1 : 0), 0) * d.staffPerBed), label: 'Health workers to staff', sub: d.staffPerBed + ' staff per bed, 4 shifts' },
+        { v: nf(tot('tests')), label: 'Patient PCR tests', sub: (pcrRun - pcrCtl) + ' of ' + pcrRun + ' wells per run are samples · ' + small(tot('tests') / (popM * 100), 1) + ' per 10,000 people' },
+        { v: nf(tot('people')), label: 'Primary care population', sub: 'IEHK basic modules × 1,000 people, 3 months · ' + small(tot('people') / (popM * 1e4), 2) + '% of population' },
+        { v: nf(tot('burials')), label: 'Safe burials', sub: 'Body bags on hand' }
+      ]
+    };
+    const runLabel = x => !x.has ? 'No stock released' : x.bind.days <= 0 ? 'No treatment PPE' : Math.round(x.bind.days) + ' days · ' + fam[x.bind.id].label.toLowerCase();
+    const rows = all.slice().sort((a, b) => b.lives - a.lives || b.c.popM - a.c.popM).map(x => {
+      const r = x.runs[x.bind.id] || { dD: 0, dP: 0 };
+      const sc = v => Math.min(100, v / AX * 100) + '%';
+      const dD = Math.min(r.dD, x.bind.days);
+      return { name: x.c.name, pop: x.c.popM.toFixed(1), beds: x.beds, bg: C === x.c.iso ? '#EAF5FC' : '#fff',
+        pick: () => { const v = C === x.c.iso ? '' : x.c.iso; this.props.onPick ? this.props.onPick(v) : this.setState({ country: v }); },
+        onBeds: e => { const v = Math.max(1, +e.target.value || 1); this.setState(s => ({ beds: { ...s.beds, [x.c.iso]: v } })); },
+        wD: sc(dD), wP: sc(Math.max(0, x.bind.days - dD)), runLabel: runLabel(x), runFg: !x.has ? '#B42318' : x.bind.days < 90 ? '#B54708' : '#536271',
+        patients: x.has ? nf(x.patients) : '—', lives: x.has ? nf(x.lives) : '—', tests: x.tests ? (x.tests / (x.c.popM * 100)).toFixed(1) : '—',
+        waste: x.waste > 0 ? usd(x.waste) : '—', wasteFg: x.waste > 0 ? '#B42318' : '#8A96A3' };
+    });
+    let rw;
+    const ax = { ax0: '0', ax1: '90 days', ax2: AX + '+' };
+    const sc = v => Math.min(100, v / AX * 100) + '%';
+    if (C) {
+      const x = sel[0];
+      const bars = Object.entries(x.runs).map(([id, r]) => ({ id, r, f: fam[id] })).sort((a, b) => (CORE.includes(b.id) - CORE.includes(a.id)) || a.r.days - b.r.days).map(({ id, r, f }) => {
+        const tot = r.dD + r.dP; const core = CORE.includes(id);
+        return { label: f.label, weight: core ? 600 : 400, sub: nf(r.units) + ' ' + f.unit + (core ? ' · core' : '') + (r.gap ? ' · gap before pipeline' : ''),
+          wD: sc(r.dD), wP: sc(Math.min(r.dP, Math.max(0, AX - r.dD))), wX: sc(Math.min(r.wDays, Math.max(0, AX - tot))),
+          days: tot >= 1000 ? '1,000+ d' : Math.round(tot) + ' d', fg: tot < 90 ? '#B54708' : '#14212E' };
+      });
+      const eq = d.fam.filter(f => f.pb).map(f => { const u = x.sumU(f.id); return { f, u }; }).filter(o => o.u > 0).map(({ f, u }) => { const b = Math.floor(u / f.pb); return { label: f.label, v: nf(b) + ' / ' + x.beds, fg: b < x.beds ? '#B54708' : '#2F855A' }; });
+      rw = { ...ax, title: 'Supply runway · ' + x.c.name, sub: 'Days each consumable lasts at ' + x.beds + ' beds from ' + start + '. Hatched red is stock that expires before it can be used.', bars, eq, hasEq: eq.length > 0, empty: !x.has };
+    } else {
+      const bars = all.slice().sort((a, b) => b.bind.days - a.bind.days).map(x => {
+        const r = x.runs[x.bind.id] || { dD: 0, dP: 0, wDays: 0 }; const dD = Math.min(r.dD, x.bind.days);
+        return { label: x.c.name, weight: 600, sub: !x.has ? 'No stock' : x.bind.days <= 0 ? 'No treatment PPE' : 'Limited by ' + fam[x.bind.id].label.toLowerCase(), wD: sc(dD), wP: sc(Math.max(0, x.bind.days - dD)), wX: '0%',
+          days: x.has ? Math.round(x.bind.days) + ' d' : '0 d', fg: x.bind.days < 90 ? '#B54708' : '#14212E' };
+      });
+      rw = { ...ax, title: 'ETC runway by country', sub: 'Days a treatment centre can run at each country\'s bed count before the scarcest core PPE item runs out.', bars, eq: [], hasEq: false, empty: false };
+    }
+    const wl = sel.flatMap(x => x.wasteLots.map(w => ({ ...w, name: x.c.name }))).sort((a, b) => b.val - a.val);
+    const exp = { rows: wl.slice(0, 40).map(w => ({ item: w.l.desc, where: w.name + ' · ' + w.l.sr, exp: w.l.exp, expFg: +new Date(w.l.exp) <= T0 ? '#B42318' : '#B54708', units: nf(w.w) + ' ' + fam[w.l.f].unit, val: usd(w.val) })),
+      sum: wl.length ? usd(wl.reduce((a, w) => a + w.val, 0)) + ' across ' + wl.length + ' lots' : '', none: wl.length === 0 };
+    const HN = { nbo: 'Nairobi', dkr: 'Dakar', dxb: 'Dubai', kin: 'Kinshasa (DRC)', gva: 'Geneva', hq: 'HQ stock', proc: 'Direct from supplier' };
+    const hubs = Object.keys(HN).map(h => { const p = sel.reduce((a, x) => a + (x.hubP[h] || 0), 0), t = sel.reduce((a, x) => a + (x.hubT[h] || 0), 0), v = d.lines.filter(l => l.hub === h && l.f && sel.some(x => x.c.iso === l.c) && (l.st === 'delivered' || pipe)).reduce((a, l) => a + l.val, 0); return { h, p, t, v }; }).filter(o => o.v > 0).sort((a, b) => b.p - a.p || b.v - a.v);
+    const hp = hubs.reduce((m, o) => Math.max(m, o.p), 0) || 1;
+    const hubRows = hubs.map(o => ({ name: HN[o.h], patients: nf(o.p), lives: nf(o.p * Math.max(0, cfrNo - cfrCare)), tests: o.t ? nf(o.t) : '—', val: usd(o.v), w: (o.p / hp * 100) + '%' }));
+    const KM = Object.fromEntries((d.kits || []).map(k => [k.id, k]));
+    const kagg = {}; sel.forEach(x => Object.entries(x.kitN).forEach(([id, v]) => { const a = kagg[id] = kagg[id] || { qty: 0, n: 0, arr: 0, pipe: 0, cs: [] }; a.qty += v.qty; a.n += v.n; a.arr += v.arr; a.pipe += v.pipe; a.cs.push(x.c.name); }));
+    const kRow = ([id, a]) => ({ label: KM[id].label, qty: a.qty + ' × ' + nf(KM[id].per), arr: nf(a.arr), pipe: pipe ? nf(a.pipe) : '—', unit: KM[id].unit, where: a.cs.join(', ') + ' · ' + KM[id].src });
+    const KO = (d.kits || []).map(k => k.id), kE = Object.entries(kagg).sort((a, b) => KO.indexOf(a[0]) - KO.indexOf(b[0]));
+    const kitGroups = [['pop', 'Catchment population covered (people, not patients)'], ['pat', 'Patients covered']].map(([g, title]) => ({ title, rows: kE.filter(([id]) => KM[id].kind === g).map(kRow) })).filter(x => x.rows.length);
+    const kitRows = kE.map(kRow);
+    const mapped = d.lines.filter(l => l.f).reduce((a, l) => a + l.val, 0), allV = d.lines.reduce((a, l) => a + l.val, 0);
+    return { ...base, kitRows, kitGroups, noKits: kitRows.length === 0, hubRows, start, countryOpts: CS.map(c => ({ v: c.iso, label: c.name })), rows, hero, rw, exp,
+      coverage: 'Items worth ' + usd(mapped) + ' of ' + usd(allV) + ' released are linked to an impact rate. Comms, cold chain, tents and visibility items are enablers and are not counted. Items are matched by WHO code. Expiry dates are only available for Nairobi stock releases. Populations are approximate UN 2024 estimates.' };
+  }
+}
+</script>
+</body>
+</html>
