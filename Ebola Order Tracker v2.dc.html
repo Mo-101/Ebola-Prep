@@ -56,7 +56,7 @@
       </select>
       <button onClick="{{ toggleF }}" style="cursor:pointer;font-size:13px;padding:6px 10px;border:1px solid #CBD4DC;border-radius:6px;background:#fff;color:#14212E;font-weight:500;white-space:nowrap">{{ fLabel }}</button>
       <button onClick="{{ toggleIssues }}" style="cursor:pointer;font-size:13px;padding:6px 12px;border-radius:6px;border:1px solid {{ issuesBorder }};background:{{ issuesBg }};color:{{ issuesFg }};font-weight:500;white-space:nowrap">Needs attention only</button>
-      <sc-if value="{{ anyFilter }}" hint-placeholder-val="{{ false }}"><button onClick="{{ clearAll }}" style="cursor:pointer;font-size:13px;padding:6px 8px;border:0;background:transparent;color:#0071B8;font-weight:500">Clear</button></sc-if>
+      <sc-if value="{{ anyFilter }}" hint-placeholder-val="{{ false }}"><button onClick="{{ clearAll }}" style="cursor:pointer;font-size:11px;padding:4px 6px;border:0;background:transparent;color:#0071B8;font-weight:500">Clear</button></sc-if>
       <sc-if value="{{ showF }}" hint-placeholder-val="{{ false }}">
         <select value="{{ stage }}" onChange="{{ onStage }}" style="font-size:13px;padding:6px 10px;border:1px solid #CBD4DC;border-radius:6px;background:#fff;color:#14212E">
           <option value="">All statuses</option>
@@ -128,7 +128,7 @@
             </div>
             <div style="display:flex;flex-direction:column;gap:4px">
               <sc-for list="{{ ov.bnCards }}" as="b" hint-placeholder-count="4">
-                <button onClick="{{ b.pick }}" title="{{ b.q }}" style="cursor:pointer;border:1px solid {{ b.border }};background:{{ b.bg }};border-radius:6px;padding:5px 8px;display:grid;grid-template-columns:118px minmax(0,1fr) auto;gap:8px;align-items:center;text-align:left;color:#14212E">
+                <button onClick="{{ b.pick }}" title="{{ b.q }}" style="cursor:pointer;border:1px solid {{ b.border }};background:{{ b.bg }};border-radius:6px;padding:3px 6px;display:grid;grid-template-columns:118px minmax(0,1fr) auto;gap:8px;align-items:center;text-align:left;color:#14212E">
                   <span style="display:flex;flex-direction:column;min-width:0"><span style="font-size:12px;font-weight:600;white-space:nowrap">{{ b.label }}</span><span style="font-size:10px;color:#536271;text-transform:uppercase;letter-spacing:.04em">{{ b.stage }}</span></span>
                   <span style="height:8px;border-radius:4px;background:#F3F5F7;overflow:hidden"><span style="display:block;height:100%;width:{{ b.w }};background:{{ b.color }}"></span></span>
                   <span style="display:flex;flex-direction:column;align-items:flex-end"><span style="font-size:12px;font-weight:600">{{ b.value }}</span><span style="font-size:10px;color:#536271;white-space:nowrap">{{ b.n }}</span></span>
@@ -170,21 +170,7 @@
 
     <sc-if value="{{ tabCountries }}" hint-placeholder-val="{{ false }}">
       <div style="flex:1;display:flex;flex-direction:column;gap:16px;min-height:0">
-      <div data-dossier="1" style="flex:1;min-height:600px;display:grid;grid-template-columns:{{ briefCols }};grid-template-rows:auto minmax(0,1fr);gap:16px">
-        <sc-if value="{{ pres.off }}" hint-placeholder-val="{{ true }}">
-          <div style="grid-row:1 / 3;background:#fff;border:1px solid #DDE3E9;border-radius:10px;overflow:hidden;display:flex;flex-direction:column;min-height:0">
-            <div style="padding:12px 14px;border-bottom:1px solid #DDE3E9;font-size:11px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:#536271">Countries · by value</div>
-            <div style="flex:1;min-height:0;overflow-y:auto;overflow-x:hidden">
-              <sc-for list="{{ cg }}" as="c" hint-placeholder-count="10">
-                <button onClick="{{ c.pick }}" style="cursor:pointer;width:100%;border:0;border-left:3px solid {{ c.rowBorder }};border-bottom:1px solid #EEF2F5;background:{{ c.rowBg }};padding:8px 12px;display:flex;flex-direction:column;gap:5px;text-align:left;color:#14212E" style-hover="background:#F3F8FC">
-                  <span style="display:flex;justify-content:space-between;gap:8px;font-size:13px"><span style="font-weight:600;display:flex;align-items:center;gap:6px;min-width:0">{{ c.name }}<sc-if value="{{ c.hasLate }}" hint-placeholder-val="{{ false }}"><span title="{{ c.late }}" style="width:7px;height:7px;border-radius:50%;background:#E8590C;flex:none"></span></sc-if></span><span style="font-weight:600">{{ c.value }}</span></span>
-                  <span style="display:flex;height:5px;border-radius:3px;overflow:hidden;background:#EEF2F5"><sc-for list="{{ c.segs }}" as="s" hint-placeholder-count="0"><span style="width:{{ s.w }};background:{{ s.color }}"></span></sc-for></span>
-                </button>
-              </sc-for>
-            </div>
-          </div>
-        </sc-if>
-
+      <div data-dossier="1" style="flex:1;min-height:600px;display:grid;grid-template-columns:minmax(0,1fr) minmax(240px,340px);grid-template-rows:auto minmax(0,1fr);gap:16px">
         <div style="background:#14212E;color:#fff;border-radius:12px;padding:12px 16px;display:flex;flex-direction:column;gap:10px;min-width:0">
           <div style="display:flex;flex-direction:column;gap:4px;min-width:0">
             <span style="display:flex;align-items:baseline;gap:6px 14px;flex-wrap:wrap"><span style="font-size:26px;font-weight:600;letter-spacing:-.02em;line-height:1.1">{{ cs.name }}</span><span style="font-size:12px;color:#C9D3DC">{{ cs.headline }}</span></span>
@@ -210,7 +196,7 @@
           </sc-for>
         </div>
 
-        <div style="background:#fff;border:1px solid #DDE3E9;border-radius:10px;display:flex;flex-direction:column;min-height:0;overflow:hidden">
+        <div style="grid-column:1 / -1;background:#fff;border:1px solid #DDE3E9;border-radius:10px;display:flex;flex-direction:column;min-height:0;overflow:hidden">
           <div style="padding:10px 16px;border-bottom:1px solid #DDE3E9;display:flex;flex-wrap:wrap;gap:8px 12px;align-items:center;justify-content:space-between">
             <span style="display:flex;align-items:baseline;gap:10px"><h3 style="margin:0;font-size:15px;font-weight:600">Items</h3><span style="font-size:12px;color:#536271">{{ cs.rowsNote }}</span></span>
             <span style="display:flex;gap:8px;align-items:center;flex-wrap:wrap">
@@ -223,42 +209,25 @@
             </span>
           </div>
           <div style="flex:1;min-height:0;overflow:auto">
-            <div style="width:max-content;min-width:100%">
-              <div style="position:sticky;top:0;z-index:1;display:grid;grid-template-columns:150px minmax(240px,1.4fr) 110px 80px 100px 190px 130px minmax(260px,1.6fr);gap:12px;padding:8px 16px;background:#F7F9FA;border-bottom:1px solid #DDE3E9;font-size:11px;font-weight:600;letter-spacing:.03em;text-transform:uppercase;color:#0071B8">
-                <span>Status</span><span>Item</span><span style="text-align:right">Qty</span><span style="text-align:right">Value</span><span>Source</span><span>Request</span><span>Shipment</span><span>Where it is / why</span>
+            <div style="display:grid;grid-template-columns:repeat(10,max-content) minmax(max-content,1fr);width:max-content;min-width:100%">
+              <div style="position:sticky;top:0;z-index:1;grid-column:1 / -1;display:grid;grid-template-columns:subgrid;background:#0071B8;border-bottom:1px solid #005A93;font-size:10px;font-weight:600;letter-spacing:.03em;text-transform:uppercase;color:#fff">
+                <span style="padding:4px 7px;border-right:1px solid #3D8FC6;white-space:nowrap;text-align:right">SN</span><span style="padding:4px 7px;border-right:1px solid #3D8FC6;white-space:nowrap">OR Ref</span><span style="padding:4px 7px;border-right:1px solid #3D8FC6;white-space:nowrap">SR Ref</span><span style="padding:4px 7px;border-right:1px solid #3D8FC6;white-space:nowrap">PO No.</span><span style="padding:4px 7px;border-right:1px solid #3D8FC6;white-space:nowrap">Item</span><span style="padding:4px 7px;border-right:1px solid #3D8FC6;white-space:nowrap">Status</span><span style="padding:4px 7px;border-right:1px solid #3D8FC6;white-space:nowrap;text-align:right">Qty</span><span style="padding:4px 7px;border-right:1px solid #3D8FC6;white-space:nowrap;text-align:right">Value</span><span style="padding:4px 7px;border-right:1px solid #3D8FC6;white-space:nowrap">Source</span><span style="padding:4px 7px;border-right:1px solid #3D8FC6;white-space:nowrap">Shipment</span><span style="padding:4px 7px;border-right:1px solid #3D8FC6;white-space:nowrap">Where it is / why</span>
               </div>
               <sc-for list="{{ cs.rows }}" as="l" hint-placeholder-count="8">
-                <button onClick="{{ l.open }}" style="cursor:pointer;width:100%;border:0;border-bottom:1px solid #EEF2F5;background:#fff;display:grid;grid-template-columns:150px minmax(240px,1.4fr) 110px 80px 100px 190px 130px minmax(260px,1.6fr);gap:12px;padding:8px 16px;text-align:left;align-items:start;font-size:13px;color:#14212E" style-hover="background:#F3F8FC">
-                  <span style="justify-self:start;display:flex;align-items:center;gap:6px;font-size:12px;font-weight:600;padding:2px 8px;border-radius:4px;white-space:nowrap;background:{{ l.stBg }};color:{{ l.stFg }}"><span style="width:7px;height:7px;border-radius:50%;background:{{ l.dot }}"></span>{{ l.stLabel }}</span>
-                  <span style="display:flex;flex-direction:column;gap:1px;min-width:0"><span style="line-height:1.3;font-weight:500">{{ l.desc }}</span><span style="font-family:'IBM Plex Mono',monospace;font-size:11px;color:#536271">{{ l.code }}</span></span>
-                  <span style="text-align:right;line-height:1.3">{{ l.qty }}<br><span style="font-size:11px;color:#536271">{{ l.uom }}</span></span>
-                  <span style="text-align:right;font-weight:600">{{ l.value }}</span>
-                  <span style="display:flex;align-items:center;gap:6px"><span style="width:7px;height:7px;border-radius:50%;background:{{ l.srcColor }};flex:none"></span>{{ l.src }}</span>
-                  <span style="display:flex;align-items:center;gap:6px;min-width:0"><span style="font-size:10px;font-weight:700;padding:1px 5px;border-radius:3px;background:{{ l.typeBg }};color:{{ l.typeFg }}">{{ l.typeShort }}</span><span style="font-family:'IBM Plex Mono',monospace;font-size:11px;overflow-wrap:anywhere">{{ l.req }}</span></span>
-                  <span style="font-family:'IBM Plex Mono',monospace;font-size:11px">{{ l.ship }}</span>
-                  <span style="display:flex;flex-direction:column;gap:3px;color:#3F4B57;line-height:1.35;font-size:12px"><sc-if value="{{ l.delayed }}" hint-placeholder-val="{{ false }}"><span style="align-self:flex-start;font-size:11px;font-weight:700;padding:1px 6px;border-radius:4px;background:#FDEBE2;color:#C92A2A;white-space:nowrap">{{ l.delayText }}</span></sc-if><span>{{ l.detail }}</span></span>
+                <button onClick="{{ l.open }}" style="cursor:pointer;grid-column:1 / -1;border:0;border-bottom:1px solid #DDE3E9;background:#fff;display:grid;grid-template-columns:subgrid;padding:0;text-align:left;align-items:stretch;font-size:11px;color:#14212E;white-space:nowrap" style-hover="background:#F3F8FC">
+                  <span style="padding:3px 7px;border-right:1px solid #DDE3E9;text-align:right;color:#536271;font-variant-numeric:tabular-nums">{{ l.num }}</span><span style="padding:3px 7px;border-right:1px solid #DDE3E9;font-family:'IBM Plex Mono',monospace;font-size:10px">{{ l.orRef }}</span><span style="padding:3px 7px;border-right:1px solid #DDE3E9;font-family:'IBM Plex Mono',monospace;font-size:10px">{{ l.srRef }}</span><span style="padding:3px 7px;border-right:1px solid #DDE3E9;font-family:'IBM Plex Mono',monospace;font-size:10px">{{ l.poNum }}</span><span title="{{ l.desc }}" style="padding:3px 7px;border-right:1px solid #DDE3E9;display:flex;align-items:center;gap:8px;max-width:520px;overflow:hidden"><span style="font-family:'IBM Plex Mono',monospace;font-size:10px;color:#536271;flex:none">{{ l.code }}</span><span style="font-weight:500;overflow:hidden;text-overflow:ellipsis">{{ l.desc }}</span></span>
+                  <span style="padding:3px 7px;border-right:1px solid #DDE3E9;display:flex;align-items:center"><span style="display:flex;align-items:center;gap:6px;font-size:11px;font-weight:600;padding:1px 6px;border-radius:4px;background:{{ l.stBg }};color:{{ l.stFg }}"><span style="width:7px;height:7px;border-radius:50%;background:{{ l.dot }}"></span>{{ l.stLabel }}</span></span>
+                  <span style="padding:3px 7px;border-right:1px solid #DDE3E9;text-align:right">{{ l.qty }} <span style="font-size:10px;color:#536271">{{ l.uom }}</span></span>
+                  <span style="padding:3px 7px;border-right:1px solid #DDE3E9;text-align:right;font-weight:600">{{ l.value }}</span>
+                  <span style="padding:3px 7px;border-right:1px solid #DDE3E9;display:flex;align-items:center;gap:6px"><span style="width:7px;height:7px;border-radius:50%;background:{{ l.srcColor }};flex:none"></span>{{ l.src }}</span>
+                  <span style="padding:3px 7px;border-right:1px solid #DDE3E9;font-family:'IBM Plex Mono',monospace;font-size:10px">{{ l.ship }}</span>
+                  <span title="{{ l.detail }}" style="padding:3px 7px;border-right:1px solid #DDE3E9;max-width:560px;overflow:hidden;display:flex;align-items:center;gap:6px;color:#3F4B57;font-size:11px"><sc-if value="{{ l.delayed }}" hint-placeholder-val="{{ false }}"><span style="flex:none;font-size:10px;font-weight:700;padding:1px 6px;border-radius:4px;background:#FDEBE2;color:#C92A2A;white-space:nowrap">{{ l.delayText }}</span></sc-if><span style="overflow:hidden;text-overflow:ellipsis">{{ l.detail }}</span></span>
                 </button>
               </sc-for>
             </div>
           </div>
         </div>
 
-        <div style="background:#fff;border:1px solid #DDE3E9;border-radius:10px;display:flex;flex-direction:column;min-height:0;overflow:hidden">
-          <div style="padding:12px 16px;border-bottom:1px solid #DDE3E9;display:flex;flex-direction:column;gap:6px">
-            <span style="font-size:11px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:#536271">Critical items</span>
-            <span style="display:flex;gap:10px;font-size:11px;color:#536271;flex-wrap:wrap"><span style="display:flex;align-items:center;gap:4px"><span style="width:8px;height:8px;border-radius:2px;background:#0FA958"></span>Delivered</span><span style="display:flex;align-items:center;gap:4px"><span style="width:8px;height:8px;border-radius:2px;background:#0A84FF"></span>In transit</span><span style="display:flex;align-items:center;gap:4px"><span style="width:8px;height:8px;border-radius:2px;background:#F03E3E"></span>Not ready</span></span>
-          </div>
-          <div style="flex:1;min-height:0;overflow-y:auto;padding:8px 10px;display:flex;flex-direction:column;gap:6px">
-            <sc-for list="{{ cs.crit }}" as="e" hint-placeholder-count="6">
-              <div style="border:1px solid #EEF2F5;border-radius:8px;padding:8px 10px;display:flex;flex-direction:column;gap:5px">
-                <span style="display:flex;justify-content:space-between;gap:8px;font-size:13px"><span style="font-weight:600">{{ e.name }}</span><span style="font-family:'IBM Plex Mono',monospace;font-size:12px">{{ e.tot }}</span></span>
-                <span style="display:flex;height:6px;border-radius:3px;overflow:hidden;background:#EEF2F5"><sc-for list="{{ e.segs }}" as="s" hint-placeholder-count="0"><span title="{{ s.label }}" style="width:{{ s.w }};background:{{ s.color }}"></span></sc-for></span>
-                <span style="font-size:11px;color:#536271">{{ e.detail }}</span>
-              </div>
-            </sc-for>
-            <sc-if value="{{ cs.noCrit }}" hint-placeholder-val="{{ false }}"><span style="font-size:12px;color:#536271;padding:6px">No essential items tagged for this country.</span></sc-if>
-          </div>
-        </div>
       </div>
         <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,420px),1fr));gap:16px">
           <sc-for list="{{ cs.reqCols }}" as="g" hint-placeholder-count="2">
@@ -269,10 +238,13 @@
               </div>
               <div style="max-height:340px;overflow-y:auto">
                 <sc-for list="{{ g.rows }}" as="r" hint-placeholder-count="3">
-                  <button onClick="{{ r.open }}" style="cursor:pointer;width:100%;border:0;border-bottom:1px solid #EEF2F5;background:#fff;padding:9px 16px;display:flex;flex-direction:column;gap:5px;text-align:left;color:#14212E" style-hover="background:#F3F8FC">
-                    <span style="display:flex;justify-content:space-between;gap:10px;font-size:13px"><span style="font-family:'IBM Plex Mono',monospace;font-size:12px;font-weight:600;overflow-wrap:anywhere">{{ r.id }}</span><span style="font-weight:700;white-space:nowrap">{{ r.value }}</span></span>
-                    <span style="display:flex;height:6px;border-radius:3px;overflow:hidden;background:#EEF2F5"><sc-for list="{{ r.segs }}" as="s" hint-placeholder-count="0"><span title="{{ s.label }}" style="width:{{ s.w }};background:{{ s.color }}"></span></sc-for></span>
-                    <span style="display:flex;justify-content:space-between;gap:10px;font-size:11px;color:#536271;flex-wrap:wrap"><span>Requested {{ r.rd }} · {{ r.items }} · {{ r.src }}</span><span style="font-weight:600;color:{{ r.statusFg }}">{{ r.status }}</span></span>
+                  <button onClick="{{ r.open }}" style="cursor:pointer;width:100%;border:0;border-bottom:1px solid #DDE3E9;background:#fff;padding:4px 12px;display:flex;align-items:center;gap:10px;text-align:left;color:#14212E;white-space:nowrap;font-size:11px" style-hover="background:#F3F8FC">
+                    <span style="flex:none;width:28px;text-align:right;color:#536271;font-variant-numeric:tabular-nums">{{ r.num }}</span>
+                    <span style="flex:none;font-family:'IBM Plex Mono',monospace;font-size:11px;font-weight:600">{{ r.id }}</span>
+                    <span style="flex:none;width:60px;display:flex;height:6px;border-radius:3px;overflow:hidden;background:#EEF2F5"><sc-for list="{{ r.segs }}" as="s" hint-placeholder-count="0"><span title="{{ s.label }}" style="width:{{ s.w }};background:{{ s.color }}"></span></sc-for></span>
+                    <span title="Requested {{ r.rd }} · {{ r.items }} · {{ r.src }}" style="flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;color:#536271">Requested {{ r.rd }} · {{ r.items }} · {{ r.src }}</span>
+                    <span style="flex:none;font-weight:600;color:{{ r.statusFg }}">{{ r.status }}</span>
+                    <span style="flex:none;font-weight:700">{{ r.value }}</span>
                   </button>
                 </sc-for>
                 <sc-if value="{{ g.empty }}" hint-placeholder-val="{{ false }}"><div style="padding:16px;font-size:12px;color:#536271">None for this country.</div></sc-if>
@@ -300,15 +272,15 @@
           </div>
         </div>
         <div style="overflow:auto;max-height:70vh">
-          <div style="width:max-content;min-width:100%">
-            <div style="position:sticky;top:0;z-index:1;display:grid;grid-template-columns:130px 100px 200px 130px 140px 300px 90px 80px 90px 90px 90px 120px 130px 160px 130px 110px 120px 110px 110px 130px 120px 160px 240px;gap:12px;padding:10px 18px;background:#F7F9FA;border-bottom:1px solid #DDE3E9">
-              <sc-for list="{{ lt.head }}" as="h" hint-placeholder-count="23">
-                <button onClick="{{ h.pick }}" style="cursor:pointer;border:0;background:transparent;padding:0;display:flex;justify-content:{{ h.align }};gap:4px;font-size:11px;font-weight:600;letter-spacing:.03em;text-transform:uppercase;color:#0071B8;text-align:left">{{ h.label }}<span>{{ h.arrow }}</span></button>
+          <div style="display:grid;grid-template-columns:repeat(25,max-content) minmax(max-content,1fr);width:max-content;min-width:100%">
+            <div style="position:sticky;top:0;z-index:1;grid-column:1 / -1;display:grid;grid-template-columns:subgrid;background:#0071B8;border-bottom:1px solid #005A93">
+              <sc-for list="{{ lt.head }}" as="h" hint-placeholder-count="26">
+                <button onClick="{{ h.pick }}" style="cursor:pointer;border:0;border-right:1px solid #3D8FC6;background:transparent;padding:4px 7px;white-space:nowrap;display:flex;justify-content:{{ h.align }};gap:4px;font-size:10px;font-weight:600;letter-spacing:.03em;text-transform:uppercase;color:#fff;text-align:left">{{ h.label }}<span>{{ h.arrow }}</span></button>
               </sc-for>
             </div>
             <sc-for list="{{ lt.rows }}" as="r" hint-placeholder-count="10">
-              <button onClick="{{ r.open }}" style="cursor:pointer;width:100%;border:0;border-bottom:1px solid #EEF2F5;background:#fff;display:grid;grid-template-columns:130px 100px 200px 130px 140px 300px 90px 80px 90px 90px 90px 120px 130px 160px 130px 110px 120px 110px 110px 130px 120px 160px 240px;gap:12px;padding:8px 18px;text-align:left;align-items:start" style-hover="background:#F3F8FC">
-                <sc-for list="{{ r.cells }}" as="c" hint-placeholder-count="23"><span style="min-width:0;overflow-wrap:anywhere;line-height:1.35;text-align:{{ c.align }};font-family:{{ c.fam }};font-size:{{ c.size }};color:{{ c.fg }};font-weight:{{ c.weight }}">{{ c.v }}</span></sc-for>
+              <button onClick="{{ r.open }}" style="cursor:pointer;grid-column:1 / -1;border:0;border-bottom:1px solid #DDE3E9;background:#fff;display:grid;grid-template-columns:subgrid;padding:0;text-align:left;align-items:stretch" style-hover="background:#F3F8FC">
+                <sc-for list="{{ r.cells }}" as="c" hint-placeholder-count="26"><span title="{{ c.v }}" style="padding:3px 7px;border-right:1px solid #DDE3E9;white-space:nowrap;max-width:480px;overflow:hidden;text-overflow:ellipsis;line-height:1.35;text-align:{{ c.align }};font-family:{{ c.fam }};font-size:{{ c.size }};color:{{ c.fg }};font-weight:{{ c.weight }}">{{ c.v }}</span></sc-for>
               </button>
             </sc-for>
           </div>
@@ -327,15 +299,15 @@
         <div style="background:#fff;border:1px solid #DDE3E9;border-radius:8px;overflow:hidden">
           <div style="padding:14px 18px;border-bottom:1px solid #DDE3E9;display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;align-items:baseline"><h2 style="margin:0;font-size:16px;font-weight:600">Shipment info</h2><span style="font-size:13px;color:#536271">Click a header to sort · click a shipment to open its request</span></div>
           <div style="overflow:auto;max-height:70vh">
-            <div style="width:max-content;min-width:100%">
-              <div style="position:sticky;top:0;z-index:1;display:grid;grid-template-columns:140px 150px 220px 150px 140px 100px 80px 80px 90px 70px 120px 150px 140px 70px 120px 140px;gap:12px;padding:10px 18px;background:#F7F9FA;border-bottom:1px solid #DDE3E9">
-                <sc-for list="{{ sh.head }}" as="h" hint-placeholder-count="16">
-                  <button onClick="{{ h.pick }}" style="cursor:pointer;border:0;background:transparent;padding:0;display:flex;justify-content:{{ h.align }};gap:4px;font-size:11px;font-weight:600;letter-spacing:.03em;text-transform:uppercase;color:#0071B8;text-align:left">{{ h.label }}<span>{{ h.arrow }}</span></button>
+            <div style="display:grid;grid-template-columns:repeat(18,max-content) minmax(max-content,1fr);width:max-content;min-width:100%">
+              <div style="position:sticky;top:0;z-index:1;grid-column:1 / -1;display:grid;grid-template-columns:subgrid;background:#0071B8;border-bottom:1px solid #005A93">
+                <sc-for list="{{ sh.head }}" as="h" hint-placeholder-count="19">
+                  <button onClick="{{ h.pick }}" style="cursor:pointer;border:0;border-right:1px solid #3D8FC6;background:transparent;padding:4px 7px;white-space:nowrap;display:flex;justify-content:{{ h.align }};gap:4px;font-size:10px;font-weight:600;letter-spacing:.03em;text-transform:uppercase;color:#fff;text-align:left">{{ h.label }}<span>{{ h.arrow }}</span></button>
                 </sc-for>
               </div>
               <sc-for list="{{ sh.rows }}" as="r" hint-placeholder-count="10">
-                <button onClick="{{ r.open }}" style="cursor:pointer;width:100%;border:0;border-bottom:1px solid #EEF2F5;background:#fff;display:grid;grid-template-columns:140px 150px 220px 150px 140px 100px 80px 80px 90px 70px 120px 150px 140px 70px 120px 140px;gap:12px;padding:8px 18px;text-align:left;align-items:start" style-hover="background:#F3F8FC">
-                  <sc-for list="{{ r.cells }}" as="c" hint-placeholder-count="16"><span style="min-width:0;overflow-wrap:anywhere;line-height:1.35;text-align:{{ c.align }};font-family:{{ c.fam }};font-size:{{ c.size }};color:{{ c.fg }};font-weight:{{ c.weight }}">{{ c.v }}</span></sc-for>
+                <button onClick="{{ r.open }}" style="cursor:pointer;grid-column:1 / -1;border:0;border-bottom:1px solid #DDE3E9;background:#fff;display:grid;grid-template-columns:subgrid;padding:0;text-align:left;align-items:stretch" style-hover="background:#F3F8FC">
+                  <sc-for list="{{ r.cells }}" as="c" hint-placeholder-count="19"><span title="{{ c.v }}" style="padding:3px 7px;border-right:1px solid #DDE3E9;white-space:nowrap;max-width:480px;overflow:hidden;text-overflow:ellipsis;line-height:1.35;text-align:{{ c.align }};font-family:{{ c.fam }};font-size:{{ c.size }};color:{{ c.fg }};font-weight:{{ c.weight }}">{{ c.v }}</span></sc-for>
                 </button>
               </sc-for>
             </div>
@@ -423,17 +395,18 @@
             <sc-for list="{{ proc.line.series }}" as="s" hint-placeholder-count="2"><span style="display:flex;align-items:center;gap:6px;font-size:12px;color:#3F4B57"><span style="width:18px;height:3px;border-radius:2px;background:{{ s.color }}"></span>{{ s.label }} · <strong style="font-weight:600;color:#14212E">{{ s.total }}</strong></span></sc-for>
             <span style="font-size:12px;font-weight:600;color:#C92A2A">{{ proc.line.gap }}</span>
           </div>
-          <div style="position:relative;width:100%;aspect-ratio:3 / 1;max-height:300px">
+          <div ref="{{ chartRef }}" style="position:relative;width:100%;height:300px">
             <svg viewBox="{{ proc.line.vb }}" style="position:absolute;inset:0;width:100%;height:100%;display:block">
+            <defs><clipPath id="pl-reveal"><rect x="0" y="0" width="0" height="{{ proc.line.h }}"><animate attributeName="width" from="0" to="{{ proc.line.w }}" dur="2.2s" begin="0s" fill="freeze" calcMode="spline" keyTimes="0;1" keySplines=".45 0 .25 1"></animate></rect></clipPath></defs>
             <sc-for list="{{ proc.line.yTicks }}" as="y" hint-placeholder-count="5">
               <line x1="{{ proc.line.left }}" x2="{{ proc.line.right }}" y1="{{ y.y }}" y2="{{ y.y }}" stroke="#EEF2F5" stroke-width="1"></line>
             </sc-for>
-            <sc-for list="{{ proc.line.series }}" as="s" hint-placeholder-count="0"><path d="{{ s.area }}" fill="{{ s.areaFill }}" fill-opacity="0.08"></path></sc-for>
+            <g clipPath="url(#pl-reveal)"><sc-for list="{{ proc.line.series }}" as="s" hint-placeholder-count="0"><path d="{{ s.area }}" fill="{{ s.areaFill }}" fillOpacity="0.1"></path></sc-for></g>
             <sc-if value="{{ proc.line.hasToday }}" hint-placeholder-val="{{ false }}"><line x1="{{ proc.line.todayX }}" x2="{{ proc.line.todayX }}" y1="{{ proc.line.top }}" y2="{{ proc.line.bottom }}" stroke="#E8590C" stroke-width="1" stroke-dasharray="2 3"></line></sc-if>
-            <sc-for list="{{ proc.line.series }}" as="s" hint-placeholder-count="0">
-              <path d="{{ s.d }}" fill="none" stroke="{{ s.color }}" stroke-width="2.25" stroke-linejoin="round" stroke-linecap="round"></path>
-              <sc-for list="{{ s.pts }}" as="p" hint-placeholder-count="0"><circle cx="{{ p.x }}" cy="{{ p.y }}" r="{{ p.r }}" fill="#fff" stroke="{{ s.color }}" stroke-width="1.5"><title>{{ p.title }}</title></circle></sc-for>
-            </sc-for>
+            <g clipPath="url(#pl-reveal)"><sc-for list="{{ proc.line.series }}" as="s" hint-placeholder-count="0">
+              <path d="{{ s.d }}" fill="none" stroke="{{ s.color }}" strokeWidth="2.25" strokeLinejoin="round" strokeLinecap="round"></path>
+              <sc-for list="{{ s.pts }}" as="p" hint-placeholder-count="0"><circle cx="{{ p.x }}" cy="{{ p.y }}" r="{{ p.r }}" fill="#fff" stroke="{{ s.color }}" strokeWidth="1.5"><title>{{ p.title }}</title></circle></sc-for>
+            </sc-for></g>
           </svg>
             <sc-for list="{{ proc.line.yTicks }}" as="y" hint-placeholder-count="0"><span style="position:absolute;right:{{ y.right }};top:{{ y.top }};transform:translateY(-50%);font-size:10px;color:#536271;white-space:nowrap">{{ y.label }}</span></sc-for>
             <sc-for list="{{ proc.line.xTicks }}" as="x" hint-placeholder-count="0"><span style="position:absolute;left:{{ x.left }};top:{{ x.top }};transform:translateX(-50%);font-size:10px;color:#536271;white-space:nowrap">{{ x.label }}</span></sc-for>
@@ -454,22 +427,22 @@
             </span>
           </div>
           <div style="overflow:auto;max-height:640px">
-            <div style="width:max-content;min-width:100%">
-              <div style="position:sticky;top:0;z-index:1;display:grid;grid-template-columns:200px 110px minmax(260px,1.4fr) 90px 90px 200px 200px 130px 230px minmax(260px,1.4fr);gap:12px;padding:8px 18px;background:#F7F9FA;border-bottom:1px solid #DDE3E9;font-size:11px;font-weight:600;letter-spacing:.03em;text-transform:uppercase;color:#0071B8">
-                <span>WHO Shipping Status</span><span>Supply type</span><span>Item</span><span style="text-align:right">Qty</span><span style="text-align:right">Value</span><span>Hub / supplier · PO</span><span>Request</span><span>Shipment</span><span>Dates</span><span>Remarks Supply</span>
+            <div style="display:grid;grid-template-columns:repeat(13,max-content) minmax(max-content,1fr);width:max-content;min-width:100%">
+              <div style="position:sticky;top:0;z-index:1;grid-column:1 / -1;display:grid;grid-template-columns:subgrid;background:#0071B8;border-bottom:1px solid #005A93;font-size:10px;font-weight:600;letter-spacing:.03em;text-transform:uppercase;color:#fff">
+                <span style="padding:4px 7px;border-right:1px solid #3D8FC6;white-space:nowrap;text-align:right">SN</span><span style="padding:4px 7px;border-right:1px solid #3D8FC6;white-space:nowrap">OR Ref</span><span style="padding:4px 7px;border-right:1px solid #3D8FC6;white-space:nowrap">SR Ref</span><span style="padding:4px 7px;border-right:1px solid #3D8FC6;white-space:nowrap">PO No.</span><span style="padding:4px 7px;border-right:1px solid #3D8FC6;white-space:nowrap">Item</span><span style="padding:4px 7px;border-right:1px solid #3D8FC6;white-space:nowrap">WHO Shipping Status</span><span style="padding:4px 7px;border-right:1px solid #3D8FC6;white-space:nowrap">Supply type</span><span style="padding:4px 7px;border-right:1px solid #3D8FC6;white-space:nowrap;text-align:right">Qty</span><span style="padding:4px 7px;border-right:1px solid #3D8FC6;white-space:nowrap;text-align:right">Value</span><span style="padding:4px 7px;border-right:1px solid #3D8FC6;white-space:nowrap">Hub / supplier · OPR</span><span style="padding:4px 7px;border-right:1px solid #3D8FC6;white-space:nowrap">Country</span><span style="padding:4px 7px;border-right:1px solid #3D8FC6;white-space:nowrap">Shipment</span><span style="padding:4px 7px;border-right:1px solid #3D8FC6;white-space:nowrap">Dates</span><span style="padding:4px 7px;border-right:1px solid #3D8FC6;white-space:nowrap">Remarks Supply</span>
               </div>
               <sc-for list="{{ proc.items }}" as="l" hint-placeholder-count="8">
-                <button onClick="{{ l.open }}" style="cursor:pointer;width:100%;border:0;border-bottom:1px solid #EEF2F5;background:#fff;display:grid;grid-template-columns:200px 110px minmax(260px,1.4fr) 90px 90px 200px 200px 130px 230px minmax(260px,1.4fr);gap:12px;padding:9px 18px;text-align:left;align-items:start;font-size:13px;color:#14212E" style-hover="background:#F3F8FC">
-                  <span style="justify-self:start;display:flex;align-items:center;gap:6px;font-size:11px;font-weight:600;padding:2px 7px;border-radius:4px;background:{{ l.stBg }};color:{{ l.stFg }}"><span style="width:7px;height:7px;border-radius:50%;background:{{ l.dot }};flex:none"></span>{{ l.st }}</span>
-                  <span style="display:flex;align-items:center;gap:6px;font-size:12px"><span style="width:8px;height:8px;border-radius:2px;background:{{ l.tyColor }};flex:none"></span>{{ l.ty }}</span>
-                  <span style="display:flex;flex-direction:column;gap:1px;min-width:0"><span style="line-height:1.3;font-weight:500">{{ l.desc }}</span><span style="font-family:'IBM Plex Mono',monospace;font-size:11px;color:#536271">{{ l.code }}</span></span>
-                  <span style="text-align:right;line-height:1.3">{{ l.qty }}<br><span style="font-size:11px;color:#536271">{{ l.uom }}</span></span>
-                  <span style="text-align:right;font-weight:600">{{ l.value }}</span>
-                  <span style="display:flex;flex-direction:column;gap:1px;min-width:0;font-size:12px"><span style="overflow-wrap:anywhere">{{ l.sup }}</span><span style="font-family:'IBM Plex Mono',monospace;font-size:11px;color:#536271;overflow-wrap:anywhere">{{ l.po }}</span></span>
-                  <span style="display:flex;flex-direction:column;gap:2px;min-width:0"><span style="display:flex;align-items:center;gap:6px"><span style="font-size:10px;font-weight:700;padding:1px 5px;border-radius:3px;background:{{ l.typeBg }};color:{{ l.typeFg }}">{{ l.typeShort }}</span><span style="font-family:'IBM Plex Mono',monospace;font-size:11px;overflow-wrap:anywhere">{{ l.req }}</span></span><span style="font-size:11px;color:#536271">{{ l.cname }}</span></span>
-                  <span style="font-family:'IBM Plex Mono',monospace;font-size:11px;overflow-wrap:anywhere">{{ l.ship }}</span>
-                  <span style="font-size:11px;color:#3F4B57;line-height:1.4">{{ l.dates }}</span>
-                  <span style="font-size:12px;color:#3F4B57;line-height:1.35;overflow-wrap:anywhere">{{ l.rem }}</span>
+                <button onClick="{{ l.open }}" style="cursor:pointer;grid-column:1 / -1;border:0;border-bottom:1px solid #DDE3E9;background:#fff;display:grid;grid-template-columns:subgrid;padding:0;text-align:left;align-items:stretch;font-size:11px;color:#14212E;white-space:nowrap" style-hover="background:#F3F8FC">
+                  <span style="padding:3px 7px;border-right:1px solid #DDE3E9;text-align:right;color:#536271;font-variant-numeric:tabular-nums">{{ l.num }}</span><span style="padding:3px 7px;border-right:1px solid #DDE3E9;font-family:'IBM Plex Mono',monospace;font-size:10px">{{ l.orRef }}</span><span style="padding:3px 7px;border-right:1px solid #DDE3E9;font-family:'IBM Plex Mono',monospace;font-size:10px">{{ l.srRef }}</span><span style="padding:3px 7px;border-right:1px solid #DDE3E9;font-family:'IBM Plex Mono',monospace;font-size:10px">{{ l.poNum }}</span><span title="{{ l.desc }}" style="padding:3px 7px;border-right:1px solid #DDE3E9;display:flex;align-items:center;gap:8px;max-width:520px;overflow:hidden"><span style="font-family:'IBM Plex Mono',monospace;font-size:10px;color:#536271;flex:none">{{ l.code }}</span><span style="font-weight:500;overflow:hidden;text-overflow:ellipsis">{{ l.desc }}</span></span>
+                  <span style="padding:3px 7px;border-right:1px solid #DDE3E9;display:flex;align-items:center"><span style="display:flex;align-items:center;gap:6px;font-size:10px;font-weight:600;padding:1px 6px;border-radius:4px;background:{{ l.stBg }};color:{{ l.stFg }}"><span style="width:7px;height:7px;border-radius:50%;background:{{ l.dot }};flex:none"></span>{{ l.st }}</span></span>
+                  <span style="padding:3px 7px;border-right:1px solid #DDE3E9;display:flex;align-items:center;gap:6px"><span style="width:8px;height:8px;border-radius:2px;background:{{ l.tyColor }};flex:none"></span>{{ l.ty }}</span>
+                  <span style="padding:3px 7px;border-right:1px solid #DDE3E9;text-align:right">{{ l.qty }} <span style="font-size:10px;color:#536271">{{ l.uom }}</span></span>
+                  <span style="padding:3px 7px;border-right:1px solid #DDE3E9;text-align:right;font-weight:600">{{ l.value }}</span>
+                  <span style="padding:3px 7px;border-right:1px solid #DDE3E9;display:flex;align-items:center;gap:8px"><span>{{ l.sup }}</span><span style="font-family:'IBM Plex Mono',monospace;font-size:10px;color:#536271">{{ l.po }}</span></span>
+                  <span style="padding:3px 7px;border-right:1px solid #DDE3E9;">{{ l.cname }}</span>
+                  <span style="padding:3px 7px;border-right:1px solid #DDE3E9;font-family:'IBM Plex Mono',monospace;font-size:10px">{{ l.ship }}</span>
+                  <span style="padding:3px 7px;border-right:1px solid #DDE3E9;font-size:10px;color:#3F4B57">{{ l.dates }}</span>
+                  <span title="{{ l.rem }}" style="padding:3px 7px;border-right:1px solid #DDE3E9;max-width:480px;overflow:hidden;text-overflow:ellipsis;color:#3F4B57">{{ l.rem }}</span>
                 </button>
               </sc-for>
             </div>
@@ -482,58 +455,154 @@
     <sc-if value="{{ tabCritical }}" hint-placeholder-val="{{ false }}">
       <div style="background:#fff;border:1px solid #DDE3E9;border-radius:8px;padding:18px;display:flex;flex-direction:column;gap:14px">
         <div style="display:flex;flex-direction:column;gap:2px"><h2 style="margin:0;font-size:16px;font-weight:600">Critical items</h2><span style="font-size:13px;color:#536271">{{ crit.sub }}</span></div>
-        <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,460px),1fr));gap:12px 32px">
-          <sc-for list="{{ crit.halves }}" as="h" hint-placeholder-count="2">
-            <div style="display:flex;flex-direction:column">
-              <div style="display:grid;grid-template-columns:minmax(0,1.6fr) repeat(4,minmax(0,1fr));gap:10px;padding:8px 0;border-bottom:2px solid #DDE3E9;font-size:13px;font-weight:600;color:#0071B8">
-                <span>Essential item</span><span style="text-align:right">Delivered</span><span style="text-align:right">In transit</span><span style="text-align:right">Not ready</span><span style="text-align:right">Total qty</span>
-              </div>
-              <sc-for list="{{ h.rows }}" as="r" hint-placeholder-count="10">
-                <div style="display:grid;grid-template-columns:minmax(0,1.6fr) repeat(4,minmax(0,1fr));gap:10px;padding:8px 0;border-bottom:1px solid #EEF2F5;font-size:14px">
-                  <span style="font-weight:500">{{ r.name }}</span><span style="text-align:right;color:#0FA958;font-weight:600">{{ r.d }}</span><span style="text-align:right;color:#0A84FF;font-weight:600">{{ r.t }}</span><span style="text-align:right;color:#F03E3E;font-weight:600">{{ r.p }}</span><span style="text-align:right;font-weight:600;background:#F3F5F7;padding:0 6px;margin:-8px 0;display:flex;align-items:center;justify-content:flex-end">{{ r.tot }}</span>
-                </div>
-              </sc-for>
+        <div style="overflow:auto;max-height:72vh;border:1px solid #DDE3E9;border-right:0">
+          <div style="display:grid;grid-template-columns:max-content max-content repeat(3,max-content) minmax(320px,1fr) max-content;width:max-content;min-width:100%">
+            <div style="position:sticky;top:0;z-index:1;grid-column:1 / -1;display:grid;grid-template-columns:subgrid;background:#0071B8;font-size:11px;font-weight:600;letter-spacing:.03em;text-transform:uppercase;color:#fff">
+              <span style="padding:5px 9px;border-right:1px solid #3D8FC6;white-space:nowrap;text-align:right">SN</span><span style="padding:5px 9px;border-right:1px solid #3D8FC6;white-space:nowrap">Essential item</span><span style="padding:5px 9px;border-right:1px solid #3D8FC6;white-space:nowrap;text-align:right">Requested</span><span style="padding:5px 9px;border-right:1px solid #3D8FC6;white-space:nowrap;text-align:right">Delivered</span><span style="padding:5px 9px;border-right:1px solid #3D8FC6;white-space:nowrap;text-align:right">Pending</span><span style="padding:5px 9px;border-right:1px solid #3D8FC6;white-space:nowrap">Delivered vs requested</span><span style="padding:5px 9px;border-right:1px solid #3D8FC6;white-space:nowrap">Pending is · in transit / preparing / not ready</span>
             </div>
-          </sc-for>
+            <sc-for list="{{ crit.rows }}" as="r" hint-placeholder-count="10">
+              <button onClick="{{ r.toggle }}" style="cursor:pointer;grid-column:1 / -1;display:grid;grid-template-columns:subgrid;border:0;border-bottom:1px solid #DDE3E9;background:#fff;padding:0;text-align:left;font-size:12px;color:#14212E;white-space:nowrap;align-items:stretch" style-hover="background:#F3F8FC">
+                <span style="padding:5px 9px;border-right:1px solid #DDE3E9;text-align:right;color:#536271">{{ r.sn }}</span>
+                <span style="padding:5px 9px;border-right:1px solid #DDE3E9;font-weight:600;display:flex;gap:6px;align-items:center"><span style="width:10px;color:#536271">{{ r.arrow }}</span>{{ r.name }}</span>
+                <span style="padding:5px 9px;border-right:1px solid #DDE3E9;text-align:right;font-weight:700;font-size:13px">{{ r.req }}</span>
+                <span style="padding:5px 9px;border-right:1px solid #DDE3E9;text-align:right;font-weight:700;font-size:13px;color:#087F3B">{{ r.d }}</span>
+                <span style="padding:5px 9px;border-right:1px solid #DDE3E9;text-align:right;font-weight:700;font-size:13px;color:{{ r.pendFg }}">{{ r.pend }}</span>
+                <span style="padding:5px 9px;border-right:1px solid #DDE3E9;display:flex;align-items:center;gap:8px"><span title="Delivered {{ r.d }} of {{ r.req }} requested" style="flex:1;min-width:200px;height:12px;border-radius:3px;background:#F8D7D3;overflow:hidden;display:flex"><span style="width:{{ r.w }};background:#0FA958"></span></span><span style="font-weight:700;color:{{ r.pctFg }};width:38px;text-align:right">{{ r.pct }}</span></span>
+                <span style="padding:5px 9px;border-right:1px solid #DDE3E9;color:#3F4B57"><span style="color:#0062CC">{{ r.t }}</span> / <span style="color:#B54708">{{ r.prep }}</span> / <span style="color:#C92A2A">{{ r.p }}</span></span>
+              </button>
+              <sc-if value="{{ r.open }}" hint-placeholder-val="{{ false }}">
+                <div style="grid-column:1 / -1;background:#F7F9FA;border-bottom:1px solid #DDE3E9;padding:8px 12px 10px 34px">
+                  <div style="display:flex;gap:6px 18px;flex-wrap:wrap;font-size:11px;color:#3F4B57;margin-bottom:8px"><span><strong style="color:#14212E">Countries</strong> {{ r.countries }}</span><span><strong style="color:#14212E">Delayed lines</strong> {{ r.delayed }}</span><span><strong style="color:#14212E">Oldest pending request</strong> {{ r.since }}</span><span><strong style="color:#14212E">Next ETA</strong> {{ r.eta }}</span><span><strong style="color:#14212E">Pending lines by status</strong> {{ r.why }}</span></div>
+                  <div style="display:grid;grid-template-columns:repeat(9,max-content) minmax(240px,1fr);width:max-content;min-width:100%;border:1px solid #DDE3E9;border-right:0;background:#fff">
+                    <div style="grid-column:1 / -1;display:grid;grid-template-columns:subgrid;background:#3F4B57;font-size:10px;font-weight:600;letter-spacing:.03em;text-transform:uppercase;color:#fff">
+                      <span style="padding:4px 7px;border-right:1px solid #3D8FC6;white-space:nowrap;text-align:right">#</span><span style="padding:4px 7px;border-right:1px solid #3D8FC6;white-space:nowrap">Country</span><span style="padding:4px 7px;border-right:1px solid #3D8FC6;white-space:nowrap">OR Ref</span><span style="padding:4px 7px;border-right:1px solid #3D8FC6;white-space:nowrap">SR Ref</span><span style="padding:4px 7px;border-right:1px solid #3D8FC6;white-space:nowrap">PO No.</span><span style="padding:4px 7px;border-right:1px solid #3D8FC6;white-space:nowrap;text-align:right">Qty</span><span style="padding:4px 7px;border-right:1px solid #3D8FC6;white-space:nowrap">WHO Shipping Status</span><span style="padding:4px 7px;border-right:1px solid #3D8FC6;white-space:nowrap">Requested</span><span style="padding:4px 7px;border-right:1px solid #3D8FC6;white-space:nowrap">ETA / ATA</span><span style="padding:4px 7px;border-right:1px solid #3D8FC6;white-space:nowrap">Why · remark</span>
+                    </div>
+                    <sc-for list="{{ r.lines }}" as="l" hint-placeholder-count="3">
+                      <button onClick="{{ l.openLine }}" style="cursor:pointer;grid-column:1 / -1;display:grid;grid-template-columns:subgrid;border:0;border-top:1px solid #DDE3E9;background:{{ l.bg }};padding:0;text-align:left;font-size:11px;color:#14212E;white-space:nowrap" style-hover="background:#F3F8FC">
+                        <span style="padding:3px 7px;border-right:1px solid #DDE3E9;text-align:right;color:#536271">{{ l.n }}</span>
+                        <span style="padding:3px 7px;border-right:1px solid #DDE3E9;">{{ l.country }}</span>
+                        <span style="padding:3px 7px;border-right:1px solid #DDE3E9;font-family:'IBM Plex Mono',monospace;font-size:10px">{{ l.orRef }}</span>
+                        <span style="padding:3px 7px;border-right:1px solid #DDE3E9;font-family:'IBM Plex Mono',monospace;font-size:10px">{{ l.srRef }}</span>
+                        <span style="padding:3px 7px;border-right:1px solid #DDE3E9;font-family:'IBM Plex Mono',monospace;font-size:10px">{{ l.poNum }}</span>
+                        <span style="padding:3px 7px;border-right:1px solid #DDE3E9;text-align:right">{{ l.qty }}</span>
+                        <span style="padding:3px 7px;border-right:1px solid #DDE3E9;font-weight:600;color:{{ l.stFg }}">{{ l.st }}</span>
+                        <span style="padding:3px 7px;border-right:1px solid #DDE3E9;color:#3F4B57">{{ l.rd }}</span>
+                        <span style="padding:3px 7px;border-right:1px solid #DDE3E9;color:#3F4B57">{{ l.eta }}</span>
+                        <span title="{{ l.why }}" style="padding:3px 7px;border-right:1px solid #DDE3E9;display:flex;align-items:center;gap:6px;max-width:640px;overflow:hidden;color:#3F4B57"><sc-if value="{{ l.late }}" hint-placeholder-val="{{ false }}"><span style="flex:none;font-size:10px;font-weight:700;padding:1px 6px;border-radius:4px;background:#FDEBE2;color:#C92A2A">{{ l.late }}</span></sc-if><span style="overflow:hidden;text-overflow:ellipsis">{{ l.why }}</span></span>
+                      </button>
+                    </sc-for>
+                  </div>
+                </div>
+              </sc-if>
+            </sc-for>
+          </div>
         </div>
         <sc-if value="{{ crit.empty }}" hint-placeholder-val="{{ false }}"><span style="font-size:14px;color:#536271">No essential items for these filters.</span></sc-if>
       </div>
     </sc-if>
 
+    <sc-if value="{{ tabBack }}" hint-placeholder-val="{{ false }}">
+      <div style="display:flex;flex-direction:column;gap:16px">
+        <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,190px),1fr));gap:12px">
+          <sc-for list="{{ bo.kpis }}" as="k" hint-placeholder-count="5">
+            <div style="background:#fff;border:1px solid #DDE3E9;border-radius:8px;padding:12px 16px;display:flex;flex-direction:column;gap:3px"><span style="font-size:11px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:#536271">{{ k.label }}</span><span style="font-size:22px;font-weight:600;color:{{ k.color }}">{{ k.value }}</span><span style="font-size:12px;color:#536271">{{ k.sub }}</span></div>
+          </sc-for>
+        </div>
+        <div style="display:flex;gap:14px;flex-wrap:wrap;font-size:11px;color:#536271;align-items:center">
+          <span>Remaining = request lines not yet at 09-Arrived or 10-Received, canceled lines excluded. Ordered is the sum of the request’s lines in the export; the original requested quantity is not available in the export.</span>
+          <span style="display:flex;align-items:center;gap:4px"><span style="width:9px;height:9px;border-radius:2px;background:#F03E3E"></span>Not ready (00–02, 12, oo)</span>
+          <span style="display:flex;align-items:center;gap:4px"><span style="width:9px;height:9px;border-radius:2px;background:#F59F00"></span>Preparing to ship (04–07)</span>
+          <span style="display:flex;align-items:center;gap:4px"><span style="width:9px;height:9px;border-radius:2px;background:#0A84FF"></span>In transit (01b, 01c, 08)</span>
+        </div>
+        <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,560px),1fr));gap:16px;align-items:start">
+          <div style="background:#fff;border:1px solid #DDE3E9;border-radius:8px;overflow:hidden">
+            <div style="padding:10px 14px;border-bottom:1px solid #DDE3E9;display:flex;justify-content:space-between;gap:8px"><h2 style="margin:0;font-size:14px;font-weight:600">Remaining by country</h2><span style="font-size:11px;color:#536271">Click a row to filter the lines below</span></div>
+            <div style="overflow:auto;max-height:360px">
+              <div style="display:grid;grid-template-columns:repeat(6,max-content) minmax(max-content,1fr);width:max-content;min-width:100%">
+                <div style="position:sticky;top:0;z-index:1;grid-column:1 / -1;display:grid;grid-template-columns:subgrid;background:#0071B8;font-size:10px;font-weight:600;letter-spacing:.03em;text-transform:uppercase;color:#fff"><span style="padding:4px 7px;border-right:1px solid #3D8FC6;white-space:nowrap;text-align:right">SN</span><span style="padding:4px 7px;border-right:1px solid #3D8FC6;white-space:nowrap">Country</span><span style="padding:4px 7px;border-right:1px solid #3D8FC6;white-space:nowrap;text-align:right">Requests</span><span style="padding:4px 7px;border-right:1px solid #3D8FC6;white-space:nowrap;text-align:right">Lines</span><span style="padding:4px 7px;border-right:1px solid #3D8FC6;white-space:nowrap;text-align:right">Remaining value</span><span style="padding:4px 7px;border-right:1px solid #3D8FC6;white-space:nowrap">Where it sits</span><span style="padding:4px 7px;border-right:1px solid #3D8FC6;white-space:nowrap;text-align:right">Oldest</span></div>
+                <sc-for list="{{ bo.countries }}" as="c" hint-placeholder-count="8">
+                  <button onClick="{{ c.pick }}" style="cursor:pointer;grid-column:1 / -1;display:grid;grid-template-columns:subgrid;border:0;border-top:1px solid #DDE3E9;padding:0;text-align:left;font-size:11px;color:#14212E;white-space:nowrap;background:{{ c.bg }}" style-hover="background:#F3F8FC"><span style="padding:3px 7px;border-right:1px solid #DDE3E9;text-align:right;color:#536271">{{ c.sn }}</span><span style="padding:3px 7px;border-right:1px solid #DDE3E9;font-weight:600">{{ c.label }}</span><span style="padding:3px 7px;border-right:1px solid #DDE3E9;text-align:right">{{ c.reqs }}</span><span style="padding:3px 7px;border-right:1px solid #DDE3E9;text-align:right">{{ c.lines }}</span><span style="padding:3px 7px;border-right:1px solid #DDE3E9;text-align:right;font-weight:600;color:#C92A2A">{{ c.v }}</span><span style="padding:3px 7px;border-right:1px solid #DDE3E9;display:flex;align-items:center"><span style="width:120px;height:8px;border-radius:4px;background:#EEF2F5;overflow:hidden;display:flex"><sc-for list="{{ c.segs }}" as="s" hint-placeholder-count="0"><span title="{{ s.title }}" style="width:{{ s.w }};background:{{ s.color }}"></span></sc-for></span></span><span style="padding:3px 7px;border-right:1px solid #DDE3E9;text-align:right">{{ c.oldest }}</span></button>
+                </sc-for>
+              </div>
+            </div>
+          </div>
+          <div style="background:#fff;border:1px solid #DDE3E9;border-radius:8px;overflow:hidden">
+            <div style="padding:10px 14px;border-bottom:1px solid #DDE3E9;display:flex;justify-content:space-between;gap:8px"><h2 style="margin:0;font-size:14px;font-weight:600">Remaining by supplier / hub</h2><span style="font-size:11px;color:#536271">Click a row to filter the lines below</span></div>
+            <div style="overflow:auto;max-height:360px">
+              <div style="display:grid;grid-template-columns:repeat(7,max-content) minmax(max-content,1fr);width:max-content;min-width:100%">
+                <div style="position:sticky;top:0;z-index:1;grid-column:1 / -1;display:grid;grid-template-columns:subgrid;background:#0071B8;font-size:10px;font-weight:600;letter-spacing:.03em;text-transform:uppercase;color:#fff"><span style="padding:4px 7px;border-right:1px solid #3D8FC6;white-space:nowrap;text-align:right">SN</span><span style="padding:4px 7px;border-right:1px solid #3D8FC6;white-space:nowrap">Hub / supplier</span><span style="padding:4px 7px;border-right:1px solid #3D8FC6;white-space:nowrap">Channel</span><span style="padding:4px 7px;border-right:1px solid #3D8FC6;white-space:nowrap;text-align:right">POs</span><span style="padding:4px 7px;border-right:1px solid #3D8FC6;white-space:nowrap;text-align:right">Lines</span><span style="padding:4px 7px;border-right:1px solid #3D8FC6;white-space:nowrap;text-align:right">Remaining value</span><span style="padding:4px 7px;border-right:1px solid #3D8FC6;white-space:nowrap">Where it sits</span><span style="padding:4px 7px;border-right:1px solid #3D8FC6;white-space:nowrap;text-align:right">Oldest</span></div>
+                <sc-for list="{{ bo.suppliers }}" as="c" hint-placeholder-count="8">
+                  <button onClick="{{ c.pick }}" style="cursor:pointer;grid-column:1 / -1;display:grid;grid-template-columns:subgrid;border:0;border-top:1px solid #DDE3E9;padding:0;text-align:left;font-size:11px;color:#14212E;white-space:nowrap;background:{{ c.bg }}" style-hover="background:#F3F8FC"><span style="padding:3px 7px;border-right:1px solid #DDE3E9;text-align:right;color:#536271">{{ c.sn }}</span><span style="padding:3px 7px;border-right:1px solid #DDE3E9;font-weight:600">{{ c.label }}</span><span style="padding:3px 7px;border-right:1px solid #DDE3E9;color:#3F4B57">{{ c.chan }}</span><span style="padding:3px 7px;border-right:1px solid #DDE3E9;text-align:right">{{ c.pos }}</span><span style="padding:3px 7px;border-right:1px solid #DDE3E9;text-align:right">{{ c.lines }}</span><span style="padding:3px 7px;border-right:1px solid #DDE3E9;text-align:right;font-weight:600;color:#C92A2A">{{ c.v }}</span><span style="padding:3px 7px;border-right:1px solid #DDE3E9;display:flex;align-items:center"><span style="width:120px;height:8px;border-radius:4px;background:#EEF2F5;overflow:hidden;display:flex"><sc-for list="{{ c.segs }}" as="s" hint-placeholder-count="0"><span title="{{ s.title }}" style="width:{{ s.w }};background:{{ s.color }}"></span></sc-for></span></span><span style="padding:3px 7px;border-right:1px solid #DDE3E9;text-align:right">{{ c.oldest }}</span></button>
+                </sc-for>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div style="background:#fff;border:1px solid #DDE3E9;border-radius:8px;overflow:hidden">
+          <div style="padding:10px 14px;border-bottom:1px solid #DDE3E9;display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap;align-items:center">
+            <span style="display:flex;align-items:baseline;gap:10px"><h2 style="margin:0;font-size:14px;font-weight:600">Back-order lines</h2><span style="font-size:12px;color:#536271">{{ bo.note }}</span></span>
+            <span style="display:flex;gap:8px;align-items:center"><sc-if value="{{ bo.hasFilter }}" hint-placeholder-val="{{ false }}"><button onClick="{{ bo.clear }}" style="cursor:pointer;border:0;background:transparent;font-size:12px;font-weight:600;color:#0071B8">Clear filter</button></sc-if><button onClick="{{ bo.exportCsv }}" style="cursor:pointer;font-size:12px;padding:5px 12px;border:1px solid #CBD4DC;border-radius:6px;background:#fff;color:#14212E;font-weight:500">Export CSV</button></span>
+          </div>
+          <div style="overflow:auto;max-height:70vh">
+            <div style="display:grid;grid-template-columns:repeat(15,max-content) minmax(max-content,1fr);width:max-content;min-width:100%">
+              <div style="position:sticky;top:0;z-index:1;grid-column:1 / -1;display:grid;grid-template-columns:subgrid;background:#0071B8;font-size:10px;font-weight:600;letter-spacing:.03em;text-transform:uppercase;color:#fff"><span style="padding:4px 7px;border-right:1px solid #3D8FC6;white-space:nowrap;text-align:right">SN</span><span style="padding:4px 7px;border-right:1px solid #3D8FC6;white-space:nowrap">Country</span><span style="padding:4px 7px;border-right:1px solid #3D8FC6;white-space:nowrap">OR Ref</span><span style="padding:4px 7px;border-right:1px solid #3D8FC6;white-space:nowrap">SR Ref</span><span style="padding:4px 7px;border-right:1px solid #3D8FC6;white-space:nowrap">PO No.</span><span style="padding:4px 7px;border-right:1px solid #3D8FC6;white-space:nowrap">Item</span><span style="padding:4px 7px;border-right:1px solid #3D8FC6;white-space:nowrap;text-align:right">Ordered</span><span style="padding:4px 7px;border-right:1px solid #3D8FC6;white-space:nowrap;text-align:right">Delivered</span><span style="padding:4px 7px;border-right:1px solid #3D8FC6;white-space:nowrap;text-align:right">Remaining</span><span style="padding:4px 7px;border-right:1px solid #3D8FC6;white-space:nowrap;text-align:right">Remaining value</span><span style="padding:4px 7px;border-right:1px solid #3D8FC6;white-space:nowrap">WHO Shipping Status</span><span style="padding:4px 7px;border-right:1px solid #3D8FC6;white-space:nowrap">Hub / supplier</span><span style="padding:4px 7px;border-right:1px solid #3D8FC6;white-space:nowrap">Channel</span><span style="padding:4px 7px;border-right:1px solid #3D8FC6;white-space:nowrap;text-align:right">Days since request</span><span style="padding:4px 7px;border-right:1px solid #3D8FC6;white-space:nowrap">Supply remark</span></div>
+              <sc-for list="{{ bo.rows }}" as="l" hint-placeholder-count="10">
+                <button onClick="{{ l.open }}" style="cursor:pointer;grid-column:1 / -1;display:grid;grid-template-columns:subgrid;border:0;border-top:1px solid #DDE3E9;padding:0;text-align:left;font-size:11px;color:#14212E;white-space:nowrap;background:#fff" style-hover="background:#F3F8FC">
+                  <span style="padding:3px 7px;border-right:1px solid #DDE3E9;text-align:right;color:#536271">{{ l.sn }}</span><span style="padding:3px 7px;border-right:1px solid #DDE3E9;">{{ l.country }}</span>
+                  <span style="padding:3px 7px;border-right:1px solid #DDE3E9;font-family:'IBM Plex Mono',monospace;font-size:10px">{{ l.orRef }}</span><span style="padding:3px 7px;border-right:1px solid #DDE3E9;font-family:'IBM Plex Mono',monospace;font-size:10px">{{ l.srRef }}</span><span style="padding:3px 7px;border-right:1px solid #DDE3E9;font-family:'IBM Plex Mono',monospace;font-size:10px">{{ l.poNum }}</span>
+                  <span title="{{ l.desc }}" style="padding:3px 7px;border-right:1px solid #DDE3E9;display:flex;gap:8px;max-width:460px;overflow:hidden"><span style="font-family:'IBM Plex Mono',monospace;font-size:10px;color:#536271;flex:none">{{ l.code }}</span><span style="font-weight:500;overflow:hidden;text-overflow:ellipsis">{{ l.desc }}</span></span>
+                  <span style="padding:3px 7px;border-right:1px solid #DDE3E9;text-align:right">{{ l.o }}</span><span style="padding:3px 7px;border-right:1px solid #DDE3E9;text-align:right;color:#087F3B">{{ l.d }}</span><span style="padding:3px 7px;border-right:1px solid #DDE3E9;text-align:right;font-weight:600;color:#C92A2A">{{ l.rem }}</span><span style="padding:3px 7px;border-right:1px solid #DDE3E9;text-align:right;font-weight:600">{{ l.v }}</span>
+                  <span style="padding:3px 7px;border-right:1px solid #DDE3E9;font-weight:600;color:{{ l.stFg }}">{{ l.st }}</span><span style="padding:3px 7px;border-right:1px solid #DDE3E9;">{{ l.src }}</span><span style="padding:3px 7px;border-right:1px solid #DDE3E9;color:#3F4B57">{{ l.chan }}</span><span style="padding:3px 7px;border-right:1px solid #DDE3E9;text-align:right">{{ l.age }}</span>
+                  <span title="{{ l.note }}" style="padding:3px 7px;border-right:1px solid #DDE3E9;max-width:420px;overflow:hidden;text-overflow:ellipsis;color:#3F4B57">{{ l.note }}</span>
+                </button>
+              </sc-for>
+            </div>
+          </div>
+          <sc-if value="{{ bo.more }}" hint-placeholder-val="{{ false }}"><div style="padding:10px 14px;border-top:1px solid #DDE3E9"><button onClick="{{ bo.showMore }}" style="cursor:pointer;font-size:12px;padding:6px 14px;border:1px solid #CBD4DC;border-radius:6px;background:#fff;color:#14212E;font-weight:500">Show 200 more</button></div></sc-if>
+        </div>
+      </div>
+    </sc-if>
+
     <sc-if value="{{ tabImpact }}" hint-placeholder-val="{{ false }}">
-      <dc-import name="BeneficiaryRisk" country="{{ country }}" on-pick="{{ impactPick }}" priority="{{ impactPrio }}" cfr-no="{{ cfrNo }}" cfr-care="{{ cfrCare }}" avg-stay="{{ avgStay }}" default-beds="{{ defaultBeds }}" pcr-run-size="{{ pcrRunSize }}" pcr-controls="{{ pcrControls }}" hint-size="100%,1100px"></dc-import>
+      <dc-import name="BeneficiaryRisk" country="{{ country }}" on-pick="{{ impactPick }}" priority="{{ impactPrio }}" cfr-no="{{ cfrNo }}" cfr-care="{{ cfrCare }}" avg-stay="{{ avgStay }}" default-beds="{{ defaultBeds }}" horizon-days="{{ horizonDays }}" pcr-run-size="{{ pcrRunSize }}" pcr-controls="{{ pcrControls }}" hint-size="100%,1100px"></dc-import>
     </sc-if>
 
     <sc-if value="{{ tabGlossary }}" hint-placeholder-val="{{ false }}">
       <div style="display:flex;flex-direction:column;gap:16px">
         <div style="display:flex;flex-direction:column;gap:4px"><h2 style="margin:0;font-size:20px;font-weight:600;color:#14212E">Glossary &amp; methods</h2><span style="font-size:13px;color:#536271">How each tab reads the OSL export and how the estimates are calculated.</span></div>
-        <div style="columns:3 340px;column-gap:16px">
-        <div style="background:#fff;border:1px solid #DDE3E9;border-radius:12px;padding:16px 18px;display:flex;flex-direction:column;gap:10px;min-width:0;break-inside:avoid;margin-bottom:16px">
-          <h3 style="margin:0;font-size:12px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:#0062CC">WHO Shipping Status</h3>
-          <div style="display:flex;flex-direction:column;font-size:12px;line-height:1.4">
-            <div style="display:grid;grid-template-columns:minmax(0,1.1fr) minmax(0,1.3fr) minmax(0,.8fr);gap:10px;padding:6px 0;border-bottom:1px solid #EEF2F5"><span style="font-weight:700;color:#C92A2A">00-Planned</span><span style="color:#3F4B57">Line planned, nothing sourced yet</span><span style="color:#C92A2A;font-weight:600">Not ready · planned</span></div>
-            <div style="display:grid;grid-template-columns:minmax(0,1.1fr) minmax(0,1.3fr) minmax(0,.8fr);gap:10px;padding:6px 0;border-bottom:1px solid #EEF2F5"><span style="font-weight:700;color:#C92A2A">01-Sourced</span><span style="color:#3F4B57">Source identified</span><span style="color:#C92A2A;font-weight:600">Not ready · planned</span></div>
-            <div style="display:grid;grid-template-columns:minmax(0,1.1fr) minmax(0,1.3fr) minmax(0,.8fr);gap:10px;padding:6px 0;border-bottom:1px solid #EEF2F5"><span style="font-weight:700;color:#C92A2A">01b-Awating Pre-leg</span><span style="color:#3F4B57">Ready, waiting for the first leg to the transit hub</span><span style="color:#C92A2A;font-weight:600">Not ready</span></div>
-            <div style="display:grid;grid-template-columns:minmax(0,1.1fr) minmax(0,1.3fr) minmax(0,.8fr);gap:10px;padding:6px 0;border-bottom:1px solid #EEF2F5"><span style="font-weight:700;color:#0062CC">01c-At transit hub</span><span style="color:#3F4B57">Arrived at the transit hub, waiting for the final leg</span><span style="color:#0062CC;font-weight:600">In transit</span></div>
-            <div style="display:grid;grid-template-columns:minmax(0,1.1fr) minmax(0,1.3fr) minmax(0,.8fr);gap:10px;padding:6px 0;border-bottom:1px solid #EEF2F5"><span style="font-weight:700;color:#0062CC">01d-Sourced (at transit hub)</span><span style="color:#3F4B57">Sourced from stock already at the transit hub</span><span style="color:#0062CC;font-weight:600">In transit</span></div>
-            <div style="display:grid;grid-template-columns:minmax(0,1.1fr) minmax(0,1.3fr) minmax(0,.8fr);gap:10px;padding:6px 0;border-bottom:1px solid #EEF2F5"><span style="font-weight:700;color:#C92A2A">02-Goods Available at hub or supplier</span><span style="color:#3F4B57">Goods ready at the hub or supplier</span><span style="color:#C92A2A;font-weight:600">Not ready</span></div>
-            <div style="display:grid;grid-template-columns:minmax(0,1.1fr) minmax(0,1.3fr) minmax(0,.8fr);gap:10px;padding:6px 0;border-bottom:1px solid #EEF2F5"><span style="font-weight:700;color:#C92A2A">04-GL Requested (if needed)</span><span style="color:#3F4B57">Greenlight requested, awaiting approval</span><span style="color:#C92A2A;font-weight:600">Not ready</span></div>
-            <div style="display:grid;grid-template-columns:minmax(0,1.1fr) minmax(0,1.3fr) minmax(0,.8fr);gap:10px;padding:6px 0;border-bottom:1px solid #EEF2F5"><span style="font-weight:700;color:#C92A2A">06-Pending pre-alert request</span><span style="color:#3F4B57">Waiting for the pre-alert to the consignee</span><span style="color:#C92A2A;font-weight:600">Not ready · pending departure</span></div>
-            <div style="display:grid;grid-template-columns:minmax(0,1.1fr) minmax(0,1.3fr) minmax(0,.8fr);gap:10px;padding:6px 0;border-bottom:1px solid #EEF2F5"><span style="font-weight:700;color:#C92A2A">07-Pending Departure</span><span style="color:#3F4B57">Cleared, waiting to depart</span><span style="color:#C92A2A;font-weight:600">Not ready · pending departure</span></div>
-            <div style="display:grid;grid-template-columns:minmax(0,1.1fr) minmax(0,1.3fr) minmax(0,.8fr);gap:10px;padding:6px 0;border-bottom:1px solid #EEF2F5"><span style="font-weight:700;color:#0062CC">08-Shipped</span><span style="color:#3F4B57">Departed, on the way to the country</span><span style="color:#0062CC;font-weight:600">In transit</span></div>
-            <div style="display:grid;grid-template-columns:minmax(0,1.1fr) minmax(0,1.3fr) minmax(0,.8fr);gap:10px;padding:6px 0;border-bottom:1px solid #EEF2F5"><span style="font-weight:700;color:#087F3B">09-Arrived</span><span style="color:#3F4B57">Arrived in country</span><span style="color:#087F3B;font-weight:600">Delivered</span></div>
-            <div style="display:grid;grid-template-columns:minmax(0,1.1fr) minmax(0,1.3fr) minmax(0,.8fr);gap:10px;padding:6px 0;border-bottom:1px solid #EEF2F5"><span style="font-weight:700;color:#087F3B">09-Arrived (from transit hub)</span><span style="color:#3F4B57">Arrived in country via the transit hub</span><span style="color:#087F3B;font-weight:600">Delivered</span></div>
-            <div style="display:grid;grid-template-columns:minmax(0,1.1fr) minmax(0,1.3fr) minmax(0,.8fr);gap:10px;padding:6px 0;border-bottom:1px solid #EEF2F5"><span style="font-weight:700;color:#087F3B">10-Received</span><span style="color:#3F4B57">Receipt confirmed by the country</span><span style="color:#087F3B;font-weight:600">Delivered</span></div>
-            <div style="display:grid;grid-template-columns:minmax(0,1.1fr) minmax(0,1.3fr) minmax(0,.8fr);gap:10px;padding:6px 0;border-bottom:1px solid #EEF2F5"><span style="font-weight:700;color:#087F3B">10-Received (from transit hub)</span><span style="color:#3F4B57">Receipt confirmed, shipped via the transit hub</span><span style="color:#087F3B;font-weight:600">Delivered</span></div>
-            <div style="display:grid;grid-template-columns:minmax(0,1.1fr) minmax(0,1.3fr) minmax(0,.8fr);gap:10px;padding:6px 0;border-bottom:1px solid #EEF2F5"><span style="font-weight:700;color:#3F4B57">11-Canceled</span><span style="color:#3F4B57">Line canceled</span><span style="color:#3F4B57;font-weight:600">Excluded from totals</span></div>
-            <div style="display:grid;grid-template-columns:minmax(0,1.1fr) minmax(0,1.3fr) minmax(0,.8fr);gap:10px;padding:6px 0;border-bottom:1px solid #EEF2F5"><span style="font-weight:700;color:#C92A2A">12-On Hold</span><span style="color:#3F4B57">Line on hold</span><span style="color:#C92A2A;font-weight:600">Not ready · planned</span></div>
-            <div style="display:grid;grid-template-columns:minmax(0,1.1fr) minmax(0,1.3fr) minmax(0,.8fr);gap:10px;padding:6px 0;border-bottom:1px solid #EEF2F5"><span style="font-weight:700;color:#C92A2A">oo-MIssing</span><span style="color:#3F4B57">No status entered in the export</span><span style="color:#C92A2A;font-weight:600">Not ready · planned</span></div>
+        <div style="display:grid;grid-template-columns:repeat(12,minmax(0,1fr));gap:14px;align-items:stretch">
+        <div style="grid-column:1 / -1;order:0;background:#fff;border:1px solid #DDE3E9;border-radius:10px;padding:14px 16px;display:flex;flex-direction:column;gap:10px;min-width:0">
+          <h3 style="margin:0;padding-bottom:8px;border-bottom:2px solid #0071B8;font-size:11px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:#0071B8">WHO Shipping Status</h3>
+          <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,380px),1fr));gap:12px 16px;align-items:start">
+            <div style="display:flex;flex-direction:column;font-size:11px;line-height:1.35;border:1px solid #DDE3E9;border-bottom:0">
+            <div style="display:grid;grid-template-columns:minmax(0,1.1fr) minmax(0,1.3fr) minmax(0,.8fr);background:#0071B8;color:#fff;font-size:10px;font-weight:600;letter-spacing:.03em;text-transform:uppercase"><span style="padding:4px 7px;border-right:1px solid #3D8FC6;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">Status</span><span style="padding:4px 7px;border-right:1px solid #3D8FC6;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">Meaning</span><span style="padding:4px 7px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">Group</span></div>
+            <div style="display:grid;grid-template-columns:minmax(0,1.1fr) minmax(0,1.3fr) minmax(0,.8fr);border-bottom:1px solid #DDE3E9"><span style="padding:3px 7px;border-right:1px solid #DDE3E9;font-weight:700;color:#C92A2A">00-Planned</span><span style="padding:3px 7px;border-right:1px solid #DDE3E9;color:#3F4B57">Line planned, nothing sourced yet</span><span style="padding:3px 7px;color:#C92A2A;font-weight:600">Not ready · planned</span></div>
+            <div style="display:grid;grid-template-columns:minmax(0,1.1fr) minmax(0,1.3fr) minmax(0,.8fr);border-bottom:1px solid #DDE3E9"><span style="padding:3px 7px;border-right:1px solid #DDE3E9;font-weight:700;color:#C92A2A">01-Sourced</span><span style="padding:3px 7px;border-right:1px solid #DDE3E9;color:#3F4B57">Source identified</span><span style="padding:3px 7px;color:#C92A2A;font-weight:600">Not ready · planned</span></div>
+            <div style="display:grid;grid-template-columns:minmax(0,1.1fr) minmax(0,1.3fr) minmax(0,.8fr);border-bottom:1px solid #DDE3E9"><span style="padding:3px 7px;border-right:1px solid #DDE3E9;font-weight:700;color:#C92A2A">01b-Awating Pre-leg</span><span style="padding:3px 7px;border-right:1px solid #DDE3E9;color:#3F4B57">Ready, waiting for the first leg to the transit hub</span><span style="padding:3px 7px;color:#C92A2A;font-weight:600">Not ready</span></div>
+            <div style="display:grid;grid-template-columns:minmax(0,1.1fr) minmax(0,1.3fr) minmax(0,.8fr);border-bottom:1px solid #DDE3E9"><span style="padding:3px 7px;border-right:1px solid #DDE3E9;font-weight:700;color:#0062CC">01c-At transit hub</span><span style="padding:3px 7px;border-right:1px solid #DDE3E9;color:#3F4B57">Arrived at the transit hub, waiting for the final leg</span><span style="padding:3px 7px;color:#0062CC;font-weight:600">In transit</span></div>
+            <div style="display:grid;grid-template-columns:minmax(0,1.1fr) minmax(0,1.3fr) minmax(0,.8fr);border-bottom:1px solid #DDE3E9"><span style="padding:3px 7px;border-right:1px solid #DDE3E9;font-weight:700;color:#0062CC">01d-Sourced (at transit hub)</span><span style="padding:3px 7px;border-right:1px solid #DDE3E9;color:#3F4B57">Sourced from stock already at the transit hub</span><span style="padding:3px 7px;color:#0062CC;font-weight:600">In transit</span></div>
+            <div style="display:grid;grid-template-columns:minmax(0,1.1fr) minmax(0,1.3fr) minmax(0,.8fr);border-bottom:1px solid #DDE3E9"><span style="padding:3px 7px;border-right:1px solid #DDE3E9;font-weight:700;color:#C92A2A">02-Goods Available at hub or supplier</span><span style="padding:3px 7px;border-right:1px solid #DDE3E9;color:#3F4B57">Goods ready at the hub or supplier</span><span style="padding:3px 7px;color:#C92A2A;font-weight:600">Not ready</span></div>
+            <div style="display:grid;grid-template-columns:minmax(0,1.1fr) minmax(0,1.3fr) minmax(0,.8fr);border-bottom:1px solid #DDE3E9"><span style="padding:3px 7px;border-right:1px solid #DDE3E9;font-weight:700;color:#C92A2A">04-GL Requested (if needed)</span><span style="padding:3px 7px;border-right:1px solid #DDE3E9;color:#3F4B57">Greenlight requested, awaiting approval</span><span style="padding:3px 7px;color:#C92A2A;font-weight:600">Not ready</span></div>
+            <div style="display:grid;grid-template-columns:minmax(0,1.1fr) minmax(0,1.3fr) minmax(0,.8fr);border-bottom:1px solid #DDE3E9"><span style="padding:3px 7px;border-right:1px solid #DDE3E9;font-weight:700;color:#C92A2A">06-Pending pre-alert request</span><span style="padding:3px 7px;border-right:1px solid #DDE3E9;color:#3F4B57">Waiting for the pre-alert to the consignee</span><span style="padding:3px 7px;color:#C92A2A;font-weight:600">Not ready · pending departure</span></div>
+            <div style="display:grid;grid-template-columns:minmax(0,1.1fr) minmax(0,1.3fr) minmax(0,.8fr);border-bottom:1px solid #DDE3E9"><span style="padding:3px 7px;border-right:1px solid #DDE3E9;font-weight:700;color:#C92A2A">07-Pending Departure</span><span style="padding:3px 7px;border-right:1px solid #DDE3E9;color:#3F4B57">Cleared, waiting to depart</span><span style="padding:3px 7px;color:#C92A2A;font-weight:600">Not ready · pending departure</span></div>
+            </div>
+            <div style="display:flex;flex-direction:column;font-size:11px;line-height:1.35;border:1px solid #DDE3E9;border-bottom:0">
+            <div style="display:grid;grid-template-columns:minmax(0,1.1fr) minmax(0,1.3fr) minmax(0,.8fr);background:#0071B8;color:#fff;font-size:10px;font-weight:600;letter-spacing:.03em;text-transform:uppercase"><span style="padding:4px 7px;border-right:1px solid #3D8FC6;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">Status</span><span style="padding:4px 7px;border-right:1px solid #3D8FC6;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">Meaning</span><span style="padding:4px 7px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">Group</span></div>
+            <div style="display:grid;grid-template-columns:minmax(0,1.1fr) minmax(0,1.3fr) minmax(0,.8fr);border-bottom:1px solid #DDE3E9"><span style="padding:3px 7px;border-right:1px solid #DDE3E9;font-weight:700;color:#0062CC">08-Shipped</span><span style="padding:3px 7px;border-right:1px solid #DDE3E9;color:#3F4B57">Departed, on the way to the country</span><span style="padding:3px 7px;color:#0062CC;font-weight:600">In transit</span></div>
+            <div style="display:grid;grid-template-columns:minmax(0,1.1fr) minmax(0,1.3fr) minmax(0,.8fr);border-bottom:1px solid #DDE3E9"><span style="padding:3px 7px;border-right:1px solid #DDE3E9;font-weight:700;color:#087F3B">09-Arrived</span><span style="padding:3px 7px;border-right:1px solid #DDE3E9;color:#3F4B57">Arrived in country</span><span style="padding:3px 7px;color:#087F3B;font-weight:600">Delivered</span></div>
+            <div style="display:grid;grid-template-columns:minmax(0,1.1fr) minmax(0,1.3fr) minmax(0,.8fr);border-bottom:1px solid #DDE3E9"><span style="padding:3px 7px;border-right:1px solid #DDE3E9;font-weight:700;color:#087F3B">09-Arrived (from transit hub)</span><span style="padding:3px 7px;border-right:1px solid #DDE3E9;color:#3F4B57">Arrived in country via the transit hub</span><span style="padding:3px 7px;color:#087F3B;font-weight:600">Delivered</span></div>
+            <div style="display:grid;grid-template-columns:minmax(0,1.1fr) minmax(0,1.3fr) minmax(0,.8fr);border-bottom:1px solid #DDE3E9"><span style="padding:3px 7px;border-right:1px solid #DDE3E9;font-weight:700;color:#087F3B">10-Received</span><span style="padding:3px 7px;border-right:1px solid #DDE3E9;color:#3F4B57">Receipt confirmed by the country</span><span style="padding:3px 7px;color:#087F3B;font-weight:600">Delivered</span></div>
+            <div style="display:grid;grid-template-columns:minmax(0,1.1fr) minmax(0,1.3fr) minmax(0,.8fr);border-bottom:1px solid #DDE3E9"><span style="padding:3px 7px;border-right:1px solid #DDE3E9;font-weight:700;color:#087F3B">10-Received (from transit hub)</span><span style="padding:3px 7px;border-right:1px solid #DDE3E9;color:#3F4B57">Receipt confirmed, shipped via the transit hub</span><span style="padding:3px 7px;color:#087F3B;font-weight:600">Delivered</span></div>
+            <div style="display:grid;grid-template-columns:minmax(0,1.1fr) minmax(0,1.3fr) minmax(0,.8fr);border-bottom:1px solid #DDE3E9"><span style="padding:3px 7px;border-right:1px solid #DDE3E9;font-weight:700;color:#3F4B57">11-Canceled</span><span style="padding:3px 7px;border-right:1px solid #DDE3E9;color:#3F4B57">Line canceled</span><span style="padding:3px 7px;color:#3F4B57;font-weight:600">Excluded from totals</span></div>
+            <div style="display:grid;grid-template-columns:minmax(0,1.1fr) minmax(0,1.3fr) minmax(0,.8fr);border-bottom:1px solid #DDE3E9"><span style="padding:3px 7px;border-right:1px solid #DDE3E9;font-weight:700;color:#C92A2A">12-On Hold</span><span style="padding:3px 7px;border-right:1px solid #DDE3E9;color:#3F4B57">Line on hold</span><span style="padding:3px 7px;color:#C92A2A;font-weight:600">Not ready · planned</span></div>
+            <div style="display:grid;grid-template-columns:minmax(0,1.1fr) minmax(0,1.3fr) minmax(0,.8fr);border-bottom:1px solid #DDE3E9"><span style="padding:3px 7px;border-right:1px solid #DDE3E9;font-weight:700;color:#C92A2A">oo-MIssing</span><span style="padding:3px 7px;border-right:1px solid #DDE3E9;color:#3F4B57">No status entered in the export</span><span style="padding:3px 7px;color:#C92A2A;font-weight:600">Not ready · planned</span></div>
+            </div>
           </div>
           <span style="font-size:12px;color:#536271;line-height:1.5">Statuses are shown exactly as written in the export, including its spelling (Awating, MIssing). The Procurement tab lists all 17; a status with no lines shows where those lines are in the export, usually under another emergency tag.</span>
         </div>
-        <div style="background:#fff;border:1px solid #DDE3E9;border-radius:12px;padding:16px 18px;display:flex;flex-direction:column;gap:10px;min-width:0;break-inside:avoid;margin-bottom:16px">
-          <h3 style="margin:0;font-size:12px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:#0062CC">Dates</h3>
-          <div style="display:flex;flex-direction:column;gap:9px;font-size:13px;line-height:1.5;color:#3F4B57">
+        <div style="grid-column:span 5;order:4;background:#fff;border:1px solid #DDE3E9;border-radius:10px;padding:14px 16px;display:flex;flex-direction:column;gap:10px;min-width:0">
+          <h3 style="margin:0;padding-bottom:8px;border-bottom:2px solid #0071B8;font-size:11px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:#0071B8">Dates</h3>
+          <div style="display:flex;flex-direction:column;gap:7px;font-size:12px;line-height:1.45;color:#3F4B57">
             <div><strong style="color:#14212E">Request Date</strong> date the order request or stock release was raised.</div>
             <div><strong style="color:#14212E">PO creation / stock request</strong> date the supplier PO or hub stock request was created.</div>
             <div><strong style="color:#14212E">Committed readiness</strong> date the supplier or hub committed the goods would be ready (PO/OPR Committed readiness date).</div>
@@ -543,9 +612,9 @@
             <div><strong style="color:#14212E">ATA</strong> Actual Time of Arrival. The export holds ETA and ATA in one column; it is read as ATA when the status is 09 or 10, otherwise as ETA.</div>
           </div>
         </div>
-        <div style="background:#fff;border:1px solid #DDE3E9;border-radius:12px;padding:16px 18px;display:flex;flex-direction:column;gap:10px;min-width:0;break-inside:avoid;margin-bottom:16px">
-          <h3 style="margin:0;font-size:12px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:#0062CC">Requests, shipments and sources</h3>
-          <div style="display:flex;flex-direction:column;gap:9px;font-size:13px;line-height:1.5;color:#3F4B57">
+        <div style="grid-column:span 6;order:1;background:#fff;border:1px solid #DDE3E9;border-radius:10px;padding:14px 16px;display:flex;flex-direction:column;gap:10px;min-width:0">
+          <h3 style="margin:0;padding-bottom:8px;border-bottom:2px solid #0071B8;font-size:11px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:#0071B8">Requests, shipments and sources</h3>
+          <div style="display:flex;flex-direction:column;gap:7px;font-size:12px;line-height:1.45;color:#3F4B57">
             <div><strong style="color:#14212E">Request</strong> = Order Request (OR) + Destination Country.</div>
             <div><strong style="color:#14212E">Order request (OR)</strong> raised by the country office (OR_…, country references).</div>
             <div><strong style="color:#14212E">Stock release (SR)</strong> pushed by WHO from hub stock (NBO_SR, DKR_SR, SR_…_hub). Both count toward the country total.</div>
@@ -556,36 +625,66 @@
             <div><strong style="color:#14212E">PTAEO</strong> Project, Task, Award, Expenditure type, Organisation: the funding codes under Funding.</div>
           </div>
         </div>
-        <div style="background:#fff;border:1px solid #DDE3E9;border-radius:12px;padding:16px 18px;display:flex;flex-direction:column;gap:10px;min-width:0;break-inside:avoid;margin-bottom:16px">
-          <h3 style="margin:0;font-size:12px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:#0062CC">Calculations</h3>
-          <div style="display:flex;flex-direction:column;gap:9px;font-size:13px;line-height:1.5;color:#3F4B57">
+        <div style="grid-column:span 6;order:2;background:#fff;border:1px solid #DDE3E9;border-radius:10px;padding:14px 16px;display:flex;flex-direction:column;gap:10px;min-width:0">
+          <h3 style="margin:0;padding-bottom:8px;border-bottom:2px solid #0071B8;font-size:11px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:#0071B8">Calculations</h3>
+          <div style="display:flex;flex-direction:column;gap:7px;font-size:12px;line-height:1.45;color:#3F4B57">
             <div><strong style="color:#14212E">Value</strong> = PO Line Amount (USD). Canceled lines are excluded from value and line counts.</div>
             <div><strong style="color:#14212E">Delivered</strong> status 09 or 10, including from transit hub. Not yet delivered = every other status except 11.</div>
             <div><strong style="color:#14212E">Delivered %</strong> shown as lines delivered ÷ lines ordered and as delivered value ÷ ordered value. The export has no partial-delivery quantity, so a line is delivered in full or not.</div>
             <div><strong style="color:#14212E">Request → arrival</strong> median days from Request Date to ATA, over delivered lines with both dates.</div>
             <div><strong style="color:#14212E">Requested vs delivered</strong> line value or count by week of Request Date against week of ATA; cumulative mode shows the gap.</div>
-            <div><strong style="color:#14212E">Needs attention</strong> greenlight pending over 7 days, picked at hub over 14 days without dispatch, supplier readiness passed, or ETA passed while in transit.</div>
+            <div><strong style="color:#14212E">Needs attention</strong> greenlight pending over 7 days, status 02 at hub over 14 days without dispatch, supplier readiness passed, or ETA passed while in transit.</div>
           </div>
         </div>
-        <div style="background:#fff;border:1px solid #DDE3E9;border-radius:12px;padding:16px 18px;display:flex;flex-direction:column;gap:10px;min-width:0;break-inside:avoid;margin-bottom:16px">
-          <h3 style="margin:0;font-size:12px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:#0062CC">Beneficiaries &amp; risk</h3>
-          <div style="display:flex;flex-direction:column;gap:9px;font-size:13px;line-height:1.5;color:#3F4B57">
-            <div><strong style="color:#14212E">Consumption rates</strong> come from the Ebola treatment centre supply calculator export (100,000 beds, 3 months). Each item’s need is divided back to a rate per bed per month, e.g. 170 coveralls, 1,530 exam gloves and 212.5 medical masks per bed-month.</div>
-            <div><strong style="color:#14212E">ETC runway</strong> is the number of days the stock lasts at the bed count shown, assuming full occupancy. It is limited by the scarcest of coveralls, exam gloves and FFP2 respirators. Lots are used in arrival order and stop counting at their expiry date.</div>
-            <div><strong style="color:#14212E">Patients and lives</strong> bed-days ÷ average stay gives patients treated. Lives saved = patients × (fatality without care − fatality with care). Defaults: 48.2%, WHO’s crude fatality for the current Bundibugyo outbreak in DRC (DON, 6 Oct 2026), and 30%, the low end of the 30–50% WHO reports for past Bundibugyo outbreaks. WHO publishes no fatality rate for treated patients, so this is an estimate, not a WHO figure.</div>
-            <div><strong style="color:#14212E">WHO standard kits</strong> use the beneficiary numbers WHO publishes per module (2025 kit overview, TESK 2025 note, RH kit manual). The primary care population counts IEHK 2024 basic modules only (1,000 people each, 3 months). Supplementary units are hospital-level for the same population and are listed separately, not added (the OSL Kits Impact dashboard adds the two). Kit rates and the arrived (status 09/10) vs pipeline split follow the OSL dashboard. One filovirus RT-PCR kit = 96 reactions; patient tests exclude the controls on every run (set controls per run in Tweaks).</div>
-            <div><strong style="color:#14212E">Pipeline</strong> lines use their ETA, or a forecast from today: greenlight +14 days, at hub +7, departed or in transit +3. Hub impact splits each country’s patients by which hub supplied the limiting item.</div>
-            <div><strong style="color:#14212E">Coverage</strong> Comms, cold chain, tents and visibility items are enablers and are not counted. Items are matched by WHO code. Expiry dates are only available for Nairobi stock releases. Populations are approximate UN 2024 estimates. The tab shows the value linked to an impact rate for the current selection.</div>
+        <div style="grid-column:1 / -1;order:4;background:#fff;border:1px solid #DDE3E9;border-radius:10px;padding:14px 16px;display:flex;flex-direction:column;gap:10px;min-width:0">
+          <h3 style="margin:0;padding-bottom:8px;border-bottom:2px solid #0071B8;font-size:11px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:#0071B8">Data recorded by source</h3>
+          <span style="font-size:12px;color:#3F4B57;line-height:1.45">Each hub and procurement channel fills different columns. Share of lines with the field filled, from the current export. Challenges list the fields recorded for the line, and show “not available” for a field the source normally fills (at least half of its lines) but that is empty on this line. Fields a source does not record are not listed. Nothing is inferred. Remarks that only log data entry (“Supply Monitoring updated”, “Populated by SB”, “Added based on NBO/DKR files”, “SR received”, “PO created”) are shown as data-entry log, not as a cause.</span>
+          <div style="overflow-x:auto;border:1px solid #DDE3E9;border-right:0">
+            <div style="display:grid;grid-template-columns:max-content max-content repeat(12,max-content);width:max-content;min-width:100%">
+              <div style="grid-column:1 / -1;display:grid;grid-template-columns:subgrid;background:#0071B8;font-size:10px;font-weight:600;letter-spacing:.03em;text-transform:uppercase;color:#fff"><span style="padding:4px 7px;border-right:1px solid #3D8FC6;white-space:nowrap">Source</span><span style="padding:4px 7px;border-right:1px solid #3D8FC6;white-space:nowrap;text-align:right">Lines</span><sc-for list="{{ srcHead }}" as="c" hint-placeholder-count="12"><span style="padding:4px 7px;border-right:1px solid #3D8FC6;white-space:nowrap;text-align:right">{{ c.label }}</span></sc-for></div>
+              <sc-for list="{{ srcProfile }}" as="p" hint-placeholder-count="7">
+                <div style="grid-column:1 / -1;display:grid;grid-template-columns:subgrid;border-top:1px solid #DDE3E9;font-size:11px;white-space:nowrap"><span style="padding:3px 7px;border-right:1px solid #DDE3E9;font-weight:600">{{ p.label }}</span><span style="padding:3px 7px;border-right:1px solid #DDE3E9;text-align:right">{{ p.n }}</span><sc-for list="{{ p.cells }}" as="c" hint-placeholder-count="12"><span style="padding:3px 7px;border-right:1px solid #DDE3E9;text-align:right;font-weight:600;color:{{ c.fg }};background:{{ c.bg }}">{{ c.v }}</span></sc-for></div>
+              </sc-for>
+            </div>
           </div>
         </div>
-        <div style="background:#fff;border:1px solid #DDE3E9;border-radius:12px;padding:16px 18px;display:flex;flex-direction:column;gap:10px;min-width:0;break-inside:avoid;margin-bottom:16px">
-          <h3 style="margin:0;font-size:12px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:#0062CC">Data source</h3>
-          <div style="display:flex;flex-direction:column;gap:9px;font-size:13px;line-height:1.5;color:#3F4B57">
+        <div style="grid-column:1 / -1;order:4;background:#fff;border:1px solid #DDE3E9;border-radius:10px;padding:14px 16px;display:flex;flex-direction:column;gap:10px;min-width:0">
+          <h3 style="margin:0;padding-bottom:8px;border-bottom:2px solid #C92A2A;font-size:11px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:#C92A2A;display:flex;justify-content:space-between;gap:10px;align-items:baseline"><span>Inconsistent values in the export · {{ dq.total }} cells</span><button onClick="{{ dq.exportCsv }}" style="cursor:pointer;font-size:11px;padding:4px 10px;border:1px solid #CBD4DC;border-radius:6px;background:#fff;color:#14212E;font-weight:500;letter-spacing:0;text-transform:none">Export for data cleaning (CSV)</button></h3>
+          <span style="font-size:12px;color:#3F4B57;line-height:1.45">Values that cannot be what the column says. They are shown in the dashboard as “Inconsistent (recorded as …)” and are not used in any calculation. The CSV lists every affected line with its shipment ref, request and source.</span>
+          <div style="overflow-x:auto;border:1px solid #DDE3E9;border-right:0">
+            <div style="display:grid;grid-template-columns:repeat(6,max-content) minmax(max-content,1fr);width:max-content;min-width:100%">
+              <div style="grid-column:1 / -1;display:grid;grid-template-columns:subgrid;background:#0071B8;font-size:10px;font-weight:600;letter-spacing:.03em;text-transform:uppercase;color:#fff"><span style="padding:4px 7px;border-right:1px solid #3D8FC6;white-space:nowrap;text-align:right">SN</span><span style="padding:4px 7px;border-right:1px solid #3D8FC6;white-space:nowrap">Field</span><span style="padding:4px 7px;border-right:1px solid #3D8FC6;white-space:nowrap">Value as recorded</span><span style="padding:4px 7px;border-right:1px solid #3D8FC6;white-space:nowrap">Issue</span><span style="padding:4px 7px;border-right:1px solid #3D8FC6;white-space:nowrap;text-align:right">Lines</span><span style="padding:4px 7px;border-right:1px solid #3D8FC6;white-space:nowrap">Shipments</span><span style="padding:4px 7px;border-right:1px solid #3D8FC6;white-space:nowrap">Sources</span></div>
+              <sc-for list="{{ dq.rows }}" as="q" hint-placeholder-count="4">
+                <div style="grid-column:1 / -1;display:grid;grid-template-columns:subgrid;border-top:1px solid #DDE3E9;font-size:11px;white-space:nowrap"><span style="padding:3px 7px;border-right:1px solid #DDE3E9;text-align:right;color:#536271">{{ q.sn }}</span><span style="padding:3px 7px;border-right:1px solid #DDE3E9;font-weight:600">{{ q.field }}</span><span style="padding:3px 7px;border-right:1px solid #DDE3E9;font-family:'IBM Plex Mono',monospace;color:#C92A2A">{{ q.v }}</span><span style="padding:3px 7px;border-right:1px solid #DDE3E9;">{{ q.why }}</span><span style="padding:3px 7px;border-right:1px solid #DDE3E9;text-align:right;font-weight:600">{{ q.n }}</span><span style="padding:3px 7px;border-right:1px solid #DDE3E9;">{{ q.refs }}</span><span style="padding:3px 7px;border-right:1px solid #DDE3E9;">{{ q.src }}</span></div>
+              </sc-for>
+            </div>
+          </div>
+        </div>
+        <div style="grid-column:1 / -1;order:5;background:#fff;border:1px solid #DDE3E9;border-radius:10px;padding:14px 16px;display:flex;flex-direction:column;gap:10px;min-width:0">
+          <h3 style="margin:0;padding-bottom:8px;border-bottom:2px solid #0071B8;font-size:11px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:#0071B8">Beneficiaries &amp; risk</h3>
+          <div style="display:grid;grid-template-columns:repeat(3,minmax(0,1fr));grid-auto-flow:dense;gap:10px;font-size:12px;line-height:1.45;color:#3F4B57">
+            <div style="order:1;background:#F7F9FA;border:1px solid #DDE3E9;border-radius:8px;padding:10px 12px;display:flex;flex-direction:column;gap:4px"><strong style="color:#0071B8;font-size:12px">Consumption rates</strong><span> come only from the Ebola treatment centre supply calculator export (100,000 beds, 3 months). Each item’s need is divided back to a rate per bed per month: 170 coveralls, 1,530 pairs of exam gloves (3,060 gloves, since stock is counted in single gloves) and 212.5 medical masks per bed-month. Items the calculator has no rate for, such as FFP2 respirators and disposable aprons, are not used. Staffing (4.47 per bed) is the calculator’s Human Resources total ÷ 100,000 beds.</span></div>
+            <div style="order:2;background:#F7F9FA;border:1px solid #DDE3E9;border-radius:8px;padding:10px 12px;display:flex;flex-direction:column;gap:4px"><strong style="color:#0071B8;font-size:12px">ETC runway</strong><span> is the number of days the stock lasts at the bed count shown, at the calculator’s full-occupancy rates. It is limited by the scarcest of coveralls, exam gloves and medical masks. FFP2 respirators are counted with medical masks: WHO recommends a fluid-resistant medical mask for routine filovirus care and a particulate respirator for aerosol-generating procedures, and allows a respirator in place of a medical mask (WHO, Personal protective equipment for use in a filovirus disease outbreak, rapid advice guideline). Lots stop counting at their expiry date.</span></div>
+            <div style="order:5;background:#F7F9FA;border:1px solid #DDE3E9;border-radius:8px;padding:10px 12px;display:flex;flex-direction:column;gap:4px"><strong style="color:#0071B8;font-size:12px">Patients and lives</strong><span> Patients admitted = beds × bed occupancy × days the scarcest core PPE lasts (capped at the planning period) ÷ average stay. Confirmed patients = admissions × share confirmed. Lives saved = confirmed patients × (48.2% − 30%). Occupancy and share confirmed default to 100% (full capacity). Set them from the latest MoH / INSP / WHO situation report. The button applies WHO AFRO’s DRC national occupancy of 64.7% (Weekly External Situation Report 15, 23 Aug 2026: 846 patients in isolation, 1,308 beds). That report gives no confirmed/suspected split of admissions; it reports 21.2% of specimens positive (15–21 Aug), which is a laboratory figure, not an admissions figure. 48.2% is WHO’s crude case fatality ratio for confirmed cases in DRC (Disease Outbreak News, 6 Oct 2026). 30% is the low end of the 30–50% WHO reports for the past two Bundibugyo outbreaks. WHO publishes no treated fatality rate.</span></div>
+            <div style="order:4;grid-column:span 2;background:#F7F9FA;border:1px solid #DDE3E9;border-radius:8px;padding:10px 12px;display:flex;flex-direction:column;gap:4px"><strong style="color:#0071B8;font-size:12px">WHO standard kits</strong><span> use the beneficiary numbers WHO publishes per module (2025 kit overview, TESK 2025 note, RH kit manual). The primary care population counts IEHK 2024 basic modules only (1,000 people each, 3 months). Supplementary units are hospital-level for the same population and are listed separately, not added (the OSL Kits Impact dashboard adds the two). Kit rates and the arrived (status 09/10) vs pipeline split follow the OSL dashboard. One filovirus RT-PCR kit = 96 reactions; patient tests exclude the controls on every run (set controls per run in Tweaks).</span></div>
+            <div style="order:3;background:#F7F9FA;border:1px solid #DDE3E9;border-radius:8px;padding:10px 12px;display:flex;flex-direction:column;gap:4px"><strong style="color:#0071B8;font-size:12px">Pipeline</strong><span> lines have no ETA in the export (698 with none, 52 past due). The “Delivered + pipeline” scenario counts them as if they arrived on the start date; no arrival dates are forecast. Hub impact splits each country’s patients by which hub supplied the limiting item.</span></div>
+            <div style="order:6;grid-column:1 / -1;background:#F7F9FA;border:1px solid #DDE3E9;border-radius:8px;padding:10px 12px;display:flex;flex-direction:column;gap:4px"><strong style="color:#0071B8;font-size:12px">Coverage</strong><span> Comms, cold chain, tents and visibility items are enablers and are not counted. Items are matched by WHO code. Expiry dates are only available for Nairobi stock releases. No population data is used. The tab shows the value linked to an impact rate for the current selection.</span></div>
+          </div>
+        </div>
+        <div style="grid-column:span 3;order:4;background:#fff;border:1px solid #DDE3E9;border-radius:10px;padding:14px 16px;display:flex;flex-direction:column;gap:10px;min-width:0">
+          <h3 style="margin:0;padding-bottom:8px;border-bottom:2px solid #0071B8;font-size:11px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:#0071B8">Data source</h3>
+          <div style="display:flex;flex-direction:column;gap:7px;font-size:12px;line-height:1.45;color:#3F4B57">
             <div><strong style="color:#14212E">OSL export</strong> data (3).xlsx: 14,185 lines across 51 destination countries and every emergency tag. The Procurement tab reads all of it by default (Emergency = All emergency tags, all countries). The other tabs default to 2026-G013 (3,380 lines) and the priority countries set in Tweaks.</div>
-            <div><strong style="color:#14212E">Emergency filter</strong> (top bar) = Emergencies/Activities. “All Ebola / Marburg / VHF tags” adds Ebola DRC, Ebola UGA 25, Ebola preparedness, Filovirus prepositioning, Marburg and Suspect VHF. “All emergency tags” includes every line. Beneficiaries &amp; risk always uses 2026-G013.</div>
-            <div><strong style="color:#14212E">Country names</strong> are taken as recorded. “Tanzania, United Republic Of” is merged with Tanzania and “Ivory Coast” with Côte d’Ivoire. “Congo” (54 lines) is kept separate because the export does not say which Congo. 2 lines with “Destination Country” in the country column are shown as Country not recorded. 3 footer rows (Total, No filters applied, blank) are not data and are skipped.</div>
             <div><strong style="color:#14212E">Shipping_Info</strong> weight, volume and temperature exist for 112 of 372 shipment references.</div>
           </div>
+        </div>
+        <div style="grid-column:span 4;order:4;background:#fff;border:1px solid #DDE3E9;border-radius:10px;padding:14px 16px;display:flex;flex-direction:column;gap:10px;min-width:0">
+          <h3 style="margin:0;padding-bottom:8px;border-bottom:2px solid #0071B8;font-size:11px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:#0071B8">Filters &amp; country names</h3>
+          <div style="display:flex;flex-direction:column;gap:7px;font-size:12px;line-height:1.45;color:#3F4B57">
+            <div><strong style="color:#14212E">Emergency filter</strong> (top bar) = Emergencies/Activities. “All Ebola / Marburg / VHF tags” adds Ebola DRC, Ebola UGA 25, Ebola preparedness, Filovirus prepositioning, Marburg and Suspect VHF. “All emergency tags” includes every line. Beneficiaries &amp; risk always uses 2026-G013.</div>
+            <div><strong style="color:#14212E">Country names</strong> are taken as recorded. “Tanzania, United Republic Of” is merged with Tanzania and “Ivory Coast” with Côte d’Ivoire. “Congo” (54 lines) is kept separate because the export does not say which Congo. 2 lines with “Destination Country” in the country column are shown as Country not recorded. 3 footer rows (Total, No filters applied, blank) are not data and are skipped.</div>
+          </div>
+        </div>
         </div>
         </div>
       </div>
@@ -607,7 +706,7 @@
   <sc-if value="{{ hasOpen }}" hint-placeholder-val="{{ false }}">
     <div style="position:fixed;inset:0;z-index:50;display:flex;justify-content:flex-end">
       <div onClick="{{ close }}" style="position:absolute;inset:0;background:rgba(20,33,46,.35)"></div>
-      <aside style="position:relative;width:min(820px,100vw);height:100%;overflow-y:auto;background:#F3F5F7;box-shadow:-8px 0 24px rgba(20,33,46,.15);display:flex;flex-direction:column">
+      <aside style="position:relative;width:min(820px,100vw);height:100%;overflow-y:auto;overflow-x:hidden;background:#F3F5F7;box-shadow:-8px 0 24px rgba(20,33,46,.15);display:flex;flex-direction:column">
         <div style="background:#fff;border-bottom:1px solid #DDE3E9;padding:18px 22px;display:flex;flex-direction:column;gap:12px;position:sticky;top:0;z-index:2">
           <div style="display:flex;justify-content:space-between;gap:12px;align-items:flex-start">
             <div style="display:flex;flex-direction:column;gap:4px;min-width:0">
@@ -665,32 +764,32 @@
                     <span style="font-size:15px;font-weight:600">{{ s.value }}</span>
                   </div>
                 </div>
-                <div style="display:grid;grid-template-columns:repeat(9,minmax(0,1fr));gap:4px">
+                <div style="display:grid;grid-template-columns:repeat(9,minmax(0,1fr));gap:3px">
                   <sc-for list="{{ s.steps }}" as="t" hint-placeholder-count="9">
                     <div style="display:flex;flex-direction:column;gap:5px">
                       <div style="height:4px;border-radius:2px;background:{{ t.color }}"></div>
-                      <span style="font-size:11px;color:{{ t.fg }};font-weight:{{ t.weight }};line-height:1.25">{{ t.label }}</span>
+                      <span style="font-size:10px;color:{{ t.fg }};font-weight:{{ t.weight }};line-height:1.2;overflow-wrap:anywhere;hyphens:auto">{{ t.label }}</span>
                     </div>
                   </sc-for>
                 </div>
-                <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:8px 14px">
+                <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,120px),1fr));gap:8px 14px">
                   <sc-for list="{{ s.facts }}" as="f" hint-placeholder-count="6">
                     <div style="display:flex;flex-direction:column;gap:1px"><span style="font-size:11px;color:#536271">{{ f.k }}</span><span style="font-size:13px;font-weight:500;word-break:break-word">{{ f.v }}</span></div>
                   </sc-for>
                 </div>
               </div>
-              <div style="overflow-x:auto;border-top:1px solid #DDE3E9">
-                <div style="min-width:640px">
-                  <div style="display:grid;grid-template-columns:minmax(200px,2.4fr) 110px 80px minmax(110px,1fr) 100px;gap:10px;padding:8px 16px;font-size:11px;font-weight:600;letter-spacing:.04em;text-transform:uppercase;color:#536271;background:#F7F9FA">
-                    <span>Item</span><span style="text-align:right">Qty</span><span style="text-align:right">Value</span><span>Source / PO</span><span>Status</span>
+              <div style="border-top:1px solid #DDE3E9">
+                <div style="display:grid;grid-template-columns:max-content max-content max-content max-content minmax(0,1fr) max-content max-content max-content;width:100%">
+                  <div style="grid-column:1 / -1;display:grid;grid-template-columns:subgrid;font-size:10px;font-weight:600;letter-spacing:.03em;text-transform:uppercase;color:#fff;background:#0071B8">
+                    <span style="padding:4px 6px;border-right:1px solid #3D8FC6;white-space:nowrap;text-align:right">SN</span><span style="padding:4px 6px;border-right:1px solid #3D8FC6;white-space:nowrap">OR Ref</span><span style="padding:4px 6px;border-right:1px solid #3D8FC6;white-space:nowrap">SR Ref</span><span style="padding:4px 6px;border-right:1px solid #3D8FC6;white-space:nowrap">PO No.</span><span style="padding:4px 6px;border-right:1px solid #3D8FC6;white-space:nowrap">Item</span><span style="padding:4px 6px;border-right:1px solid #3D8FC6;white-space:nowrap;text-align:right">Qty</span><span style="padding:4px 6px;border-right:1px solid #3D8FC6;white-space:nowrap;text-align:right">Value</span><span style="padding:4px 6px;white-space:nowrap">Status</span>
                   </div>
                   <sc-for list="{{ s.lines }}" as="l" hint-placeholder-count="3">
-                    <div style="display:grid;grid-template-columns:minmax(200px,2.4fr) 110px 80px minmax(110px,1fr) 100px;gap:10px;padding:8px 16px;border-top:1px solid #EEF2F5;font-size:13px;align-items:start">
-                      <div style="display:flex;flex-direction:column;gap:2px;min-width:0"><span style="line-height:1.35">{{ l.desc }}</span><span style="font-family:'IBM Plex Mono',monospace;font-size:11px;color:#536271">{{ l.code }}</span></div>
-                      <div style="text-align:right;display:flex;flex-direction:column;gap:2px"><span>{{ l.qty }}</span><span style="font-size:11px;color:#536271">{{ l.uom }}</span></div>
-                      <span style="text-align:right;font-weight:500">{{ l.amt }}</span>
-                      <div style="display:flex;flex-direction:column;gap:2px;min-width:0"><span style="word-break:break-word">{{ l.hub }}</span><span style="font-family:'IBM Plex Mono',monospace;font-size:11px;color:#536271">{{ l.po }}</span></div>
-                      <span style="font-size:12px;font-weight:600;color:{{ l.stFg }}">{{ l.stLabel }}</span>
+                    <div style="grid-column:1 / -1;display:grid;grid-template-columns:subgrid;border-top:1px solid #DDE3E9;font-size:11px">
+                      <span style="padding:3px 6px;border-right:1px solid #DDE3E9;text-align:right;color:#536271">{{ l.num }}</span><span style="padding:3px 6px;border-right:1px solid #DDE3E9;font-family:'IBM Plex Mono',monospace;font-size:10px;white-space:nowrap">{{ l.orRef }}</span><span style="padding:3px 6px;border-right:1px solid #DDE3E9;font-family:'IBM Plex Mono',monospace;font-size:10px;white-space:nowrap">{{ l.srRef }}</span><span style="padding:3px 6px;border-right:1px solid #DDE3E9;font-family:'IBM Plex Mono',monospace;font-size:10px;white-space:nowrap">{{ l.poNum }}</span>
+                      <div style="padding:3px 6px;border-right:1px solid #DDE3E9;display:flex;flex-direction:column;gap:1px;min-width:0"><span style="line-height:1.3;overflow-wrap:anywhere">{{ l.desc }}</span><span style="font-family:'IBM Plex Mono',monospace;font-size:10px;color:#536271">{{ l.code }} · {{ l.hub }}</span></div>
+                      <span style="padding:3px 6px;border-right:1px solid #DDE3E9;text-align:right;white-space:nowrap">{{ l.qty }} <span style="font-size:10px;color:#536271">{{ l.uom }}</span></span>
+                      <span style="padding:3px 6px;border-right:1px solid #DDE3E9;text-align:right;font-weight:500;white-space:nowrap">{{ l.amt }}</span>
+                      <span style="padding:3px 6px;white-space:nowrap;font-weight:600;color:{{ l.stFg }}">{{ l.stLabel }}</span>
                     </div>
                   </sc-for>
                 </div>
@@ -712,7 +811,7 @@
   <sc-if value="{{ hasLine }}" hint-placeholder-val="{{ false }}">
     <div style="position:fixed;inset:0;z-index:60;display:flex;justify-content:flex-end">
       <div onClick="{{ closeLine }}" style="position:absolute;inset:0;background:rgba(20,33,46,.35)"></div>
-      <aside style="position:relative;width:min(560px,100vw);height:100%;overflow-y:auto;background:#fff;box-shadow:-8px 0 24px rgba(20,33,46,.15);display:flex;flex-direction:column">
+      <aside style="position:relative;width:min(560px,100vw);height:100%;overflow-y:auto;overflow-x:hidden;background:#fff;box-shadow:-8px 0 24px rgba(20,33,46,.15);display:flex;flex-direction:column">
         <div style="padding:18px 22px;border-bottom:1px solid #DDE3E9;display:flex;flex-direction:column;gap:10px">
           <div style="display:flex;justify-content:space-between;gap:12px;align-items:flex-start">
             <span style="display:flex;align-items:center;gap:8px;flex-wrap:wrap;font-size:12px;color:#536271"><span style="font-weight:700;padding:2px 6px;border-radius:4px;background:{{ it.typeBg }};color:{{ it.typeFg }}">{{ it.typeLabel }}</span><span style="font-family:'IBM Plex Mono',monospace">{{ it.orId }}</span><span>· {{ it.cname }}</span></span>
@@ -748,7 +847,7 @@
   </sc-if>
 </div>
 </x-dc>
-<script type="text/x-dc" data-dc-script data-props="{&quot;priorityCountries&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;UGA, SSD, RWA, BDI, TZA, KEN, CAF, COG, AGO, ZMB&quot;,&quot;tsType&quot;:&quot;string&quot;},&quot;slideSeconds&quot;:{&quot;editor&quot;:&quot;int&quot;,&quot;default&quot;:15,&quot;min&quot;:5,&quot;max&quot;:60,&quot;unit&quot;:&quot;s&quot;,&quot;tsType&quot;:&quot;number&quot;},&quot;hideCompleted&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:false,&quot;tsType&quot;:&quot;boolean&quot;},&quot;cfrNo&quot;:{&quot;editor&quot;:&quot;range&quot;,&quot;default&quot;:0.482,&quot;min&quot;:0.2,&quot;max&quot;:0.9,&quot;step&quot;:0.005,&quot;tsType&quot;:&quot;number&quot;,&quot;section&quot;:&quot;Beneficiaries &amp; risk&quot;},&quot;cfrCare&quot;:{&quot;editor&quot;:&quot;range&quot;,&quot;default&quot;:0.3,&quot;min&quot;:0.1,&quot;max&quot;:0.8,&quot;step&quot;:0.005,&quot;tsType&quot;:&quot;number&quot;,&quot;section&quot;:&quot;Beneficiaries &amp; risk&quot;},&quot;avgStay&quot;:{&quot;editor&quot;:&quot;int&quot;,&quot;default&quot;:7,&quot;min&quot;:3,&quot;max&quot;:21,&quot;tsType&quot;:&quot;number&quot;,&quot;section&quot;:&quot;Beneficiaries &amp; risk&quot;},&quot;defaultBeds&quot;:{&quot;editor&quot;:&quot;int&quot;,&quot;default&quot;:20,&quot;min&quot;:5,&quot;max&quot;:200,&quot;tsType&quot;:&quot;number&quot;,&quot;section&quot;:&quot;Beneficiaries &amp; risk&quot;},&quot;pcrRunSize&quot;:{&quot;editor&quot;:&quot;int&quot;,&quot;default&quot;:32,&quot;min&quot;:8,&quot;max&quot;:96,&quot;tsType&quot;:&quot;number&quot;,&quot;section&quot;:&quot;Beneficiaries &amp; risk&quot;},&quot;pcrControls&quot;:{&quot;editor&quot;:&quot;int&quot;,&quot;default&quot;:2,&quot;min&quot;:0,&quot;max&quot;:16,&quot;tsType&quot;:&quot;number&quot;,&quot;section&quot;:&quot;Beneficiaries &amp; risk&quot;}}">
+<script type="text/x-dc" data-dc-script data-props="{&quot;priorityCountries&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;UGA, SSD, RWA, BDI, TZA, KEN, CAF, COG, AGO, ZMB&quot;,&quot;tsType&quot;:&quot;string&quot;},&quot;slideSeconds&quot;:{&quot;editor&quot;:&quot;int&quot;,&quot;default&quot;:15,&quot;min&quot;:5,&quot;max&quot;:60,&quot;unit&quot;:&quot;s&quot;,&quot;tsType&quot;:&quot;number&quot;},&quot;hideCompleted&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:false,&quot;tsType&quot;:&quot;boolean&quot;},&quot;cfrNo&quot;:{&quot;editor&quot;:&quot;range&quot;,&quot;default&quot;:0.482,&quot;min&quot;:0.2,&quot;max&quot;:0.9,&quot;step&quot;:0.005,&quot;tsType&quot;:&quot;number&quot;,&quot;section&quot;:&quot;Beneficiaries &amp; risk&quot;},&quot;cfrCare&quot;:{&quot;editor&quot;:&quot;range&quot;,&quot;default&quot;:0.3,&quot;min&quot;:0.1,&quot;max&quot;:0.8,&quot;step&quot;:0.005,&quot;tsType&quot;:&quot;number&quot;,&quot;section&quot;:&quot;Beneficiaries &amp; risk&quot;},&quot;avgStay&quot;:{&quot;editor&quot;:&quot;int&quot;,&quot;default&quot;:7,&quot;min&quot;:3,&quot;max&quot;:21,&quot;tsType&quot;:&quot;number&quot;,&quot;section&quot;:&quot;Beneficiaries &amp; risk&quot;},&quot;defaultBeds&quot;:{&quot;editor&quot;:&quot;int&quot;,&quot;default&quot;:20,&quot;min&quot;:1,&quot;max&quot;:200,&quot;tsType&quot;:&quot;number&quot;,&quot;section&quot;:&quot;Beneficiaries &amp; risk&quot;},&quot;horizonDays&quot;:{&quot;editor&quot;:&quot;int&quot;,&quot;default&quot;:90,&quot;min&quot;:7,&quot;max&quot;:365,&quot;unit&quot;:&quot;d&quot;,&quot;tsType&quot;:&quot;number&quot;,&quot;section&quot;:&quot;Beneficiaries &amp;amp; risk&quot;},&quot;pcrRunSize&quot;:{&quot;editor&quot;:&quot;int&quot;,&quot;default&quot;:32,&quot;min&quot;:8,&quot;max&quot;:96,&quot;tsType&quot;:&quot;number&quot;,&quot;section&quot;:&quot;Beneficiaries &amp; risk&quot;},&quot;pcrControls&quot;:{&quot;editor&quot;:&quot;int&quot;,&quot;default&quot;:2,&quot;min&quot;:0,&quot;max&quot;:16,&quot;tsType&quot;:&quot;number&quot;,&quot;section&quot;:&quot;Beneficiaries &amp; risk&quot;}}">
 const STG = [
   { k:'planned', label:'Planned / sourcing', color:'#B9A27A', bg:'#F4EFE6', fg:'#5E4A12' },
   { k:'hub', label:'At hub / supplier', color:'#8A97A3', bg:'#EEF1F4', fg:'#3F4B57' },
@@ -803,7 +902,35 @@ const GRP = [
   { k:'canceled', label:'Canceled', color:'#C3CBD3', bg:'#EEF1F4', fg:'#536271' }
 ];
 const GM = Object.fromEntries(GRP.map(g => [g.k, g]));
+function refsOf(l) { return { orRef: l.t === 'or' ? l.or : '', srRef: l.t === 'sr' ? l.or : (/_SR_/i.test(l.ref || '') ? l.ref : ''), poNum: l.po || '' }; }
+let SRC_FILL = {}, SRC_FILL_SET = false, DQ = [];
+const DQ_LABEL = { tpl: 'Transporter', awb: 'AWB / BOL', from: 'Origin', to: 'Destination', mode: 'Mode', hub: 'HUB/Supplier', reg: 'Reg. no.', opr: 'OPR ref', po: 'Origin PO', rd: 'Request Date', poDate: 'PO creation date', ready: 'Last readiness', commit: 'Committed readiness', etd: 'ETD', eta: 'ETA', ata: 'ATA' };
+const PF = [['proj', 'Funding codes (PTAEO)'], ['po', 'PO number'], ['opr', 'OPR ref'], ['commit', 'Committed readiness'], ['ready', 'Last readiness'], ['tpl', 'Transporter'], ['mode', 'Transport mode'], ['awb', 'AWB / BOL'], ['etd', 'ETD'], ['eta', 'ETA'], ['ata', 'ATA'], ['rem', 'Remarks Supply']];
+function buildFill(lines) { const o = {}; lines.forEach(l => { const a = o[l.src] = o[l.src] || { n: 0 }; a.n++; PF.forEach(([k]) => { if (l[k]) a[k] = (a[k] || 0) + 1; }); }); Object.values(o).forEach(a => PF.forEach(([k]) => { a[k] = (a[k] || 0) / a.n; })); return o; }
+const AUDIT_RE = /supply monitoring updated|populated by sb|added based on|data update|sr\s*\w*\s*received|received \(afro\)|po created|^processed/i;
+function splitRem(rem) {
+  if (!rem) return { cause: [], audit: [] };
+  const parts = rem.split(/\s+-\s+|\s*\|\s*|(?=\bAD\s?\d)|(?=\bAM\d)|(?=\bMA\d)|(?=Pick\s?:)/).map(s => s.trim()).filter(Boolean);
+  return { cause: parts.filter(p => !AUDIT_RE.test(p)), audit: parts.filter(p => AUDIT_RE.test(p)) };
+}
+function evidence(l, today) {
+  const s = l.ship || {}, raw = l.stRaw || '', pick = k => l[k] || s[k] || '', fill = SRC_FILL[l.src] || {};
+  const since = l.ready || l.commit || l.poDate || l.rd, nd = since ? days(since, today) : null;
+  const sinceK = l.ready ? 'last readiness' : l.commit ? 'committed readiness' : l.poDate ? 'PO / stock request date' : 'request date';
+  const F = [['proj', 'Funding (PTAEO)', v => 'award ' + (l.award || v)], ['po', 'PO', v => v], ['commit', 'Committed readiness', v => fd(v)], ['ready', 'Last readiness', v => fd(v)], ['tpl', 'Transporter', v => v], ['mode', 'Mode', v => v], ['awb', 'AWB / BOL', v => v], ['etd', 'ETD', v => fd(v)], ['eta', 'ETA', v => fd(v)]];
+  const parts = F.filter(([k]) => pick(k) || (fill[k] ?? 0) >= 0.5).map(([k, label, f]) => label + ': ' + (pick(k) ? f(pick(k)) : 'not available'));
+  const sr = splitRem(l.rem), bad = l.badDates ? Object.entries(l.badDates).map(([k, v]) => k + ': inconsistent (recorded as ' + v + ')') : [];
+  return [raw ? 'WHO status ' + raw : 'WHO status: not available', ...bad,
+    nd != null && nd >= 0 ? nd + ' days since ' + sinceK + ' (' + fd(since) + ')' : '',
+    ...parts,
+    'Supply remark: ' + (sr.cause.length ? '“' + sr.cause.join(' · ') + '”' : 'not available'),
+    sr.audit.length ? 'Data-entry log: ' + sr.audit.join(' · ') : ''].filter(Boolean).join(' · ');
+}
 function journey(l, today) {
+  const j = journey0(l, today);
+  return /^(09|10|11)/.test(l.stRaw || '') ? j : { ...j, detail: evidence(l, today) };
+}
+function journey0(l, today) {
   const s = l.ship || {}, n = d => d ? days(d, today) : null, nr = n(l.ready);
   const since = nr != null && nr > 0 ? ' · ready since ' + fd(l.ready) + ' (' + nr + ' days)' : '';
   const rem = l.rem ? ' · Remark: ' + l.rem : '';
@@ -814,7 +941,7 @@ function journey(l, today) {
   if (l.st === 'hub') {
     if (/pending.*arrival.*NBO/i.test(l.rem)) return { g:'pending', label:'Not available at hub', detail:'Stock not yet in Nairobi hub, awaiting replenishment · ' + l.rem, delayed:true, delayText:'Stock-out', bn:'stock', bnWho:'Hub replenishment (HQ / OSL)' };
     if (l.type === 'Procurement') { const late = nr != null && nr > 0; return { g:'pending', label:'In procurement', detail:'PO ' + (l.po || '—') + ' placed with ' + (l.hub || 'supplier') + (l.ready ? (late ? ' · supplier readiness ' + fd(l.ready) + ' passed ' + nr + ' days ago' : ' · supplier readiness expected ' + fd(l.ready)) : ' · readiness date not confirmed') + rem, delayed: late, delayText: late ? nr + ' days past readiness' : '', bn: late ? 'proc' : '', bnWho: 'Procurement · ' + (l.hub || 'supplier') + (l.po ? ' · PO ' + l.po : ''), bnDays: nr }; }
-    return { g:'processing', label:'Picked & packed', detail:'At ' + SRC[l.src].label + ' (' + (l.hub || '—') + '), awaiting dispatch' + since + rem, delayed: nr > 14, delayText: nr > 14 ? nr + ' days at hub' : '', bn: nr > 14 ? 'hub' : '', bnWho: (l.hub || SRC[l.src].label) + ' warehouse', bnDays: nr };
+    return { g:'processing', label:'Goods available at hub', detail:'At ' + SRC[l.src].label + ' (' + (l.hub || '—') + '), awaiting dispatch' + since + rem, delayed: nr > 14, delayText: nr > 14 ? nr + ' days at hub' : '', bn: nr > 14 ? 'hub' : '', bnWho: (l.hub || SRC[l.src].label) + ' warehouse', bnDays: nr };
   }
   if (l.st === 'gl') return { g:'pending', label:'Awaiting greenlight', detail:'Greenlight requested for shipment ' + l.ref + ', not yet approved' + since + rem, delayed: nr > 7, delayText: nr > 7 ? nr + ' days waiting' : '', bn: nr > 7 ? 'gl' : '', bnWho: 'Greenlight approver · shipment ' + l.ref, bnDays: nr };
   if (l.st === 'depart') return { g:'processing', label:'Pending departure', detail:'Greenlight cleared, booked ' + [s.mode, s.tpl && 'with ' + s.tpl].filter(Boolean).join(' ') + ', awaiting uplift' + since + rem, delayed: nr > 7, delayText: nr > 7 ? nr + ' days since ready' : '', bn: nr > 7 ? 'book' : '', bnWho: (s.tpl || 'Freight forwarder') + (s.mode ? ' · ' + s.mode : ''), bnDays: nr };
@@ -827,7 +954,7 @@ function journey(l, today) {
 const BN = [
   { k:'stock', label:'Hub stock-out', stage:'Sourcing', q:'Item not in hub stock, waiting for replenishment', color:'#E03131', bg:'#FDEBE2', fg:'#C92A2A' },
   { k:'proc', label:'Procurement', stage:'Sourcing', q:'Supplier has passed its readiness date', color:'#E8590C', bg:'#FDEBE2', fg:'#C92A2A' },
-  { k:'hub', label:'Hub dispatch', stage:'Preparing', q:'Picked & packed, sitting at hub over 14 days', color:'#B7791F', bg:'#FDF3DC', fg:'#C92A2A' },
+  { k:'hub', label:'Hub dispatch', stage:'Preparing', q:'Status 02 (goods available at hub) for over 14 days without dispatch', color:'#B7791F', bg:'#FDF3DC', fg:'#C92A2A' },
   { k:'gl', label:'Greenlight', stage:'Preparing', q:'Shipment waiting over 7 days for greenlight approval', color:'#F03E3E', bg:'#FDF3DC', fg:'#C92A2A' },
   { k:'book', label:'Freight booking', stage:'Preparing', q:'Greenlit but not uplifted over 7 days after ready', color:'#8A6D1F', bg:'#F6EFD9', fg:'#5E4A12' },
   { k:'ship', label:'Shipping', stage:'In transit', q:'ETA has passed and arrival not recorded', color:'#0A84FF', bg:'#E0F1F8', fg:'#0062CC' }
@@ -846,6 +973,9 @@ const PRIORITY = ['UGA','SSD','RWA','BDI','TZA','KEN','CAF','COG','AGO','ZMB'];
 function build(raw0, pri) {
   const ALL = pri === '*', P = new Set(pri && pri.length && !ALL ? pri : PRIORITY);
   const raw = { ...raw0, countries: raw0.countries.filter(c => ALL || P.has(c.iso)), lines: raw0.lines.filter(l => ALL || P.has(l.c)) };
+  raw0.lines.forEach(l => ['tpl', 'awb', 'from', 'to', 'mode', 'hub', 'reg', 'opr', 'po'].forEach(k => { const v = l[k]; if (v && typeof v === 'string' && !/^Inconsistent/.test(v) && (/^\d{1,2}\/\d{1,2}\/\d{2,4}$/.test(v.trim()) || /\b1899\b/.test(v))) { DQ.push({ k, v: v.trim(), l, why: 'date value in a text field' }); l[k] = 'Inconsistent (recorded as ' + v.trim() + ')'; } }));
+  raw0.lines.forEach(l => ['rd', 'poDate', 'ready', 'commit', 'etd', 'eta', 'ata'].forEach(k => { const v = l[k]; if (v && (!/^\d{4}-\d{2}-\d{2}/.test(v) || +v.slice(0, 4) < 2015 || +v.slice(0, 4) > 2030)) { DQ.push({ k, v, l, why: 'not a valid date in 2015–2030' }); (l.badDates = l.badDates || {})[k] = v; l[k] = null; } }));
+  if (!SRC_FILL_SET) { SRC_FILL = buildFill(raw0.lines); SRC_FILL_SET = true; }
   const today = raw.asOf, cn = Object.fromEntries(raw.countries.map(c => [c.iso, c]));
   const om = {};
   raw.lines.forEach((l, i) => { l.i = i; l.t = typeOf(l.or); l.okey = l.c + '|' + l.or; (om[l.okey] = om[l.okey] || []).push(l); });
@@ -881,9 +1011,13 @@ function build(raw0, pri) {
         if (s.eta && s.eta < today) issues.push({ ref: s.ref, sev: 2, text: 'In transit · ETA ' + fd(s.eta) + ' passed ' + days(s.eta, today) + ' days ago, arrival not confirmed' });
         else if (!s.awb) issues.push({ ref: s.ref, sev: 1, text: 'In transit · no transport document (AWB/BOL) recorded' });
       } else if (s.st === 'arrived') issues.push({ ref: s.ref, sev: 0, text: 'Arrived ' + fd(s.ata) + ' · receipt (POD) not yet confirmed' });
+      const live = s.lines.filter(l => !/^(09|10|11)/.test(l.stRaw || '')), rep = live.slice().sort((a, b) => (SI[a.st] ?? 9) - (SI[b.st] ?? 9))[0];
+      const last = issues[issues.length - 1];
+      if (rep && last && last.ref === s.ref && s.st !== 'arrived') last.text = evidence(rep, today) + (live.length > 1 && new Set(live.map(l => l.stRaw)).size > 1 ? ' · lines in this shipment are at ' + new Set(live.map(l => l.stRaw)).size + ' different statuses' : '');
+      else if (rep && !(last && last.ref === s.ref)) issues.push({ ref: s.ref, sev: 1, text: evidence(rep, today) });
       const canc = s.lines.filter(l => l.st === 'canceled');
       if (canc.length) issues.push({ ref: s.ref, sev: 0, text: plural(canc.length, 'line') + ' canceled · ' + fmt$(sum(canc, l => l.amt)) });
-      [...new Set(s.lines.map(l => l.rem).filter(Boolean))].forEach(r => issues.push({ ref: s.ref, sev: 0, text: 'Supply remark: ' + r }));
+      [...new Set(s.lines.flatMap(l => splitRem(l.rem).cause))].filter(r => !(rep && splitRem(rep.rem).cause.includes(r))).forEach(r => issues.push({ ref: s.ref, sev: 0, text: 'Supply note: ' + r }));
     });
     issues.sort((a, b) => b.sev - a.sev);
     const srcVal = {}; live.forEach(l => srcVal[l.src] = (srcVal[l.src] || 0) + l.amt);
@@ -912,6 +1046,8 @@ class Component extends DCLogic {
   }
   startPresent() { this.setState({ present: true, auto: true }); this.goSlide(0); try { document.documentElement.requestFullscreen && document.documentElement.requestFullscreen(); } catch (e) {} }
   stopPresent() { this.setState({ present: false }); try { document.fullscreenElement && document.exitFullscreen(); } catch (e) {} }
+  chartRef = el => { if (el === this._chartEl) return; this._chartEl = el; if (this._ro) this._ro.disconnect(); this._svg = el ? el.querySelector('svg') : null; this._lastSig = this._lineSig;
+    if (el && window.ResizeObserver) { this._ro = new ResizeObserver(e => { const w = Math.round(e[0].contentRect.width); if (w && Math.abs(w - (this.state.chartW || 0)) > 2) this.setState({ chartW: w }); }); this._ro.observe(el); } };
   mapRef = el => { if (el === this.mapEl) return; this.mapEl = el; if (el) setTimeout(() => this.drawMap(), 0); };
   componentDidMount() {
     fetch('data/orders.json').then(r => r.json()).then(raw => this.setState({ data: build(raw, (this.props.priorityCountries || '').split(/[ ,]+/).filter(Boolean).map(x => x.toUpperCase())), dataAll: build({ ...raw, lines: raw.lines.map(l => ({ ...l })) }, '*') }, () => setTimeout(() => this.drawMap(), 50))).catch(err => console.warn('orders.json load failed', err && err.message));
@@ -923,6 +1059,7 @@ class Component extends DCLogic {
   componentWillUnmount() { clearInterval(this.poll); clearInterval(this.ticker); window.removeEventListener('resize', this.onResize); window.removeEventListener('keydown', this.onKey); }
   componentDidUpdate(pp, ps) {
     pp = pp || {}; ps = ps || {};
+    if (this._chartEl && this._lineSig !== this._lastSig) { this._lastSig = this._lineSig; const svg = this._chartEl.querySelector('svg'); try { svg && svg.setCurrentTime(0); } catch (e) {} }
     const s = this.state;
     if (['data','q','country','src','stage','type','issuesOnly','tab','dFrom','dTo','em'].some(k => s[k] !== ps[k]) || pp.showMap !== this.props.showMap) setTimeout(() => this.drawMap(), 0);
   }
@@ -1005,10 +1142,10 @@ class Component extends DCLogic {
       anyFilter: !!(q || country || src || stage || type || issuesOnly || this.state.dFrom || this.state.dTo), clearAll: () => this.setState({ q:'', country:'', src:'', stage:'', type:'', grp:'', issuesOnly:false, dFrom:'', dTo:'', limit:25, page:0 }),
       showF: this.state.showF, toggleF: () => this.setState(s => ({ showF: !s.showF })), fLabel: (this.state.showF ? 'Fewer filters' : 'More filters') + ([src, stage, type, this.state.dFrom, this.state.dTo].filter(Boolean).length ? ' (' + [src, stage, type, this.state.dFrom, this.state.dTo].filter(Boolean).length + ')' : ''),
       dFrom: this.state.dFrom, dTo: this.state.dTo, onFrom: e => set('dFrom', e.target.value), onTo: e => set('dTo', e.target.value),
-      tabs: [['visuals','Overview'],['countries','Country brief'],['lines','Line details'],['ships','Shipment info'],['proc','Procurement'],['critical','Critical items'],['impact','Beneficiaries & risk'],['glossary','Glossary']].map(([k, label]) => ({ label, pick: () => this.setState({ tab: k, page: 0 }), fg: tab === k ? '#0071B8' : '#536271', border: tab === k ? '#0071B8' : 'transparent', weight: tab === k ? 600 : 500 })),
-      tabVisuals: tab === 'visuals', tabCountries: tab === 'countries', tabLines: tab === 'lines', tabShips: tab === 'ships', tabProc: tab === 'proc', tabCritical: tab === 'critical', tabGlossary: tab === 'glossary', tabImpact: tab === 'impact',
-      impactPick: v => set('country', v), impactPrio: (() => { const p = (this.props.priorityCountries || '').split(/[ ,]+/).filter(Boolean).map(x => x.toUpperCase()); return p.length ? p : PRIORITY; })(), cfrNo: this.props.cfrNo ?? 0.482, cfrCare: this.props.cfrCare ?? 0.30, pcrRunSize: this.props.pcrRunSize ?? 32, pcrControls: this.props.pcrControls ?? 2, avgStay: this.props.avgStay ?? 7, defaultBeds: this.props.defaultBeds ?? 20,
-      qv: {}, lt: {}, sh: {}, crit: {}, proc: { stAll: [], stats: [], dSt: { segs: [], legend: [] }, dTy: { segs: [], legend: [] }, line: { series: [], yTicks: [], xTicks: [] }, reqBars: [], active: [], reqOpts: [], items: [], mV: {}, mN: {}, tCum: {}, tWk: {} }, cs: {}, cg: [], bkLegend: [], ov: { total: '—', scope: 'Loading…', bar: [], legend: [], alerts: [], att: [], attAll: [], bnCards: [], tiles: [], cats: [], sk: { links: [], l: [], r: [] } }, pres: { off: true, on: false, dots: [] },
+      tabs: [['visuals','Overview'],['countries','Country brief'],['lines','Line details'],['ships','Shipment info'],['proc','Procurement'],['critical','Critical items'],['backorders','Back orders'],['impact','Beneficiaries & risk'],['glossary','Glossary']].map(([k, label]) => ({ label, pick: () => this.setState({ tab: k, page: 0 }), fg: tab === k ? '#0071B8' : '#536271', border: tab === k ? '#0071B8' : 'transparent', weight: tab === k ? 600 : 500 })),
+      tabVisuals: tab === 'visuals', tabCountries: tab === 'countries', tabLines: tab === 'lines', tabShips: tab === 'ships', tabProc: tab === 'proc', tabCritical: tab === 'critical', tabBack: tab === 'backorders', tabGlossary: tab === 'glossary', tabImpact: tab === 'impact',
+      impactPick: v => set('country', v), impactPrio: (() => { const p = (this.props.priorityCountries || '').split(/[ ,]+/).filter(Boolean).map(x => x.toUpperCase()); return p.length ? p : PRIORITY; })(), cfrNo: this.props.cfrNo ?? 0.482, cfrCare: this.props.cfrCare ?? 0.30, pcrRunSize: this.props.pcrRunSize ?? 32, pcrControls: this.props.pcrControls ?? 2, avgStay: this.props.avgStay ?? 7, defaultBeds: this.props.defaultBeds ?? 20, horizonDays: this.props.horizonDays ?? 90,
+      dq: { rows: [] }, srcProfile: [], srcHead: [], chartRef: this.chartRef, qv: {}, lt: {}, sh: {}, crit: { rows: [] }, bo: { kpis: [], countries: [], suppliers: [], rows: [] }, proc: { stAll: [], stats: [], dSt: { segs: [], legend: [] }, dTy: { segs: [], legend: [] }, line: { series: [], yTicks: [], xTicks: [] }, reqBars: [], active: [], reqOpts: [], items: [], mV: {}, mN: {}, tCum: {}, tWk: {} }, cs: {}, cg: [], bkLegend: [], ov: { total: '—', scope: 'Loading…', bar: [], legend: [], alerts: [], att: [], attAll: [], bnCards: [], tiles: [], cats: [], sk: { links: [], l: [], r: [] } }, pres: { off: true, on: false, dots: [] },
       em: this.emEff(), onEm: e => set('em', e.target.value), emOpts: [{ v:'ebola', label:'All Ebola / Marburg / VHF tags' }, { v:'all', label:'All emergency tags in export' }, ...((data && data.ems) || []).filter(x => x.k !== 'G013').map(x => ({ v: x.k, label: x.k + ' (' + fmtN(x.n) + ')' }))],
       type, onType: e => set('type', e.target.value), typeOpts: [{ v:'sr', label:'Stock releases (SR)' }, { v:'or', label:'Order requests (OR)' }],
       ovMode: !country, cMode: !!country, backToAll: () => this.setState({ country:'', grp:'' }), closeLine: () => this.setState({ openLine: null }), hasLine: false, it: {}, dos: {},
@@ -1094,7 +1231,7 @@ class Component extends DCLogic {
           ].filter(f => f[1] && f[1] !== '—').map(([k, v]) => ({ k, v: String(v) }));
           return { ref: s.ref, route, srcLabel: S.label, srcBg: S.bg, srcFg: S.fg, stLabel: st.label, stBg: st.bg, stFg: st.fg, value: fmt$(s.value), facts,
             steps: STG.map((t, i) => ({ label: t.label, color: s.st === 'canceled' ? '#E6EAEE' : i < idx ? '#7D8B98' : i === idx ? t.color : '#E6EAEE', fg: i === idx ? '#14212E' : '#8A97A3', weight: i === idx ? 600 : 400 })),
-            lines: s.lines.map(l => ({ desc: l.desc, code: l.code || l.ess, qty: fmtN(l.qty) + (l.each && l.each !== l.qty ? ' (' + fmtN(l.each) + ' ea)' : ''), uom: l.uom, amt: fmt$(l.amt), hub: l.hub || SRC[l.src].label, po: l.po ? 'PO ' + l.po : '', stLabel: SG(l.st).label, stFg: SG(l.st).fg })) };
+            lines: s.lines.map((l, li) => ({ num: li + 1, ...refsOf(l), desc: l.desc, code: l.code || l.ess, qty: fmtN(l.qty) + (l.each && l.each !== l.qty ? ' (' + fmtN(l.each) + ' ea)' : ''), uom: l.uom, amt: fmt$(l.amt), hub: l.hub || SRC[l.src].label, po: l.po ? 'PO ' + l.po : '', stLabel: SG(l.st).label, stFg: SG(l.st).fg })) };
         }) };
     }
 
@@ -1134,7 +1271,7 @@ class Component extends DCLogic {
       const s = ln.ship || {}, idx = SI[ln.st] ?? -1, G = GM[ln.j.g], proc = ln.type === 'Procurement', o = DL.orders.find(x => x.key === ln.okey);
       const viaT = ln.st === 'prelg' || ln.st === 'thub' || /transit hub/i.test(ln.stRaw || '');
       const steps = [
-        ['Requested', ln.rd], [proc ? 'PO created with supplier' : 'Stock request created', ln.poDate], ['Committed readiness', ln.commit], [proc ? 'Ready at supplier' : 'Picked & packed at hub', ln.ready],
+        ['Requested', ln.rd], [proc ? 'PO created with supplier' : 'Stock request created', ln.poDate], ['Committed readiness', ln.commit], [proc ? 'Ready at supplier' : 'Goods available at hub', ln.ready],
         ['Greenlight / booking', null], ['Departed', ln.etd || s.etd], ...(viaT ? [['At transit hub', null]] : []), [ln.ata ? 'Arrived in country' : 'Arrival (ETA)', ln.ata || ln.eta || (idx >= SI.arrived ? s.ata : s.eta)], ['Received', null]
       ];
       const pos = k => steps.findIndex(x => x[0] === k);
@@ -1153,7 +1290,7 @@ class Component extends DCLogic {
     // Countries tab
     const BK = [
       { k:'sourcing', label:'Sourcing', sub:'With a supplier (procurement) or not yet in hub stock', color:'#E8590C', bg:'#FDEBE2', fg:'#C92A2A' },
-      { k:'preparing', label:'Preparing to ship', sub:'Available — picked at hub, awaiting greenlight or departure', color:'#F03E3E', bg:'#FDF3DC', fg:'#C92A2A' },
+      { k:'preparing', label:'Preparing to ship', sub:'Status 02–07: goods available, greenlight, pre-alert or pending departure', color:'#F03E3E', bg:'#FDF3DC', fg:'#C92A2A' },
       { k:'transit', label:'In transit', sub:'Shipped and on the way', color:'#0A84FF', bg:'#E0F1F8', fg:'#0062CC' },
       { k:'delivered', label:'Delivered', sub:'Arrived or received in country', color:'#0FA958', bg:'#D3EBDD', fg:'#087F3B' }
     ];
@@ -1191,7 +1328,7 @@ class Component extends DCLogic {
           statusFg: allD ? '#087F3B' : '#3F4B57', late: ls.some(l => l.j.delayed), open: () => this.setState({ open: o.key }) };
       });
       const reqCols = [['or', 'Order requests (OR)', 'Raised by the country office'], ['sr', 'Stock releases (SR)', 'Pushed by WHO from hub stock']].map(([k, title, sub]) => { const rs = reqs.filter(r => r.typeShort === TYPE[k].short), ks = reqKeys.filter(x => ordM[x].t === k), ls2 = CLs.filter(l => ks.includes(l.okey) && l.st !== 'canceled'), v = sum(ls2, l => l.amt), dl = ls2.filter(l => bucket(l) === 'delivered');
-        return { title, sub, n: plural(rs.length, 'request'), value: fmt$(v), meta: dl.length + ' of ' + plural(ls2.length, 'line') + ' delivered · ' + pct(sum(dl, l => l.amt), v) + ' of value', rows: rs, empty: rs.length === 0, bg: TYPE[k].bg, fg: TYPE[k].fg }; });
+        return { title, sub, n: plural(rs.length, 'request'), value: fmt$(v), meta: dl.length + ' of ' + plural(ls2.length, 'line') + ' delivered · ' + pct(sum(dl, l => l.amt), v) + ' of value', rows: rs.map((r, i) => ({ ...r, num: i + 1 })), empty: rs.length === 0, bg: TYPE[k].bg, fg: TYPE[k].fg }; });
       const late = CLs.filter(l => l.j.delayed).sort((a, b) => b.amt - a.amt);
       const shownB = BK.filter(b => !grp || grp === b.k).filter(b => m[b.k]);
       const dOnly = this.state.dOnly, reqF = this.state.reqF || '';
@@ -1204,7 +1341,7 @@ class Component extends DCLogic {
         detail: [a.d && fmtN(a.d) + ' delivered', a.t && fmtN(a.t) + ' in transit', a.p && fmtN(a.p) + ' not ready'].filter(Boolean).join(' · ') }; });
       cs = {
         statusCards: BK.map(b => { const a = m[b.k] || { v:0, n:0 }; const on = grp === b.k; return { short: b.k === 'preparing' ? 'Preparing' : b.label, label: b.label, color: b.color, value: fmt$(a.v), n: plural(a.n, 'item'), pct: pctOf(b.k) + '%', bg: on ? '#2A3A4A' : 'transparent', border: on ? '#7CC4EC' : '#2F4152', pick: () => this.setState({ grp: on ? '' : b.k }) }; }),
-        rows: rowsL.map(l => { const B = BKM[bucket(l)] || { bg:'#EEF1F4', fg:'#536271', color:'#C3CBD3' }; return { stLabel: l.stRaw || l.j.label, stBg: B.bg, stFg: B.fg, dot: B.color, desc: l.desc, code: l.code || l.ess, qty: fmtN(l.qty), uom: l.uom, value: fmt$(l.amt), src: SRCS[l.src], srcColor: SRC[l.src].color, typeShort: TYPE[l.t].short, typeBg: TYPE[l.t].bg, typeFg: TYPE[l.t].fg, req: l.or, ship: l.ref, detail: l.j.detail, delayed: !!l.j.delayed, delayText: (l.j.bn ? BNM[l.j.bn].label + ' · ' : '') + (l.j.delayText || ''), open: () => this.setState({ openLine: l.i }) }; }),
+        rows: rowsL.map((l, li) => { const B = BKM[bucket(l)] || { bg:'#EEF1F4', fg:'#536271', color:'#C3CBD3' }; return { num: li + 1, ...refsOf(l), stLabel: l.stRaw || l.j.label, stBg: B.bg, stFg: B.fg, dot: B.color, desc: l.desc, code: l.code || l.ess, qty: fmtN(l.qty), uom: l.uom, value: fmt$(l.amt), src: SRCS[l.src], srcColor: SRC[l.src].color, typeShort: TYPE[l.t].short, typeBg: TYPE[l.t].bg, typeFg: TYPE[l.t].fg, req: l.or, ship: l.ref, detail: l.j.detail, delayed: !!l.j.delayed, delayText: (l.j.bn ? BNM[l.j.bn].label + ' · ' : '') + (l.j.delayText || ''), open: () => this.setState({ openLine: l.i }) }; }),
         rowsNote: rowsL.length + ' of ' + CLs.length + ' · delayed first' + (grp ? ' · ' + BKM[grp].label : ''),
         reqF, reqOpts: reqKeys.map(k => { const o = ordM[k]; return { v: k, label: TYPE[o.t].short + ' · ' + o.id }; }), onReq: e => this.setState({ reqF: e.target.value }),
         dLabel: 'Delayed only (' + nDel + ')', toggleD: () => this.setState(s => ({ dOnly: !s.dOnly })), dBg: dOnly ? '#FDEBE2' : '#fff', dFg: dOnly ? '#C92A2A' : '#14212E', dBorder: dOnly ? '#E8590C' : '#CBD4DC',
@@ -1312,12 +1449,15 @@ class Component extends DCLogic {
 
     // Line details
     const LC = [
-      { k:'c', label:'Country', get: l => data.cn[l.c].name },
-      { k:'rd', label:'Request date', get: l => l.rd || '', show: l => fd(l.rd) },
-      { k:'or', label:'Request (SR / OR)', get: l => l.or, show: l => TYPE[l.t].short + ' · ' + l.or, mono: true },
-      { k:'opr', label:'OPR / PO ref', get: l => l.opr, mono: true },
+      { k:'sn', label:'SN', get: () => '', num: true, sn: true },
+      { k:'orRef', label:'OR Ref', get: l => refsOf(l).orRef, mono: true },
+      { k:'srRef', label:'SR Ref', get: l => refsOf(l).srRef, mono: true },
+      { k:'poNum', label:'PO No.', get: l => l.po || '', mono: true },
       { k:'code', label:'Item code', get: l => l.code, mono: true },
       { k:'desc', label:'Item description', get: l => l.desc },
+      { k:'c', label:'Country', get: l => data.cn[l.c].name },
+      { k:'rd', label:'Request date', get: l => l.rd || '', show: l => fd(l.rd) },
+      { k:'opr', label:'OPR ref', get: l => l.opr, mono: true },
       { k:'uom', label:'UoM', get: l => l.uom },
       { k:'qty', label:'Qty ordered', get: l => l.qty, show: l => fmtN(l.qty), num: true },
       { k:'unit', label:'Unit value', get: l => l.unit, show: l => '$' + l.unit.toLocaleString('en-US', { maximumFractionDigits: 2 }), num: true },
@@ -1336,20 +1476,49 @@ class Component extends DCLogic {
       { k:'st', label:'WHO Shipping Status', get: l => WHO_ST.findIndex(g => g.k === (l.stRaw || '').trim()), show: l => l.stRaw || l.j.label, status: true },
       { k:'rem', label:'Remarks', get: l => l.rem }
     ];
+    // Back orders: remaining quantity per request + item, from the lines in the export
+    const bo = (() => {
+      const { boC = '', boS = '', boLim = 100 } = this.state, T = data.today;
+      const isDel = l => l.st === 'arrived' || l.st === 'received', u = l => l.each || l.qty || 0;
+      const chan = l => l.type === 'Procurement' ? 'Supplier (procurement)' : /^Stock/.test(l.type || '') ? 'Hub stock' : (l.type || 'Not recorded');
+      const where = l => /^(00|01-|01d|02|12|oo)/i.test(l.stRaw || '') ? 'nr' : /^(04|06|07)/.test(l.stRaw || '') ? 'prep' : 'tr';
+      const G = {}; L.filter(l => l.st !== 'canceled').forEach(l => { const k = l.okey + '|' + (l.code || l.desc); (G[k] = G[k] || []).push(l); });
+      const groups = Object.values(G).map(ls => { const pend = ls.filter(l => !isDel(l)); return { ls, pend, o: sum(ls, u), d: sum(ls.filter(isDel), u), rem: sum(pend, u), oV: sum(ls, l => l.amt), rV: sum(pend, l => l.amt) }; }).filter(g => g.pend.length);
+      const pendL = groups.flatMap(g => g.pend.map(l => ({ l, g })));
+      const totV = sum(L.filter(l => l.st !== 'canceled'), l => l.amt), remV = sum(groups, g => g.rV);
+      const age = l => l.rd ? days(l.rd, T) : null, oldest = ls => Math.max(0, ...ls.map(age).filter(v => v != null));
+      const supV = sum(pendL.filter(x => chan(x.l) === 'Supplier (procurement)'), x => x.l.amt), hubV = sum(pendL.filter(x => chan(x.l) === 'Hub stock'), x => x.l.amt);
+      const kpis = [
+        { label: 'Request items with remaining qty', value: fmtN(groups.length), sub: fmtN(new Set(groups.map(g => g.ls[0].okey)).size) + ' requests · ' + fmtN(new Set(groups.map(g => g.ls[0].c)).size) + ' countries' },
+        { label: 'Remaining value', value: fmt$(remV), sub: pct(remV, totV) + ' of ordered value', color: '#C92A2A' },
+        { label: 'From suppliers (procurement)', value: fmt$(supV), sub: fmtN(new Set(pendL.filter(x => chan(x.l) === 'Supplier (procurement)').map(x => x.l.po).filter(Boolean)).size) + ' POs' },
+        { label: 'From hub stock', value: fmt$(hubV), sub: fmtN(new Set(pendL.filter(x => chan(x.l) === 'Hub stock').map(x => x.l.or)).size) + ' stock releases / requests' },
+        { label: 'Oldest remaining', value: pendL.length ? oldest(pendL.map(x => x.l)) + ' days' : '—', sub: 'since Request Date' }
+      ];
+      const agg = (keyF, labelF) => { const o = {}; pendL.forEach(({ l, g }) => { const k = keyF(l); const a = o[k] = o[k] || { k, label: labelF(l), v: 0, n: 0, reqs: new Set(), nr: 0, prep: 0, tr: 0, ls: [], chans: new Set() }; a.v += l.amt; a.n++; a.reqs.add(l.okey); a[where(l)] += l.amt; a.ls.push(l); a.chans.add(chan(l)); }); return Object.values(o).sort((x, y) => y.v - x.v); };
+      const bar = a => { const t = a.nr + a.prep + a.tr || 1; return [['Not ready', a.nr, '#F03E3E'], ['Preparing to ship', a.prep, '#F59F00'], ['In transit', a.tr, '#0A84FF']].filter(x => x[1] > 0).map(x => ({ w: (x[1] / t * 100) + '%', color: x[2], title: x[0] + ' · ' + fmt$(x[1]) })); };
+      const countries = agg(l => l.c, l => data.cn[l.c].name).map((a, i) => ({ sn: i + 1, label: a.label, reqs: fmtN(a.reqs.size), lines: fmtN(a.n), v: fmt$(a.v), segs: bar(a), oldest: oldest(a.ls) + ' d', on: boC === a.k, bg: boC === a.k ? '#EAF3FB' : '#fff', pick: () => this.setState({ boC: boC === a.k ? '' : a.k, boLim: 100 }) }));
+      const suppliers = agg(l => (l.hub || SRC[l.src].label) + '|' + chan(l), l => l.hub || SRC[l.src].label).map((a, i) => ({ sn: i + 1, label: a.label, chan: [...a.chans][0], pos: fmtN(new Set(a.ls.map(l => l.po).filter(Boolean)).size), lines: fmtN(a.n), v: fmt$(a.v), segs: bar(a), oldest: oldest(a.ls) + ' d', on: boS === a.k, bg: boS === a.k ? '#EAF3FB' : '#fff', pick: () => this.setState({ boS: boS === a.k ? '' : a.k, boLim: 100 }) }));
+      const sel = pendL.filter(({ l }) => (!boC || l.c === boC) && (!boS || (l.hub || SRC[l.src].label) + '|' + chan(l) === boS)).sort((a, b) => b.l.amt - a.l.amt);
+      const rows = sel.slice(0, boLim).map(({ l, g }, i) => { const sr = splitRem(l.rem); return { sn: i + 1, ...refsOf(l), country: data.cn[l.c].name, code: l.code || '', desc: l.desc, o: fmtN(g.o), d: g.d ? fmtN(g.d) : '0', rem: fmtN(u(l)), v: fmt$(l.amt), st: l.stRaw || 'not available', stFg: where(l) === 'nr' ? '#C92A2A' : where(l) === 'prep' ? '#B54708' : '#0062CC', src: l.hub || SRC[l.src].label, chan: chan(l), age: age(l) != null ? age(l) + ' d' : 'not available', note: sr.cause.length ? sr.cause.join(' · ') : 'not available', open: () => this.setState({ openLine: l.i }) }; });
+      const fl = [boC && data.cn[boC].name, boS && boS.split('|')[0]].filter(Boolean);
+      return { kpis, countries, suppliers, rows, note: fmtN(Math.min(boLim, sel.length)) + ' of ' + fmtN(sel.length) + ' remaining lines' + (fl.length ? ' · ' + fl.join(' · ') : '') + ' · largest value first', hasFilter: fl.length > 0, clear: () => this.setState({ boC: '', boS: '' }), more: sel.length > boLim, showMore: () => this.setState({ boLim: boLim + 200 }),
+        exportCsv: () => { const H = ['SN','Country','OR Ref','SR Ref','PO No.','Item code','Item','Ordered (request item)','Delivered (request item)','Remaining on line','Remaining value USD','WHO Shipping Status','Hub / supplier','Channel','Days since request','Supply remark']; const rs = [H, ...sel.map(({ l, g }, i) => { const f = refsOf(l); return [i + 1, data.cn[l.c].name, f.orRef, f.srRef, f.poNum, l.code, l.desc, g.o, g.d, u(l), l.amt, l.stRaw, l.hub || SRC[l.src].label, chan(l), age(l), splitRem(l.rem).cause.join(' · ')]; })]; const csv = rs.map(r => r.map(v => '"' + String(v ?? '').replace(/"/g, '""') + '"').join(',')).join('\n'); const a = document.createElement('a'); a.href = URL.createObjectURL(new Blob(['\ufeff' + csv], { type: 'text/csv' })); a.download = 'ebola-back-orders.csv'; a.click(); } };
+    })();
     const { lsort, ldir, ssort, sdir, page } = this.state;
     const cmp = (col, dir) => (a, b) => { const x = col.get(a), y = col.get(b); return (typeof x === 'number' && typeof y === 'number' ? x - y : String(x || '').localeCompare(String(y || ''))) * dir; };
-    const lcol = LC.find(c => c.k === lsort) || LC[1];
+    const lcol = LC.find(c => c.k === lsort && !c.sn) || LC.find(c => c.k === 'rd');
     const sortedL = [...L].sort(cmp(lcol, ldir)), PS = 50, pages = Math.max(1, Math.ceil(sortedL.length / PS)), pg = Math.min(page, pages - 1);
     const lt = {
       kpis: [{ label:'Line items', value: fmtN(L.length), sub: fmtN(new Set(L.map(l => l.okey)).size) + ' requests · ' + fmtN(new Set(L.map(l => l.code)).size) + ' distinct items' }, { label:'Total value (USD)', value: '$' + fmtN(tot), sub: fmtN(live.length) + ' active lines' }, { label:'Delivered', value: '$' + fmtN(v3.dl), sub: pct(v3.dl, tot) + ' · arrived or received', color:'#087F3B' }, { label:'In transit', value: '$' + fmtN(v3.tr), sub: pct(v3.tr, tot) + ' · shipped or at transit hub', color:'#0062CC' }, { label:'Not ready', value: '$' + fmtN(v3.nr), sub: pct(v3.nr, tot) + ' · planned, at hub/supplier, greenlight', color:'#C92A2A' }, { label:'Canceled', value: fmtN(L.filter(l => l.st === 'canceled').length), sub: '$' + fmtN(sum(L.filter(l => l.st === 'canceled'), l => l.amt)) + ' not counted', color:'#536271' }],
-      head: LC.map(c => ({ label: c.label, arrow: lsort === c.k ? (ldir > 0 ? '↑' : '↓') : '', align: c.num ? 'flex-end' : 'flex-start', pick: () => this.setState(s => ({ lsort: c.k, ldir: s.lsort === c.k ? -s.ldir : (c.num ? -1 : 1), page: 0 })) })),
-      rows: sortedL.slice(pg * PS, pg * PS + PS).map(l => ({ open: () => this.setState({ openLine: l.i }), cells: LC.map(c => ({ v: c.show ? c.show(l) : (c.get(l) || ''), align: c.num ? 'right' : 'left', fam: c.mono ? "'IBM Plex Mono',monospace" : 'inherit', size: c.mono ? '12px' : '13px', fg: c.status ? GM[l.j.g].fg : '#14212E', weight: c.status || c.k === 'amt' ? 600 : 400 })) })),
+      head: LC.map(c => ({ label: c.label, arrow: lsort === c.k ? (ldir > 0 ? '↑' : '↓') : '', align: c.num ? 'flex-end' : 'flex-start', pick: c.sn ? () => {} : () => this.setState(s => ({ lsort: c.k, ldir: s.lsort === c.k ? -s.ldir : (c.num ? -1 : 1), page: 0 })) })),
+      rows: sortedL.slice(pg * PS, pg * PS + PS).map((l, li) => ({ open: () => this.setState({ openLine: l.i }), cells: LC.map(c => ({ v: c.sn ? pg * PS + li + 1 : c.show ? c.show(l) : (c.get(l) || ''), align: c.num ? 'right' : 'left', fam: c.mono ? "'IBM Plex Mono',monospace" : 'inherit', size: c.mono ? '10px' : '11px', fg: c.status ? GM[l.j.g].fg : '#14212E', weight: c.status || c.k === 'amt' ? 600 : 400 })) })),
       range: sortedL.length ? (pg * PS + 1) + '–' + Math.min(sortedL.length, pg * PS + PS) + ' of ' + fmtN(sortedL.length) + ' lines' : 'No lines',
       total: fmt$(sum(sortedL.filter(l => l.st !== 'canceled'), l => l.amt)) + ' total value',
       prev: () => this.setState({ page: Math.max(0, pg - 1) }), next: () => this.setState({ page: Math.min(pages - 1, pg + 1) }),
       prevOp: pg > 0 ? 1 : .35, nextOp: pg < pages - 1 ? 1 : .35,
       exportCsv: () => {
-        const rows = [LC.map(c => c.label), ...sortedL.map(l => LC.map(c => c.k === 'st' ? l.j.label : c.get(l)))];
+        const rows = [LC.map(c => c.label), ...sortedL.map((l, li) => LC.map(c => c.sn ? li + 1 : c.k === 'st' ? l.j.label : c.get(l)))];
         const csv = rows.map(r => r.map(v => '"' + String(v ?? '').replace(/"/g, '""') + '"').join(',')).join('\n');
         const a = document.createElement('a'); a.href = URL.createObjectURL(new Blob(['\ufeff' + csv], { type: 'text/csv' })); a.download = 'ebola-line-details.csv'; a.click();
       }
@@ -1358,10 +1527,14 @@ class Component extends DCLogic {
     // Shipment info
     const sgm = {}; L.forEach(l => { const s = sgm[l.ref] = sgm[l.ref] || { ref: l.ref, c: l.c, ls: [], ors: new Set() }; s.ls.push(l); s.ors.add(l.or); });
     const SH = Object.values(sgm).map(s => { const lv = s.ls.filter(l => l.st !== 'canceled'), st = lv.length ? STG[Math.min(...lv.map(l => SI[l.st]))].k : 'canceled', shp = s.ls[0].ship || {}; return { ...s, st, shp, x: shp.x || {}, value: sum(lv, l => l.amt), src: top(s.ls, l => l.src) }; });
+    const uq = (s, f) => [...new Set(s.ls.map(f).filter(Boolean))].join(', ');
     const SC = [
+      { k:'sn', label:'SN', get: () => '', num: true, sn: true },
+      { k:'orRef', label:'OR Ref', get: s => uq(s, l => refsOf(l).orRef), mono: true },
+      { k:'srRef', label:'SR Ref', get: s => uq(s, l => refsOf(l).srRef), mono: true },
+      { k:'poNum', label:'PO No.', get: s => uq(s, l => l.po), mono: true },
       { k:'ref', label:'Shipping ref', get: s => s.ref, mono: true },
       { k:'c', label:'Country', get: s => data.cn[s.c].name },
-      { k:'ors', label:'Request(s)', get: s => [...s.ors].join(', '), mono: true },
       { k:'st', label:'Status', get: s => SI[s.st] ?? 9, show: s => SG(s.st).label, status: true },
       { k:'src', label:'Fulfilled from', get: s => SRC[s.src].label },
       { k:'value', label:'Value (USD)', get: s => s.value, show: s => '$' + fmtN(s.value), num: true },
@@ -1376,11 +1549,11 @@ class Component extends DCLogic {
       { k:'ready', label:'Last readiness', get: s => s.shp.ready || '', show: s => s.shp.ready ? fd(s.shp.ready) : '' },
       { k:'eta', label:'ETA / ATA', get: s => s.shp.ata || s.shp.eta || '', show: s => s.shp.ata ? 'ATA ' + fd(s.shp.ata) : s.shp.eta ? 'ETA ' + fd(s.shp.eta) : '' }
     ];
-    const scol = SC.find(c => c.k === ssort) || SC[5], sortedS = [...SH].sort(cmp(scol, sdir));
+    const scol = SC.find(c => c.k === ssort && !c.sn) || SC.find(c => c.k === 'value'), sortedS = [...SH].sort(cmp(scol, sdir));
     const sh = {
       kpis: [{ label:'Shipments', value: fmtN(SH.filter(s => !s.ref.startsWith('(no')).length), sub: fmtN(SH.filter(s => s.ref.startsWith('(no')).length) + ' requests without a shipment ref' }, { label:'Value (USD)', value: '$' + fmtN(sum(SH, s => s.value)), sub: 'active lines' }, { label:'Volume (CBM)', value: fmtN(sum(SH, s => +s.x.cbm || 0)), sub: 'where Shipping_Info is available' }, { label:'Weight (MT)', value: (sum(SH, s => +s.x.kg || 0) / 1000).toFixed(2), sub: 'where Shipping_Info is available' }],
-      head: SC.map(c => ({ label: c.label, arrow: ssort === c.k ? (sdir > 0 ? '↑' : '↓') : '', align: c.num ? 'flex-end' : 'flex-start', pick: () => this.setState(s => ({ ssort: c.k, sdir: s.ssort === c.k ? -s.sdir : (c.num ? -1 : 1) })) })),
-      rows: sortedS.map(s => ({ open: () => this.setState({ open: s.ls[0].okey }), cells: SC.map(c => ({ v: c.show ? c.show(s) : (c.get(s) || ''), align: c.num ? 'right' : 'left', fam: c.mono ? "'IBM Plex Mono',monospace" : 'inherit', size: c.mono ? '12px' : '13px', fg: c.status ? SG(s.st).fg : '#14212E', weight: c.status || c.k === 'value' ? 600 : 400 })) })),
+      head: SC.map(c => ({ label: c.label, arrow: ssort === c.k ? (sdir > 0 ? '↑' : '↓') : '', align: c.num ? 'flex-end' : 'flex-start', pick: c.sn ? () => {} : () => this.setState(s => ({ ssort: c.k, sdir: s.ssort === c.k ? -s.sdir : (c.num ? -1 : 1) })) })),
+      rows: sortedS.map((s, si) => ({ open: () => this.setState({ open: s.ls[0].okey }), cells: SC.map(c => ({ v: c.sn ? si + 1 : c.show ? c.show(s) : (c.get(s) || ''), align: c.num ? 'right' : 'left', fam: c.mono ? "'IBM Plex Mono',monospace" : 'inherit', size: c.mono ? '10px' : '11px', fg: c.status ? SG(s.st).fg : '#14212E', weight: c.status || c.k === 'value' ? 600 : 400 })) })),
       empty: SH.length === 0
     };
 
@@ -1439,21 +1612,29 @@ class Component extends DCLogic {
     const pWk = d => { const x = new Date(d + 'T00:00:00Z'); x.setUTCDate(x.getUTCDate() - (x.getUTCDay() + 6) % 7); return x.toISOString().slice(0, 10); };
     const pSER = [{ k:'req', label:'Requested · Request Date', color:'#B7861A', get: l => l.rd }, { k:'del', label:'Delivered · ATA (status 09/10)', color:'#0FA958', get: l => isDel(l) ? l.ata : null }];
     const pWv = {}; PLv.forEach(l => pSER.forEach(s => { const d = s.get(l); if (!d) return; const w = pWk(d); (pWv[w] = pWv[w] || {})[s.k] = (pWv[w][s.k] || 0) + mv(l); }));
-    const pW0 = Object.keys(pWv).sort(), pW = [];
+    const pTw = pWk(dataP.today), pW0 = Object.keys(pWv).filter(w => w <= pTw && Object.values(pWv[w]).some(v => v > 0)).sort(), pW = [];
     if (pW0.length) { for (let d = new Date(pW0[0] + 'T00:00:00Z'); d <= new Date(pW0[pW0.length - 1] + 'T00:00:00Z'); d.setUTCDate(d.getUTCDate() + 7)) pW.push(d.toISOString().slice(0, 10)); }
     const pVal = {}; pSER.forEach(s => { let c = 0; pVal[s.k] = pW.map(w => { const v = (pWv[w] || {})[s.k] || 0; c += v; return ptm === 'cum' ? c : v; }); });
-    const CW = 720, CH = 240, px0 = 58, px1 = 14, py0 = 14, py1 = 28;
+    const CW = Math.max(320, this.state.chartW || 720), CH = 300, px0 = 58, px1 = 16, py0 = 14, py1 = 28;
     const pYMax = Math.max(1, ...pSER.map(s => Math.max(0, ...pVal[s.k])));
     const pX = i => px0 + (pW.length > 1 ? i / (pW.length - 1) : 0.5) * (CW - px0 - px1), pY = v => CH - py1 - v / pYMax * (CH - py0 - py1);
     const pTi = pW.indexOf(pWk(dataP.today));
     const noAta = delL.filter(l => !l.ata);
-    const area = k => pW.length ? 'M' + pX(0).toFixed(1) + ',' + (CH - py1) + ' ' + pW.map((w, i) => 'LP' + pX(i).toFixed(1) + ',' + pY(pVal[k][i]).toFixed(1)).join(' ') + ' LP' + pX(pW.length - 1).toFixed(1) + ',' + (CH - py1) + ' Z' : '';
-    const lineC = { vb: '0 0 ' + CW + ' ' + CH,
+    const smooth = P => { const n = P.length; if (!n) return ''; if (n === 1) return 'M' + P[0][0].toFixed(1) + ',' + P[0][1].toFixed(1);
+      const dx = [], m = []; for (let i = 0; i < n - 1; i++) { dx[i] = P[i + 1][0] - P[i][0]; m[i] = (P[i + 1][1] - P[i][1]) / (dx[i] || 1); }
+      const t = [m[0]]; for (let i = 1; i < n - 1; i++) t[i] = m[i - 1] * m[i] <= 0 ? 0 : 3 * (dx[i - 1] + dx[i]) / ((2 * dx[i] + dx[i - 1]) / m[i - 1] + (dx[i] + 2 * dx[i - 1]) / m[i]); t[n - 1] = m[n - 2];
+      let d = 'M' + P[0][0].toFixed(1) + ',' + P[0][1].toFixed(1);
+      for (let i = 0; i < n - 1; i++) { const a = dx[i] / 3; d += ' C' + (P[i][0] + a).toFixed(1) + ',' + (P[i][1] + t[i] * a).toFixed(1) + ' ' + (P[i + 1][0] - a).toFixed(1) + ',' + (P[i + 1][1] - t[i + 1] * a).toFixed(1) + ' ' + P[i + 1][0].toFixed(1) + ',' + P[i + 1][1].toFixed(1); }
+      return d; };
+    const ptsOf = k => pW.map((w, i) => [pX(i), pY(pVal[k][i])]);
+    const area = k => pW.length > 1 ? smooth(ptsOf(k)) + ' L' + pX(pW.length - 1).toFixed(1) + ',' + (CH - py1) + ' L' + pX(0).toFixed(1) + ',' + (CH - py1) + ' Z' : '';
+    this._lineSig = [ptm, pmet, pW.length, pW[0], ...pSER.map(s => pVal[s.k][pW.length - 1])].join('|');
+    const lineC = { vb: '0 0 ' + CW + ' ' + CH, w: CW, h: CH,
       series: pSER.map(s => ({ label: s.k === 'req' ? 'Requested' : 'Delivered (ATA)', color: s.color, total: fmtMx(sum(pW, w => (pWv[w] || {})[s.k] || 0)), area: ptm === 'cum' ? area(s.k) : '', areaFill: s.color, 
-        d: pW.map((w, i) => (i ? 'LP' : 'M') + pX(i).toFixed(1) + ',' + pY(pVal[s.k][i]).toFixed(1)).join(' '),
-        pts: pW.map((w, i) => ({ x: pX(i).toFixed(1), y: pY(pVal[s.k][i]).toFixed(1), title: s.label + ' · week of ' + fd(w) + ' · ' + (ptm === 'cum' ? 'cumulative ' : '') + fmtMx(pVal[s.k][i]), r: (pWv[w] || {})[s.k] ? 3 : 0 })) })),
+        d: smooth(ptsOf(s.k)),
+        pts: pW.map((w, i) => ({ x: pX(i).toFixed(1), y: pY(pVal[s.k][i]).toFixed(1), title: s.label + ' · week of ' + fd(w) + ' · ' + (ptm === 'cum' ? 'cumulative ' : '') + fmtMx(pVal[s.k][i]), r: (pWv[w] || {})[s.k] ? 2.5 : 0 })) })),
       yTicks: [0, .25, .5, .75, 1].map(f => ({ y: pY(pYMax * f).toFixed(1), ty: (pY(pYMax * f) + 4).toFixed(1), top: (pY(pYMax * f) / CH * 100) + '%', right: ((CW - 52) / CW * 100) + '%', label: fmtM(pYMax * f) })),
-      xTicks: pW.map((w, i) => ({ w, i })).filter(({ w }, j, arr) => j === 0 || w.slice(0, 7) !== arr[j - 1].w.slice(0, 7)).map(({ w, i }) => ({ x: pX(i).toFixed(1), y: CH - 8, left: (pX(i) / CW * 100) + '%', top: ((CH - 12) / CH * 100) + '%', label: MON[+w.slice(5, 7) - 1] + ' ' + w.slice(2, 4) })),
+      xTicks: pW.map((w, i) => ({ w, i })).filter(({ w }, j, arr) => j === 0 || w.slice(0, 7) !== arr[j - 1].w.slice(0, 7)).filter((x, j, arr) => j % Math.max(1, Math.ceil(arr.length / Math.max(4, Math.floor(CW / 70)))) === 0).map(({ w, i }) => ({ x: pX(i).toFixed(1), y: CH - 8, left: (pX(i) / CW * 100) + '%', top: ((CH - 12) / CH * 100) + '%', label: MON[+w.slice(5, 7) - 1] + ' ' + w.slice(2, 4) })),
       hasToday: pTi >= 0, todayX: pTi >= 0 ? pX(pTi).toFixed(1) : '0', bottom: CH - py1, top: py0, left: px0, right: CW - px1, empty: pW.length === 0,
       sub: (ptm === 'cum' ? 'Cumulative' : 'Weekly') + ' · ' + (pmet === 'v' ? 'line value' : 'line count'),
       gap: ptm === 'cum' && pW.length ? 'Gap: ' + fmtMx(pVal.req[pW.length - 1] - pVal.del[pW.length - 1]) : '',
@@ -1465,8 +1646,8 @@ class Component extends DCLogic {
     // items
     const plim = this.state.plim || 100;
     const itemsS = [...PLf].sort((x, y) => PG.findIndex(g => g.k === pgOf(x)) - PG.findIndex(g => g.k === pgOf(y)) || y.amt - x.amt);
-    const items = itemsS.slice(0, plim).map(l => { const s = pgOf(l), ty = tyOf(l); return { st: s, stBg: pgBg(s), stFg: pgFg(s), dot: PGM[s].color, ty, tyColor: TYC[ty] || '#536271', desc: l.desc, code: l.code, qty: fmtN(l.qty), uom: l.uom, value: '$' + fmtN(l.amt),
-      sup: l.hub || '—', po: [l.po && 'PO ' + l.po, l.opr && 'OPR ' + l.opr].filter(Boolean).join(' · ') || '—', req: l.or, cname: dataP.cn[l.c].name, typeShort: TYPE[l.t].short, typeBg: TYPE[l.t].bg, typeFg: TYPE[l.t].fg, ship: l.ref.startsWith('(no') ? '—' : l.ref,
+    const items = itemsS.slice(0, plim).map((l, li) => { const s = pgOf(l), ty = tyOf(l); return { num: li + 1, ...refsOf(l), st: s, stBg: pgBg(s), stFg: pgFg(s), dot: PGM[s].color, ty, tyColor: TYC[ty] || '#536271', desc: l.desc, code: l.code, qty: fmtN(l.qty), uom: l.uom, value: '$' + fmtN(l.amt),
+      sup: l.hub || '—', po: l.opr ? 'OPR ' + l.opr : '', req: l.or, cname: dataP.cn[l.c].name, typeShort: TYPE[l.t].short, typeBg: TYPE[l.t].bg, typeFg: TYPE[l.t].fg, ship: l.ref.startsWith('(no') ? '—' : l.ref,
       dates: [['Req', l.rd], ['PO', l.poDate], ['Commit', l.commit], ['Ready', l.ready], ['ETD', l.etd], [l.ata ? 'ATA' : 'ETA', l.ata || l.eta]].filter(x => x[1]).map(x => x[0] + ' ' + fd(x[1])).join(' · ') || '—',
       rem: l.rem || '', open: () => this.setState({ openLine: 'A' + l.i }) }; });
     const rv = {}; LP.forEach(l => { if (l.st !== 'canceled') rv[l.okey] = (rv[l.okey] || 0) + l.amt; else rv[l.okey] = rv[l.okey] || 0; });
@@ -1509,13 +1690,42 @@ class Component extends DCLogic {
     proc.stAll = stAll; proc.stAllNote = stAll.filter(s => s.has).length + ' of ' + stAll.length + ' statuses have lines · Emergency: ' + emName;
 
     // Critical items
-    const cr = Object.entries(eAgg).sort((a, b) => a[0].localeCompare(b[0])).map(([name, a]) => ({ name, d: a.d ? fmtN(a.d) : '', t: a.t ? fmtN(a.t) : '', p: a.p ? fmtN(a.p) : '', tot: fmtN(a.d + a.t + a.p) }));
-    const half = Math.ceil(cr.length / 2);
-    const crit = { halves: cr.length ? [{ rows: cr.slice(0, half) }, ...(cr.length > 1 ? [{ rows: cr.slice(half) }] : [])] : [], empty: cr.length === 0,
-      sub: (country ? data.cn[country].name : 'All countries') + ' · quantity in each · ' + plural(cr.length, 'essential item') };
+    const cOpen = this.state.critOpen || '', cToday = data.today;
+    const cr = Object.entries(eAgg).map(([name, a]) => {
+      const ls = L.filter(l => l.ess === name && l.st !== 'canceled');
+      const pend = ls.filter(l => l.st !== 'arrived' && l.st !== 'received');
+      const rs = {}; pend.forEach(l => { const k = l.j.label; rs[k] = (rs[k] || 0) + 1; });
+      const reasons = Object.entries(rs).sort((x, y) => y[1] - x[1]);
+      const dl = pend.filter(l => l.j.delayed).length;
+      const oldest = pend.map(l => l.rd).filter(Boolean).sort()[0];
+      const etas = pend.map(l => l.eta).filter(d => d && d >= cToday).sort();
+      const cs = [...new Set(ls.map(l => data.cn[l.c].name))], csP = new Set(pend.map(l => l.c)).size;
+      const uq = l => l.each || l.qty || 0, isD = l => l.st === 'arrived' || l.st === 'received';
+      const qReq = sum(ls, uq), qDel = sum(ls.filter(isD), uq), qTr = sum(pend.filter(l => /^(01b|01c|08)/.test(l.stRaw || '')), uq), qPrep = sum(pend.filter(l => /^(04|06|07)/.test(l.stRaw || '')), uq), qNr = sum(pend, uq) - qTr - qPrep;
+      const tot = qReq, share = tot ? qDel / tot : 0;
+      return { name, a, tot, share, pendN: pend.length, open: cOpen === name,
+        toggle: () => this.setState({ critOpen: cOpen === name ? '' : name }),
+        req: fmtN(qReq), d: fmtN(qDel), t: qTr ? fmtN(qTr) : '—', prep: qPrep ? fmtN(qPrep) : '—', p: qNr ? fmtN(qNr) : '—', pend: qReq - qDel ? fmtN(qReq - qDel) : '0', pendFg: qReq - qDel ? '#C92A2A' : '#087F3B', totS: fmtN(tot),
+        pct: Math.round(share * 100) + '%', w: (share * 100) + '%', pctFg: share >= .8 ? '#087F3B' : share >= .4 ? '#B54708' : '#C92A2A',
+        countries: (cs.length === 1 ? cs[0] : cs.length + ' countries') + (pend.length ? ' · ' + csP + ' pending' : ''), cTitle: cs.join(', '),
+        why: pend.length ? reasons.slice(0, 3).map(([k, n]) => k + ' ×' + n).join(' · ') + (reasons.length > 3 ? ' · +' + (reasons.length - 3) + ' more' : '') : 'All delivered',
+        whyFg: pend.length ? '#3F4B57' : '#087F3B',
+        delayed: dl ? dl + ' of ' + pend.length : '—', delFg: dl ? '#C92A2A' : '#8A97A3',
+        since: oldest ? fd(oldest) + ' · ' + days(oldest, cToday) + ' d' : '—',
+        eta: etas.length ? fd(etas[0]) : '—',
+        arrow: cOpen === name ? '▾' : '▸',
+        lines: ls.slice().sort((x, y) => (pend.includes(y) ? 1 : 0) - (pend.includes(x) ? 1 : 0) || (y.j.delayed ? 1 : 0) - (x.j.delayed ? 1 : 0) || data.cn[x.c].name.localeCompare(data.cn[y.c].name) || String(x.rd || '').localeCompare(String(y.rd || ''))).map((l, i) => ({ bg: pend.includes(l) ? '#fff' : '#F4FAF6', n: i + 1, ...refsOf(l), country: data.cn[l.c].name, qty: fmtN(l.each || l.qty), st: l.stRaw || l.j.label, stFg: GM[l.j.g] ? GM[l.j.g].fg : '#3F4B57', why: l.j.detail || '', late: l.j.delayed ? (l.j.delayText || 'Delayed') : '', rd: l.rd ? fd(l.rd) : '', eta: l.ata ? 'ATA ' + fd(l.ata) : l.eta ? 'ETA ' + fd(l.eta) : '', openLine: () => this.setState({ openLine: l.i }) })) };
+    }).sort((x, y) => (y.tot - y.a.d > 0) - (x.tot - x.a.d > 0) || x.share - y.share || x.name.localeCompare(y.name)).map((x, i) => ({ ...x, sn: i + 1 }));
+    const crPend = cr.filter(x => x.pendN > 0).length;
+    const crit = { rows: cr, empty: cr.length === 0,
+      sub: (country ? data.cn[country].name : 'All countries') + ' · quantities in each · ' + plural(cr.length, 'essential item') + ' · ' + crPend + ' with pending supply · requested = sum of request lines in the export (canceled excluded) · delivered = 09-Arrived / 10-Received · lowest delivered share first · click a row for countries, delays and every line' };
 
     const cname = country ? data.cn[country].name : '';
-    return { ...base, dos, it, hasLine, qv, lt, sh, crit, proc, cs, cg, ov, pres, briefCols: (() => { const w = window.innerWidth, side = w < 1200 ? 230 : 290, list = w < 1200 ? 190 : 230; return present ? 'minmax(0,1fr) ' + side + 'px' : list + 'px minmax(0,1fr) ' + side + 'px'; })(), bkLegend: BK.map(b => ({ label: b.label, color: b.color })),
+    const dqG = {}; DQ.forEach(x => { const key = x.k + '|' + x.v; const a = dqG[key] = dqG[key] || { k: x.k, v: x.v, why: x.why, n: 0, src: new Set(), refs: new Set() }; a.n++; a.src.add(SRC[x.l.src] ? SRC[x.l.src].label : x.l.src); a.refs.add(x.l.ref); });
+    const dq = { rows: Object.values(dqG).sort((a, b) => b.n - a.n).map((a, i) => ({ sn: i + 1, field: DQ_LABEL[a.k] || a.k, v: a.v, why: a.why, n: fmtN(a.n), src: [...a.src].join(', '), refs: fmtN(a.refs.size) + ' shipment refs' })), total: fmtN(DQ.length), none: DQ.length === 0,
+      exportCsv: () => { const H = ['Field','Value as recorded','Issue','Shipment ref','Request','Country','Source','Item code','Item']; const rs = [H, ...DQ.map(x => [DQ_LABEL[x.k] || x.k, x.v, x.why, x.l.ref, x.l.or, x.l.c, SRC[x.l.src] ? SRC[x.l.src].label : x.l.src, x.l.code, x.l.desc])]; const csv = rs.map(r => r.map(v => '"' + String(v ?? '').replace(/"/g, '""') + '"').join(',')).join('\n'); const a = document.createElement('a'); a.href = URL.createObjectURL(new Blob(['\ufeff' + csv], { type: 'text/csv' })); a.download = 'ebola-data-inconsistencies.csv'; a.click(); } };
+    const srcProfile = Object.entries(SRC_FILL).sort((a, b) => b[1].n - a[1].n).map(([k, a]) => ({ label: SRC[k] ? SRC[k].label : k, n: fmtN(a.n), cells: PF.map(([f]) => { const p = Math.round(a[f] * 100); return { v: p + '%', fg: p >= 50 ? '#087F3B' : p >= 10 ? '#B54708' : '#C92A2A', bg: p >= 50 ? '#fff' : p >= 10 ? '#FFF8E6' : '#FDEBE2' }; }) }));
+    return { ...base, dq, bo, srcProfile, srcHead: PF.map(([, label]) => ({ label })), chartRef: this.chartRef, dos, it, hasLine, qv, lt, sh, crit, proc, cs, cg, ov, pres, briefCols: (() => { const w = window.innerWidth, side = w < 1200 ? 230 : 290, list = w < 1200 ? 190 : 230; return present ? 'minmax(0,1fr) ' + side + 'px' : list + 'px minmax(0,1fr) ' + side + 'px'; })(), bkLegend: BK.map(b => ({ label: b.label, color: b.color })),
       countryOpts: (tab === 'proc' && this.state.dataAll ? this.state.dataAll : data).countries.slice().sort((a,b) => a.name.localeCompare(b.name)).map(c => ({ v: c.iso, label: c.name })),
       kpis, srcBars, stageBars, countryRows, orders, essItems,
       offMapNote: 'Geneva HQ stock, HQ/OSL stock and direct supplier POs ship from outside the region and are not drawn as lines.',
