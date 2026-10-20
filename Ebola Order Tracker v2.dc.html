@@ -509,11 +509,53 @@
             <div style="background:#fff;border:1px solid #DDE3E9;border-radius:8px;padding:12px 16px;display:flex;flex-direction:column;gap:3px"><span style="font-size:11px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:#536271">{{ k.label }}</span><span style="font-size:22px;font-weight:600;color:{{ k.color }}">{{ k.value }}</span><span style="font-size:12px;color:#536271">{{ k.sub }}</span></div>
           </sc-for>
         </div>
-        <div style="display:flex;gap:14px;flex-wrap:wrap;font-size:11px;color:#536271;align-items:center">
-          <span>Each line’s quantity sits in one column by its WHO status: not yet available (00, 01, 01d, 12, oo), available not shipped (01b, 02, 04, 06, 07), in transit (01c, 08), delivered (09, 10). Pending = not delivered. Canceled lines excluded. The original requested quantity is not available in the export; ordered is the sum of the request’s lines.</span>
-          <span style="display:flex;align-items:center;gap:4px"><span style="width:9px;height:9px;border-radius:2px;background:#F03E3E"></span>Not ready (00–02, 12, oo)</span>
-          <span style="display:flex;align-items:center;gap:4px"><span style="width:9px;height:9px;border-radius:2px;background:#F59F00"></span>Preparing to ship (04–07)</span>
-          <span style="display:flex;align-items:center;gap:4px"><span style="width:9px;height:9px;border-radius:2px;background:#0A84FF"></span>In transit (01b, 01c, 08)</span>
+
+        <div style="background:#fff;border:1px solid #DDE3E9;border-radius:8px;padding:12px 16px;display:flex;flex-direction:column;gap:10px">
+          <div style="display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap;align-items:baseline"><h2 style="margin:0;font-size:14px;font-weight:600">Where the ordered value is now</h2><span style="font-size:12px;color:#536271">{{ bo.funnel.total }} ordered · canceled lines excluded</span></div>
+          <div style="display:flex;height:22px;border-radius:5px;overflow:hidden;background:#EEF2F5"><sc-for list="{{ bo.funnel.segs }}" as="s" hint-placeholder-count="4"><span title="{{ s.label }} · {{ s.v }}" style="width:{{ s.w }};background:{{ s.color }}"></span></sc-for></div>
+          <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,170px),1fr));gap:8px 16px">
+            <sc-for list="{{ bo.funnel.segs }}" as="s" hint-placeholder-count="4"><div style="display:flex;gap:8px;align-items:flex-start"><span style="width:10px;height:10px;border-radius:2px;margin-top:4px;flex:none;background:{{ s.color }}"></span><span style="display:flex;flex-direction:column"><span style="font-size:12px;color:#3F4B57">{{ s.label }}</span><span style="font-size:17px;font-weight:700;color:#14212E">{{ s.v }} <span style="font-size:12px;font-weight:600;color:#536271">{{ s.p }}</span></span><span style="font-size:11px;color:#536271">{{ s.lines }}</span></span></div></sc-for>
+          </div>
+          <span style="font-size:11px;color:#536271;text-wrap:pretty">Not yet available = WHO status 00, 01, 01d, 12 or missing · Available, not shipped = 01b, 02, 04, 06, 07 · In transit = 01c, 08 · Delivered = 09, 10. The original requested quantity is not available in the export; ordered is the sum of each request’s lines.</span>
+        </div>
+        <div style="display:flex;flex-direction:column;gap:8px">
+          <div style="display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap;align-items:baseline"><h2 style="margin:0;font-size:14px;font-weight:600">Lines by condition</h2><span style="font-size:11px;color:#536271">Click a card to filter the lines below · days counted to {{ asOf }}</span></div>
+          <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,240px),1fr));gap:12px">
+            <sc-for list="{{ bo.queues }}" as="q" hint-placeholder-count="4">
+              <button onClick="{{ q.pick }}" style="cursor:pointer;text-align:left;background:{{ q.bg }};border:1px solid {{ q.bd }};border-top:4px solid {{ q.fg }};border-radius:8px;padding:10px 14px;display:flex;flex-direction:column;gap:4px;color:#14212E" style-hover="background:#F7F9FA">
+                <span style="font-size:12px;font-weight:600;color:{{ q.fg }}">{{ q.label }}</span>
+                <span style="display:flex;align-items:baseline;gap:8px"><span style="font-size:24px;font-weight:700">{{ q.n }}</span><span style="font-size:12px;color:#536271">lines</span><span style="margin-left:auto;font-size:16px;font-weight:700">{{ q.v }}</span></span>
+                <span style="font-size:11px;color:#536271">{{ q.reqs }} · {{ q.oldest }}</span>
+                <span style="font-size:10px;color:#6B7884">{{ q.sub }}</span>
+              </button>
+            </sc-for>
+          </div>
+        </div>
+        <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,480px),1fr));gap:16px;align-items:start">
+          <div style="background:#fff;border:1px solid #DDE3E9;border-radius:8px;overflow:hidden">
+            <div style="padding:10px 14px;border-bottom:1px solid #DDE3E9;display:flex;justify-content:space-between;gap:8px"><h2 style="margin:0;font-size:14px;font-weight:600">Age of remaining value</h2><span style="font-size:11px;color:#536271">Days since Request Date</span></div>
+            <div style="padding:10px 14px;display:grid;grid-template-columns:max-content minmax(0,1fr) max-content max-content;gap:8px 12px;align-items:center;font-size:12px">
+              <sc-for list="{{ bo.ageing }}" as="a" hint-placeholder-count="5">
+                <span style="color:#3F4B57;white-space:nowrap">{{ a.label }}</span>
+                <span style="display:flex;height:14px;border-radius:3px;overflow:hidden;background:#F3F5F7"><sc-for list="{{ a.segs }}" as="s" hint-placeholder-count="0"><span title="{{ s.title }}" style="width:{{ s.w }};background:{{ s.color }}"></span></sc-for></span>
+                <span style="text-align:right;font-weight:700;white-space:nowrap">{{ a.v }}</span>
+                <span style="text-align:right;color:#536271;white-space:nowrap">{{ a.n }}</span>
+              </sc-for>
+            </div>
+          </div>
+          <div style="background:#fff;border:1px solid #DDE3E9;border-radius:8px;overflow:hidden">
+            <div style="padding:10px 14px;border-bottom:1px solid #DDE3E9;display:flex;justify-content:space-between;gap:8px"><h2 style="margin:0;font-size:14px;font-weight:600">Top 10 items by remaining value</h2><span style="font-size:11px;color:#536271">Click an item to filter the lines below</span></div>
+            <div style="display:flex;flex-direction:column">
+              <sc-for list="{{ bo.topItems }}" as="t" hint-placeholder-count="10">
+                <button onClick="{{ t.pick }}" title="{{ t.desc }}" style="cursor:pointer;border:0;border-bottom:1px solid #EEF2F5;background:{{ t.bg }};padding:5px 14px;display:grid;grid-template-columns:20px minmax(0,1fr) 120px max-content;gap:10px;align-items:center;text-align:left;font-size:11px;color:#14212E" style-hover="background:#F3F8FC">
+                  <span style="color:#536271;text-align:right">{{ t.sn }}</span>
+                  <span style="display:flex;flex-direction:column;min-width:0"><span style="font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">{{ t.desc }}</span><span style="color:#536271;white-space:nowrap;overflow:hidden;text-overflow:ellipsis"><span style="font-family:'IBM Plex Mono',monospace;font-size:10px">{{ t.code }}</span> · {{ t.q }} pending · {{ t.n }} lines · {{ t.cs }}</span></span>
+                  <span style="height:8px;border-radius:4px;background:#EEF2F5;overflow:hidden;display:flex"><span style="width:{{ t.w }};background:#C92A2A"></span></span>
+                  <span style="font-weight:700;text-align:right;white-space:nowrap">{{ t.v }}</span>
+                </button>
+              </sc-for>
+            </div>
+          </div>
         </div>
         <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,560px),1fr));gap:16px;align-items:start">
           <div style="background:#fff;border:1px solid #DDE3E9;border-radius:8px;overflow:hidden">
@@ -545,11 +587,11 @@
             <span style="display:flex;gap:8px;align-items:center"><sc-if value="{{ bo.hasFilter }}" hint-placeholder-val="{{ false }}"><button onClick="{{ bo.clear }}" style="cursor:pointer;border:0;background:transparent;font-size:12px;font-weight:600;color:#0071B8">Clear filter</button></sc-if><button onClick="{{ bo.exportCsv }}" style="cursor:pointer;font-size:12px;padding:5px 12px;border:1px solid #CBD4DC;border-radius:6px;background:#fff;color:#14212E;font-weight:500">Export CSV</button></span>
           </div>
           <div style="overflow:auto;max-height:70vh">
-            <div style="display:grid;grid-template-columns:repeat(21,max-content) minmax(max-content,1fr);width:max-content;min-width:100%">
-              <div style="position:sticky;top:0;z-index:1;grid-column:1 / -1;display:grid;grid-template-columns:subgrid;background:#0071B8;font-size:10px;font-weight:600;letter-spacing:.03em;text-transform:uppercase;color:#fff"><span style="padding:4px 7px;border-right:1px solid #3D8FC6;white-space:nowrap;text-align:right">SN</span><span style="padding:4px 7px;border-right:1px solid #3D8FC6;white-space:nowrap;text-align:right">Item #</span><span style="padding:4px 7px;border-right:1px solid #3D8FC6;white-space:nowrap">Country</span><span style="padding:4px 7px;border-right:1px solid #3D8FC6;white-space:nowrap">OR Ref</span><span style="padding:4px 7px;border-right:1px solid #3D8FC6;white-space:nowrap">SR Ref</span><span style="padding:4px 7px;border-right:1px solid #3D8FC6;white-space:nowrap">PO No.</span><span style="padding:4px 7px;border-right:1px solid #3D8FC6;white-space:nowrap">Item code</span><span style="padding:4px 7px;border-right:1px solid #3D8FC6;white-space:nowrap">Item</span><span style="padding:4px 7px;border-right:1px solid #3D8FC6;white-space:nowrap;text-align:right">Ordered</span><span style="padding:4px 7px;border-right:1px solid #3D8FC6;white-space:nowrap;text-align:right">Not yet available</span><span style="padding:4px 7px;border-right:1px solid #3D8FC6;white-space:nowrap;text-align:right">Available, not shipped</span><span style="padding:4px 7px;border-right:1px solid #3D8FC6;white-space:nowrap;text-align:right">In transit</span><span style="padding:4px 7px;border-right:1px solid #3D8FC6;white-space:nowrap;text-align:right">Delivered</span><span style="padding:4px 7px;border-right:1px solid #3D8FC6;white-space:nowrap;text-align:right">Pending</span><span style="padding:4px 7px;border-right:1px solid #3D8FC6;white-space:nowrap;text-align:right">Pending value</span><span style="padding:4px 7px;border-right:1px solid #3D8FC6;white-space:nowrap">WHO Shipping Status</span><span style="padding:4px 7px;border-right:1px solid #3D8FC6;white-space:nowrap;text-align:right">Days since</span><span style="padding:4px 7px;border-right:1px solid #3D8FC6;white-space:nowrap">Hub / supplier</span><span style="padding:4px 7px;border-right:1px solid #3D8FC6;white-space:nowrap">Channel</span><span style="padding:4px 7px;border-right:1px solid #3D8FC6;white-space:nowrap">Shipment ref</span><span style="padding:4px 7px;border-right:1px solid #3D8FC6;white-space:nowrap">Item total</span><span style="padding:4px 7px;border-right:1px solid #3D8FC6;white-space:nowrap">Why pending (as recorded)</span></div>
+            <div style="display:grid;grid-template-columns:repeat(20,max-content) minmax(max-content,1fr);width:max-content;min-width:100%">
+              <div style="position:sticky;top:0;z-index:1;grid-column:1 / -1;display:grid;grid-template-columns:subgrid;background:#0071B8;font-size:10px;font-weight:600;letter-spacing:.03em;text-transform:uppercase;color:#fff"><span style="padding:4px 7px;border-right:1px solid #3D8FC6;white-space:nowrap;text-align:right">Item #</span><span style="padding:4px 7px;border-right:1px solid #3D8FC6;white-space:nowrap">Country</span><span style="padding:4px 7px;border-right:1px solid #3D8FC6;white-space:nowrap">OR Ref</span><span style="padding:4px 7px;border-right:1px solid #3D8FC6;white-space:nowrap">SR Ref</span><span style="padding:4px 7px;border-right:1px solid #3D8FC6;white-space:nowrap">PO No.</span><span style="padding:4px 7px;border-right:1px solid #3D8FC6;white-space:nowrap">Item code</span><span style="padding:4px 7px;border-right:1px solid #3D8FC6;white-space:nowrap">Item</span><span style="padding:4px 7px;border-right:1px solid #3D8FC6;white-space:nowrap;text-align:right">Ordered</span><span style="padding:4px 7px;border-right:1px solid #3D8FC6;white-space:nowrap;text-align:right">Not yet available</span><span style="padding:4px 7px;border-right:1px solid #3D8FC6;white-space:nowrap;text-align:right">Available, not shipped</span><span style="padding:4px 7px;border-right:1px solid #3D8FC6;white-space:nowrap;text-align:right">In transit</span><span style="padding:4px 7px;border-right:1px solid #3D8FC6;white-space:nowrap;text-align:right">Delivered</span><span style="padding:4px 7px;border-right:1px solid #3D8FC6;white-space:nowrap;text-align:right">Pending</span><span style="padding:4px 7px;border-right:1px solid #3D8FC6;white-space:nowrap;text-align:right">Pending value</span><span style="padding:4px 7px;border-right:1px solid #3D8FC6;white-space:nowrap">WHO Shipping Status</span><span style="padding:4px 7px;border-right:1px solid #3D8FC6;white-space:nowrap;text-align:right">Days since</span><span style="padding:4px 7px;border-right:1px solid #3D8FC6;white-space:nowrap">Hub / supplier</span><span style="padding:4px 7px;border-right:1px solid #3D8FC6;white-space:nowrap">Channel</span><span style="padding:4px 7px;border-right:1px solid #3D8FC6;white-space:nowrap">Shipment ref</span><span style="padding:4px 7px;border-right:1px solid #3D8FC6;white-space:nowrap">Item total</span><span style="padding:4px 7px;border-right:1px solid #3D8FC6;white-space:nowrap">Why pending (as recorded)</span></div>
               <sc-for list="{{ bo.rows }}" as="l" hint-placeholder-count="10">
                 <button onClick="{{ l.open }}" style="cursor:pointer;grid-column:1 / -1;display:grid;grid-template-columns:subgrid;border:0;border-top:{{ l.top }};padding:0;text-align:left;font-size:11px;color:#14212E;white-space:nowrap;background:{{ l.bg }}" style-hover="background:#F3F8FC">
-                  <span style="padding:3px 7px;border-right:1px solid #DDE3E9;text-align:right;color:#536271">{{ l.sn }}</span><span style="padding:3px 7px;border-right:1px solid #DDE3E9;text-align:right;color:#536271">{{ l.grp }}</span><span style="padding:3px 7px;border-right:1px solid #DDE3E9;">{{ l.country }}</span>
+                  <span style="padding:3px 7px;border-right:1px solid #DDE3E9;text-align:right;color:#536271">{{ l.grp }}</span><span style="padding:3px 7px;border-right:1px solid #DDE3E9;">{{ l.country }}</span>
                   <span style="padding:3px 7px;border-right:1px solid #DDE3E9;font-family:'IBM Plex Mono',monospace;font-size:10px">{{ l.orRef }}</span><span style="padding:3px 7px;border-right:1px solid #DDE3E9;font-family:'IBM Plex Mono',monospace;font-size:10px">{{ l.srRef }}</span><span style="padding:3px 7px;border-right:1px solid #DDE3E9;font-family:'IBM Plex Mono',monospace;font-size:10px">{{ l.poNum }}</span>
                   <span style="padding:3px 7px;border-right:1px solid #DDE3E9;font-family:'IBM Plex Mono',monospace;font-size:10px">{{ l.code }}</span><span title="{{ l.desc }}" style="padding:3px 7px;border-right:1px solid #DDE3E9;max-width:380px;overflow:hidden;text-overflow:ellipsis;font-weight:500">{{ l.desc }}</span>
                   <span style="padding:3px 7px;border-right:1px solid #DDE3E9;text-align:right;font-weight:700;background:#F3F5F7">{{ l.o }}</span>
@@ -569,7 +611,57 @@
     </sc-if>
 
     <sc-if value="{{ tabImpact }}" hint-placeholder-val="{{ false }}">
-      <dc-import name="BeneficiaryRisk" country="{{ country }}" on-pick="{{ impactPick }}" priority="{{ impactPrio }}" cfr-no="{{ cfrNo }}" cfr-care="{{ cfrCare }}" avg-stay="{{ avgStay }}" default-beds="{{ defaultBeds }}" horizon-days="{{ horizonDays }}" pcr-run-size="{{ pcrRunSize }}" pcr-controls="{{ pcrControls }}" hint-size="100%,1100px"></dc-import>
+      <div data-noprint="1" style="display:flex;gap:0;margin-bottom:4px">
+        <sc-for list="{{ impTabs }}" as="t" hint-placeholder-count="2"><button onClick="{{ t.pick }}" style="cursor:pointer;flex:none;white-space:nowrap;font-size:13px;font-weight:600;padding:7px 16px;border:1px solid {{ t.bd }};background:{{ t.bg }};color:{{ t.fg }};margin-right:-1px">{{ t.label }}</button></sc-for>
+      </div>
+      <sc-if value="{{ impEtc }}" hint-placeholder-val="{{ true }}">      <dc-import name="BeneficiaryRisk" country="{{ country }}" on-pick="{{ impactPick }}" priority="{{ impactPrio }}" cfr-no="{{ cfrNo }}" cfr-care="{{ cfrCare }}" avg-stay="{{ avgStay }}" default-beds="{{ defaultBeds }}" horizon-days="{{ horizonDays }}" pcr-run-size="{{ pcrRunSize }}" pcr-controls="{{ pcrControls }}" hint-size="100%,1100px"></dc-import></sc-if>
+      <sc-if value="{{ impKits }}" hint-placeholder-val="{{ false }}"><section style="display:flex;flex-direction:column;gap:14px">
+        <div style="display:flex;flex-wrap:wrap;gap:8px 24px;align-items:flex-end;justify-content:space-between">
+          <div style="display:flex;flex-direction:column;gap:3px;max-width:900px">
+          <h2 style="margin:0;font-size:20px;font-weight:600;color:#14212E">Emergency health kits · estimated beneficiaries</h2>
+          <span style="font-size:12px;color:#536271;text-wrap:pretty">{{ kits.sub }}. Beneficiaries = modules recorded × WHO beneficiaries per module. Delivered = Arrived or Received; pipeline = every other status. Rows are not added together because their populations can overlap.</span>
+          </div>
+          <div style="display:flex;gap:24px"><div style="display:flex;flex-direction:column;align-items:flex-end"><span style="font-size:22px;font-weight:700;color:#14212E">{{ kits.tot }}</span><span style="font-size:11px;color:#536271">value of counted modules</span></div><div style="display:flex;flex-direction:column;align-items:flex-end"><span style="font-size:22px;font-weight:700;color:#14212E">{{ kits.nMods }}</span><span style="font-size:11px;color:#536271">modules counted</span></div></div>
+        </div>
+        <sc-if value="{{ kits.empty }}" hint-placeholder-val="{{ false }}"><div style="padding:14px;border:1px solid #DDE3E9;border-radius:8px;background:#fff;font-size:13px;color:#536271">No WHO kit modules with a published beneficiary figure in the current filters.</div></sc-if>
+        <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,460px),1fr));gap:14px;align-items:start">
+          <sc-for list="{{ kits.panels }}" as="pn" hint-placeholder-count="2">
+            <div style="background:#fff;border:1px solid #DDE3E9;border-radius:8px;overflow:hidden">
+              <div style="background:#0071B8;color:#fff;padding:9px 14px;display:flex;flex-direction:column;gap:1px"><span style="font-size:14px;font-weight:600">{{ pn.title }}</span><span style="font-size:11px;color:#D6E9F7">{{ pn.sub }}</span></div>
+              <div style="display:grid;grid-template-columns:minmax(0,1fr) max-content max-content;column-gap:18px">
+                <div style="grid-column:1 / -1;display:grid;grid-template-columns:subgrid;padding:6px 14px;border-bottom:1px solid #DDE3E9;background:#F7F9FA;font-size:10px;font-weight:600;letter-spacing:.04em;text-transform:uppercase;color:#536271"><span>Kit · beneficiary</span><span style="text-align:right;color:#087F3B">Delivered</span><span style="text-align:right;color:#0062CC">Pipeline</span></div>
+                <sc-for list="{{ pn.rows }}" as="x" hint-placeholder-count="4">
+                  <div title="{{ x.basis }}" style="grid-column:1 / -1;display:grid;grid-template-columns:subgrid;align-items:center;padding:8px 14px;border-bottom:1px solid #EEF2F5">
+                    <span style="display:flex;flex-direction:column;gap:1px;min-width:0"><span style="font-size:12px;font-weight:600;color:#14212E">{{ x.fam }}</span><span style="font-size:12px;color:#3F4B57">{{ x.unit }}</span><span style="font-size:10px;color:#6B7884">{{ x.basis }} · modules {{ x.mods }} · {{ x.v }}</span></span>
+                    <span style="text-align:right;font-size:20px;font-weight:700;color:#087F3B;font-variant-numeric:tabular-nums">{{ x.d }}</span>
+                    <span style="text-align:right;font-size:20px;font-weight:700;color:#0062CC;font-variant-numeric:tabular-nums">{{ x.p }}</span>
+                  </div>
+                </sc-for>
+              </div>
+            </div>
+          </sc-for>
+        </div>
+        <div style="background:#fff;border:1px solid #DDE3E9;border-radius:8px;overflow:hidden">
+          <div style="padding:10px 12px;display:flex;flex-direction:column;gap:2px"><h3 style="margin:0;font-size:14px;font-weight:600">Kit modules counted</h3><span style="font-size:12px;color:#536271">Each row is the module that sets the beneficiary count for its kit. Hover a row for the WHO source.</span></div>
+          <div style="overflow:auto;max-height:60vh;border-top:1px solid #DDE3E9">
+            <div style="display:grid;grid-template-columns:repeat(12,max-content) minmax(320px,1fr);width:max-content;min-width:100%">
+              <div style="position:sticky;top:0;z-index:1;grid-column:1 / -1;display:grid;grid-template-columns:subgrid;background:#0071B8;font-size:10px;font-weight:600;letter-spacing:.03em;text-transform:uppercase;color:#fff"><span style="padding:4px 7px;border-right:1px solid #3D8FC6;white-space:nowrap;text-align:right">SN</span><span style="padding:4px 7px;border-right:1px solid #3D8FC6;white-space:nowrap">Kit</span><span style="padding:4px 7px;border-right:1px solid #3D8FC6;white-space:nowrap">Module counted</span><span style="padding:4px 7px;border-right:1px solid #3D8FC6;white-space:nowrap">Item code</span><span style="padding:4px 7px;border-right:1px solid #3D8FC6;white-space:nowrap;text-align:right">Per module</span><span style="padding:4px 7px;border-right:1px solid #3D8FC6;white-space:nowrap">Beneficiary unit</span><span style="padding:4px 7px;border-right:1px solid #3D8FC6;white-space:nowrap;text-align:right">Modules delivered</span><span style="padding:4px 7px;border-right:1px solid #3D8FC6;white-space:nowrap;text-align:right">Modules pipeline</span><span style="padding:4px 7px;border-right:1px solid #3D8FC6;white-space:nowrap;text-align:right">Delivered beneficiaries</span><span style="padding:4px 7px;border-right:1px solid #3D8FC6;white-space:nowrap;text-align:right">Pipeline beneficiaries</span><span style="padding:4px 7px;border-right:1px solid #3D8FC6;white-space:nowrap;text-align:right">Value</span><span style="padding:4px 7px;border-right:1px solid #3D8FC6;white-space:nowrap">Countries</span><span style="padding:4px 7px;border-right:1px solid #3D8FC6;white-space:nowrap">WHO basis</span></div>
+              <sc-for list="{{ kits.rows }}" as="k" hint-placeholder-count="8">
+                <div title="{{ k.src }}" style="grid-column:1 / -1;display:grid;grid-template-columns:subgrid;border-top:1px solid #DDE3E9;font-size:11px;color:#14212E;white-space:nowrap">
+                  <span style="padding:3px 7px;border-right:1px solid #DDE3E9;text-align:right;color:#536271">{{ k.sn }}</span><span style="padding:3px 7px;border-right:1px solid #DDE3E9;font-weight:600">{{ k.fam }}</span><span style="padding:3px 7px;border-right:1px solid #DDE3E9;">{{ k.label }}</span><span title="{{ k.codes }}" style="padding:3px 7px;border-right:1px solid #DDE3E9;font-family:'IBM Plex Mono',monospace;font-size:10px;max-width:200px;overflow:hidden;text-overflow:ellipsis">{{ k.codes }}</span>
+                  <span style="padding:3px 7px;border-right:1px solid #DDE3E9;text-align:right">{{ k.per }}</span><span style="padding:3px 7px;border-right:1px solid #DDE3E9;">{{ k.unit }}</span>
+                  <span style="padding:3px 7px;border-right:1px solid #DDE3E9;text-align:right;font-weight:600;color:#087F3B">{{ k.mD }}</span><span style="padding:3px 7px;border-right:1px solid #DDE3E9;text-align:right;font-weight:600;color:#0062CC">{{ k.mP }}</span>
+                  <span style="padding:3px 7px;border-right:1px solid #DDE3E9;text-align:right;font-weight:700;color:#087F3B">{{ k.bD }}</span><span style="padding:3px 7px;border-right:1px solid #DDE3E9;text-align:right;font-weight:700;color:#0062CC">{{ k.bP }}</span>
+                  <span style="padding:3px 7px;border-right:1px solid #DDE3E9;text-align:right">{{ k.v }}</span><span title="{{ k.cTitle }}" style="padding:3px 7px;border-right:1px solid #DDE3E9;">{{ k.countries }}</span>
+                  <span title="{{ k.basis }}" style="padding:3px 7px;border-right:1px solid #DDE3E9;color:#3F4B57;max-width:520px;overflow:hidden;text-overflow:ellipsis">{{ k.basis }}</span>
+                </div>
+              </sc-for>
+            </div>
+          </div>
+          <sc-if value="{{ kits.other }}" hint-placeholder-val="{{ false }}"><div style="padding:8px 12px;border-top:1px solid #DDE3E9;font-size:11px;color:#536271;text-wrap:pretty">{{ kits.other }}</div></sc-if>
+          <div style="padding:8px 12px;border-top:1px solid #DDE3E9;font-size:11px;color:#536271;text-wrap:pretty">Sources: WHO Standards Health Emergency Kits – Overview (August 2025, cdn.who.int); WHO Cholera kits 2020 information note. TESK 2025 (25 trauma patients per kit) is not counted: the export has TESK 2025 disinfectant, sterilisation and extrication-collar sets only, none of which sets the patient count. TRK 2025 is not counted: WHO does not state which set sets its 50-patient count.</div>
+        </div>
+      </section></sc-if>
     </sc-if>
 
     <sc-if value="{{ tabGlossary }}" hint-placeholder-val="{{ false }}">
@@ -1034,6 +1126,46 @@ function build(raw0, pri) {
   return { today, countries: raw.countries, cn, orders, lines: raw.lines, ems: raw0.ems || [], allLines: raw0.lines, allCn: Object.fromEntries(raw0.countries.map(c => [c.iso, c.name])) };
 }
 
+const WHO_KITS = 'WHO Standards Health Emergency Kits – Overview, August 2025';
+const KITF = [
+  { f: 'TESK', name: 'Trauma and Emergency Surgery Kit (TESK) 2019', kind: 'p' },
+  { f: 'IEHK', name: 'Interagency Emergency Health Kit (IEHK)', kind: 'c' },
+  { f: 'NCDK', name: 'Non-communicable Diseases Kit (NCDK)', kind: 'c' },
+  { f: 'MHK', name: 'Mental Health Kit (MHK) 2022', kind: 'c' },
+  { f: 'CHO', name: 'Cholera kits 2020', kind: 'p' },
+  { f: 'PED', name: 'Paediatric SAM kit (PED-SAM) 2020', kind: 'p' },
+  { f: 'MEAS', name: 'Measles kit 2021', kind: 'p' },
+  { f: 'PNEU', name: 'Pneumonia kit 2020', kind: 'p' },
+  { f: 'CTT', name: 'Collection, testing & transfusion kit (CTT) 2021', kind: 'p' }];
+const KITR = [
+  { f: 'TESK', id: 'tesk', code: /^KMEDTESM1AB/, d: /tesk 2019.*set.*drugs, basic/i, per: 50, unit: 'hospitalized trauma patients', label: 'Set 1A1, drugs basic', basis: '1 kit (driven by set 1A1) = 50 hospitalized trauma patients, avg. two operations each', src: WHO_KITS + ', TESK 2019' },
+  { f: 'IEHK', id: 'iehkB', code: /^KMEDIEHK(BMM1|24101)/, d: /iehk 20(17|24),? basic\)? (module, medicines$|unit, medicine and renewables)/i, per: 1000, unit: 'people for 3 months (primary care)', label: 'Basic medicines module / unit', basis: '1 basic module = outreach population of 1,000 people for 3 months', src: WHO_KITS + ', IEHK 2024 basic vs supplementary', main: 1 },
+  { f: 'IEHK', id: 'iehkS', code: /^KMEDIEHK(SMM1|24201)/, d: /iehk 20(17|24),? supplementary\)?,? (module medicines|unit,? medecine,? oral|unit, medicine, oral)/i, per: 10000, unit: 'people for 3 months (hospital level)', label: 'Supplementary medicines module / oral unit', basis: '1 supplementary module = outreach population of 10,000 people for 3 months (hospital level; overlaps the basic-module population)', src: WHO_KITS + ', IEHK 2024 basic vs supplementary' },
+  { f: 'IEHK', id: 'iehkMB', code: /^KMEDIEHK24102/, per: 510, unit: 'uncomplicated malaria cases', label: 'IEHK 2024 basic malaria unit (1.2)', basis: '1 basic malaria unit = 510 uncomplicated malaria cases (+ RDTs to screen 800)', src: WHO_KITS + ', malaria units IEHK 2024' },
+  { f: 'IEHK', id: 'iehkMS', code: /^KMEDIEHK24206/, d: /iehk 2024 supplementary\) unit, malaria/i, per: 120, unit: 'severe malaria cases', label: 'IEHK 2024 supplementary malaria unit (2.6)', basis: '1 supplementary malaria unit = about 120 severe malaria cases (WHO medium of 166 children <20 kg or 75 patients >20 kg)', src: WHO_KITS + ', malaria units IEHK 2024' },
+  { f: 'IEHK', id: 'iehkP', code: /^KMEDIEHK24207/, d: /iehk 2024 supplementary\) unit, medicine, pep/i, per: 61, unit: 'people given PEP', label: 'IEHK 2024 supplementary PEP unit (2.7)', basis: '1 PEP unit = 50 adults + 10 children 20–30 kg + 1 child <20 kg', src: WHO_KITS + ', PEP unit' },
+  { f: 'IEHK', id: 'iehkP21', code: /^KMEDIEHKSMP5B/, per: 60, unit: 'people given PEP', label: 'IEHK 2021 supplementary PEP module', basis: 'As named in the item description: treatments for 50 adults + 10 children', src: 'Item description as recorded' },
+  { f: 'NCDK', id: 'ncdM', code: /^KMEDNCD(1BM1|K2MM)/, per: 10000, unit: 'people for 3 months', label: 'Medicines module (NCDK 2016 1a / NCDK 2022 module 1)', basis: '1 medicines module = population of 10,000 people for about 3 months', src: WHO_KITS + ', NCDK 2022', main: 1 },
+  { f: 'NCDK', id: 'ncdC', code: /^KMEDNCDK2MCC/, per: 100, unit: 'diabetic patients for 3 months', label: 'NCDK 2022 cold chain (insulin) module', basis: '1 cold chain module = about 100 diabetic patients for 3 months', src: WHO_KITS + ', NCDK 2022' },
+  { f: 'MHK', id: 'mhk', code: /^KMEDMH22M1/, per: 10000, unit: 'people for 3 months', label: 'Module 1, medicines, PHC', basis: '1 kit = population of 10,000 for 3 months', src: WHO_KITS + ', MHK 2022', main: 1 },
+  { f: 'CHO', id: 'choC', code: /^KMEDCHO(MA11|KA1-)/, d: /kit cholera central\) module, drugs/i, per: 100, unit: 'cholera cases (80 severe, 20 mild)', label: 'Central drugs module (1.1)', basis: '1 central module = 80 severe + 20 mild cases', src: WHO_KITS + ', cholera kits 2020' },
+  { f: 'CHO', id: 'choP', code: /^KMEDCHO(MA21|KA2-)/, d: /kit cholera periphery\) module, drugs/i, per: 100, unit: 'cholera cases (60 severe, 40 mild)', label: 'Periphery drugs module (2.1)', basis: '1 peripheral module = 60 severe + 40 mild cases', src: WHO_KITS + ', cholera kits 2020' },
+  { f: 'CHO', id: 'choM', code: /^KMEDCHO(MA31|KA3-)/, d: /kit cholera community\) module, drugs/i, per: 100, unit: 'mild cholera cases', label: 'Community drugs module (3.1)', basis: '1 community module = 100 mild cases', src: WHO_KITS + ', cholera kits 2020' },
+  { f: 'CHO', id: 'choL', code: /^KMEDCHOKA4(20|--)/, per: 100, unit: 'laboratory confirmation tests', label: 'Cholera laboratory kit (4), complete', basis: '1 laboratory kit = 100 laboratory confirmation tests', src: WHO_KITS + ', cholera kits 2020' },
+  { f: 'CHO', id: 'choI', code: /^KMEDCHO(KA5|K25050)/, per: 100, unit: 'suspected samples collected', label: 'Cholera investigation kit (5), complete', basis: '1 investigation kit = supplies to collect 100 samples', src: WHO_KITS + ', cholera kits 2020' },
+  { f: 'PED', id: 'pedS', code: /^KMEDPEDSAMMS/, d: /ped-sam 2020\) module,? (1, )?medicines sam/i, per: 50, unit: 'children with SAM and medical complications', label: 'SAM module', basis: '1 SAM module = 50 SAM children (inpatient)', src: WHO_KITS + ', PED-SAM 2020', main: 1 },
+  { f: 'PED', id: 'pedO', code: /^KMEDPEDSAMMPO/, per: 200, unit: 'sick children (oral treatment)', label: 'Oral medicines module', basis: '1 oral module = about 200 children', src: WHO_KITS + ', PED-SAM 2020' },
+  { f: 'PED', id: 'pedI', code: /^KMEDPEDSAMMPI/, per: 200, unit: 'sick children (oral + injectable)', label: 'Injectable medicines module', basis: '1 oral + injectable module = about 200 children (10-bed ward, 3 months, 4–6 day stay)', src: WHO_KITS + ', PED-SAM 2020' },
+  { f: 'MEAS', id: 'measS', code: /^KMEDMEASL1MCC/, per: 50, unit: 'severe measles cases', label: 'Medicines, severe cases', basis: '1 severe-cases module = 50 severe cases (incl. SAM with complications)', src: WHO_KITS + ', measles kit 2021' },
+  { f: 'MEAS', id: 'measM', code: /^KMEDMEASL1MMS/, per: 20, unit: 'mild measles cases', label: 'Medicines & supply, mild cases', basis: '1 mild-cases module = 20 mild cases', src: WHO_KITS + ', measles kit 2021' },
+  { f: 'PNEU', id: 'pneu', code: /^KMEDPNEU(M1MM|MM2)/, d: /kit pne[un]+monia 100 cases\) module, med[ei]cines/i, per: 100, unit: 'pneumonia cases', label: 'Medicines module (1)', basis: '1 medicines module = 100 pneumonia cases', src: WHO_KITS + ', pneumonia kit 2020' },
+  { f: 'CTT', id: 'ctt', code: /^KMEDCTTK5UM32/, per: 50, unit: 'transfusions', label: 'Submodule 3B, transfusion', basis: '1 kit = collect, test and transfuse 50 blood bags', src: WHO_KITS + ', CTT kit 2021' }];
+const KIT_ANY = /^KMED(TES|T25|IEHK|NCD|MH22|CHO|PEDSAM|MEAS|PNEU|CTT|TR25)/;
+const KIT_PEOPLE = new Set(['iehkB', 'iehkS', 'ncdM', 'mhk']), KIT_TESTS = new Set(['choL', 'choI']);
+const kitRule = l => { const d = (l.desc || '').trim();
+  if (/cholera (2025 )?investigation \(5\).*complete/i.test(d)) return KITR.find(k => k.id === 'choI');
+  if (/cholera laboratory \(4\).*complete/i.test(d)) return /box\s*2/i.test(d) ? null : KITR.find(k => k.id === 'choL');
+  return KITR.find(k => l.code ? k.code.test(l.code) : (k.d && k.d.test(d))); };
 class Component extends DCLogic {
   state = { data: null, q: '', country: '', src: '', stage: '', type: '', grp: '', issuesOnly: false, open: null, openLine: null, limit: 25, tab: 'visuals', bnF: '', showF: false, dOnly: false, reqF: '', present: false, pIdx: 0, auto: true, expand: {}, dFrom: '', dTo: '', lsort: 'rd', ldir: -1, ssort: 'value', sdir: -1, page: 0 };
   pickCountry(iso) {
@@ -1075,7 +1207,7 @@ class Component extends DCLogic {
     if (this.props.hideCompleted && o.pct >= 0.999) return false;
     return !qq || o.text.includes(qq);
   }
-  emEff() { return this.state.em || (this.state.tab === 'proc' ? 'all' : 'G013'); }
+  emEff() { return this.state.em || (this.state.tab === 'proc' || this.state.tab === 'impact' ? 'all' : 'G013'); }
   fLines({ noCountry, noSrc, noStage, noType, all } = {}) {
     const { country, src, stage, type, dFrom, dTo } = this.state, em = this.emEff(), data = all ? (this.state.dataAll || this.state.data) : this.state.data; if (!data) return [];
     const ok = new Set(data.orders.filter(o => this.orderPass(o)).map(o => o.key));
@@ -1177,11 +1309,13 @@ class Component extends DCLogic {
       anyFilter: !!(q || country || src || stage || type || issuesOnly || this.state.dFrom || this.state.dTo), clearAll: () => this.setState({ q:'', country:'', src:'', stage:'', type:'', grp:'', issuesOnly:false, dFrom:'', dTo:'', limit:25, page:0 }),
       showF: this.state.showF, toggleF: () => this.setState(s => ({ showF: !s.showF })), fLabel: (this.state.showF ? 'Fewer filters' : 'More filters') + ([src, stage, type, this.state.dFrom, this.state.dTo].filter(Boolean).length ? ' (' + [src, stage, type, this.state.dFrom, this.state.dTo].filter(Boolean).length + ')' : ''),
       dFrom: this.state.dFrom, dTo: this.state.dTo, onFrom: e => set('dFrom', e.target.value), onTo: e => set('dTo', e.target.value),
+      impEtc: (this.state.impView || 'etc') === 'etc', impKits: this.state.impView === 'kits',
+      impTabs: [['etc', 'Ebola treatment capacity'], ['kits', 'Emergency health kits']].map(([k, label]) => { const on = (this.state.impView || 'etc') === k; return { label, pick: () => this.setState({ impView: k }), bg: on ? '#0071B8' : '#fff', fg: on ? '#fff' : '#14212E', bd: on ? '#0071B8' : '#CBD4DC' }; }),
       exportPdf: () => this.exportPdf(), exportXlsx: () => this.exportXlsx(), xlsxLabel: this.state.xBusy ? 'Exporting…' : 'Excel', tabName: this.tabLabel(),
       tabs: [['visuals','Overview'],['countries','Country brief'],['lines','Line details'],['ships','Shipment info'],['proc','Procurement'],['critical','Critical items'],['backorders','Back orders'],['impact','Beneficiaries & risk'],['glossary','Glossary']].map(([k, label]) => ({ label, pick: () => this.setState({ tab: k, page: 0 }), fg: tab === k ? '#0071B8' : '#536271', border: tab === k ? '#0071B8' : 'transparent', weight: tab === k ? 600 : 500 })),
       tabVisuals: tab === 'visuals', tabCountries: tab === 'countries', tabLines: tab === 'lines', tabShips: tab === 'ships', tabProc: tab === 'proc', tabCritical: tab === 'critical', tabBack: tab === 'backorders', tabGlossary: tab === 'glossary', tabImpact: tab === 'impact',
       impactPick: v => set('country', v), impactPrio: (() => { const p = (this.props.priorityCountries || '').split(/[ ,]+/).filter(Boolean).map(x => x.toUpperCase()); return p.length ? p : PRIORITY; })(), cfrNo: this.props.cfrNo ?? 0.482, cfrCare: this.props.cfrCare ?? 0.30, pcrRunSize: this.props.pcrRunSize ?? 32, pcrControls: this.props.pcrControls ?? 2, avgStay: this.props.avgStay ?? 7, defaultBeds: this.props.defaultBeds ?? 20, horizonDays: this.props.horizonDays ?? 90,
-      dq: { rows: [] }, srcProfile: [], srcHead: [], chartRef: this.chartRef, qv: {}, lt: {}, sh: {}, crit: { rows: [] }, bo: { kpis: [], countries: [], suppliers: [], rows: [] }, proc: { stAll: [], stats: [], dSt: { segs: [], legend: [] }, dTy: { segs: [], legend: [] }, line: { series: [], yTicks: [], xTicks: [] }, reqBars: [], active: [], reqOpts: [], items: [], mV: {}, mN: {}, tCum: {}, tWk: {} }, cs: {}, cg: [], bkLegend: [], ov: { total: '—', scope: 'Loading…', bar: [], legend: [], alerts: [], att: [], attAll: [], bnCards: [], tiles: [], cats: [], sk: { links: [], l: [], r: [] } }, pres: { off: true, on: false, dots: [] },
+      dq: { rows: [] }, srcProfile: [], srcHead: [], chartRef: this.chartRef, qv: {}, lt: {}, sh: {}, crit: { rows: [] }, bo: { kpis: [], countries: [], suppliers: [], rows: [], queues: [], funnel: { segs: [] }, ageing: [], topItems: [] }, kits: { rows: [], cards: [], panels: [], sub: 'Loading…', other: '', tot: '—', nMods: '—' }, proc: { stAll: [], stats: [], dSt: { segs: [], legend: [] }, dTy: { segs: [], legend: [] }, line: { series: [], yTicks: [], xTicks: [] }, reqBars: [], active: [], reqOpts: [], items: [], mV: {}, mN: {}, tCum: {}, tWk: {} }, cs: {}, cg: [], bkLegend: [], ov: { total: '—', scope: 'Loading…', bar: [], legend: [], alerts: [], att: [], attAll: [], bnCards: [], tiles: [], cats: [], sk: { links: [], l: [], r: [] } }, pres: { off: true, on: false, dots: [] },
       em: this.emEff(), onEm: e => set('em', e.target.value), emOpts: [{ v:'ebola', label:'All Ebola / Marburg / VHF tags' }, { v:'all', label:'All emergency tags in export' }, ...((data && data.ems) || []).filter(x => x.k !== 'G013').map(x => ({ v: x.k, label: x.k + ' (' + fmtN(x.n) + ')' }))],
       type, onType: e => set('type', e.target.value), typeOpts: [{ v:'sr', label:'Stock releases (SR)' }, { v:'or', label:'Order requests (OR)' }],
       ovMode: !country, cMode: !!country, backToAll: () => this.setState({ country:'', grp:'' }), closeLine: () => this.setState({ openLine: null }), hasLine: false, it: {}, dos: {},
@@ -1514,10 +1648,11 @@ class Component extends DCLogic {
     ];
     // Back orders: remaining quantity per request + item, from the lines in the export
     const bo = (() => {
-      const { boC = '', boS = '', boLim = 100, boOpen = '' } = this.state, T = data.today;
+      const { boC = '', boS = '', boLim = 100, boOpen = '', boQ = '', boI = '' } = this.state, T = data.today;
       const isDel = l => l.st === 'arrived' || l.st === 'received', u = l => l.each || l.qty || 0;
       const chan = l => l.type === 'Procurement' ? 'Supplier (procurement)' : /^Stock/.test(l.type || '') ? 'Hub stock' : (l.type || 'Not recorded');
-      const where = l => /^(00|01-|01d|02|12|oo)/i.test(l.stRaw || '') ? 'nr' : /^(04|06|07)/.test(l.stRaw || '') ? 'prep' : 'tr';
+      const bucketOf = l => isDel(l) ? 'del' : /^(01c|08)/.test(l.stRaw || '') ? 'tr' : /^(01b|02|04|06|07)/.test(l.stRaw || '') ? 'av' : 'na';
+      const where = l => ({ na: 'nr', av: 'prep', tr: 'tr', del: 'tr' })[bucketOf(l)];
       const G = {}; L.filter(l => l.st !== 'canceled').forEach(l => { const k = l.okey + '|' + (l.code || '') + '|' + (l.desc || ''); (G[k] = G[k] || []).push(l); });
       const groups = Object.values(G).map(ls => { const pend = ls.filter(l => !isDel(l)); return { key: ls[0].okey + '|' + (ls[0].code || '') + '|' + (ls[0].desc || ''), ls, pend, o: sum(ls, u), d: sum(ls.filter(isDel), u), rem: sum(pend, u), oV: sum(ls, l => l.amt), rV: sum(pend, l => l.amt) }; }).filter(g => g.pend.length);
       const pendL = groups.flatMap(g => g.pend.map(l => ({ l, g })));
@@ -1536,8 +1671,26 @@ class Component extends DCLogic {
       const countries = agg(l => l.c, l => data.cn[l.c].name).map((a, i) => ({ sn: i + 1, label: a.label, reqs: fmtN(a.reqs.size), lines: fmtN(a.n), v: fmt$(a.v), segs: bar(a), oldest: oldest(a.ls) + ' d', on: boC === a.k, bg: boC === a.k ? '#EAF3FB' : '#fff', pick: () => this.setState({ boC: boC === a.k ? '' : a.k, boLim: 100 }) }));
       const suppliers = agg(l => (l.hub || SRC[l.src].label) + '|' + chan(l), l => l.hub || SRC[l.src].label).map((a, i) => ({ sn: i + 1, label: a.label, chan: [...a.chans][0], pos: fmtN(new Set(a.ls.map(l => l.po).filter(Boolean)).size), lines: fmtN(a.n), v: fmt$(a.v), segs: bar(a), oldest: oldest(a.ls) + ' d', on: boS === a.k, bg: boS === a.k ? '#EAF3FB' : '#fff', pick: () => this.setState({ boS: boS === a.k ? '' : a.k, boLim: 100 }) }));
       const supK = l => (l.hub || SRC[l.src].label) + '|' + chan(l);
-      const bucketOf = l => isDel(l) ? 'del' : /^(01c|08)/.test(l.stRaw || '') ? 'tr' : /^(01b|02|04|06|07)/.test(l.stRaw || '') ? 'av' : 'na';
-      const selG = groups.filter(g => g.pend.some(l => (!boC || l.c === boC) && (!boS || supK(l) === boS))).sort((a, b) => b.rV - a.rV);
+      const sinceOf = l => l.ready || l.commit || l.poDate || l.rd;
+      const Q = [
+        { k: 'av14', label: 'Available, not shipped · 14+ days', sub: 'WHO status 01b–07; days since ready, commitment, PO or request date', fg: '#B54708', bg: '#FFF4E5', test: l => bucketOf(l) === 'av' && sinceOf(l) && days(sinceOf(l), T) >= 14 },
+        { k: 'na30', label: 'Not yet available · 30+ days since request', sub: 'WHO status 00, 01, 01d, 12 or missing', fg: '#C92A2A', bg: '#FDEBE2', test: l => bucketOf(l) === 'na' && l.rd && days(l.rd, T) >= 30 },
+        { k: 'eta', label: 'In transit · ETA passed, no ATA recorded', sub: 'WHO status 01c or 08 with ETA before ' + fd(T), fg: '#0062CC', bg: '#E6F2FA', test: l => bucketOf(l) === 'tr' && l.eta && l.eta < T && !l.ata },
+        { k: 'nost', label: 'No WHO Shipping Status recorded', sub: 'Status recorded as oo-Missing or empty', fg: '#3F4B57', bg: '#EEF2F5', test: l => !l.stRaw || /^oo/i.test(l.stRaw) }];
+      const qOf = k => Q.find(q => q.k === k);
+      const queues = Q.map(q => { const ls = pendL.map(x => x.l).filter(q.test); return { label: q.label, sub: q.sub, fg: q.fg, bg: boQ === q.k ? q.bg : '#fff', bd: boQ === q.k ? q.fg : '#DDE3E9', n: fmtN(ls.length), v: fmt$(sum(ls, l => l.amt)), reqs: fmtN(new Set(ls.map(l => l.okey)).size) + ' requests · ' + fmtN(new Set(ls.map(l => l.c)).size) + ' countries', oldest: ls.length ? 'oldest ' + Math.max(...ls.map(l => days(q.k === 'na30' ? l.rd : (q.k === 'eta' ? l.eta : sinceOf(l)) || l.rd, T)).filter(v => !isNaN(v))) + ' d' : '', pick: () => this.setState({ boQ: boQ === q.k ? '' : q.k, boLim: 100 }) }; });
+      const live = L.filter(l => l.st !== 'canceled'), fB = {}; live.forEach(l => { const b = bucketOf(l); fB[b] = (fB[b] || 0) + l.amt; });
+      const FC = [['na', 'Not yet available', '#F03E3E'], ['av', 'Available, not shipped', '#F59F00'], ['tr', 'In transit', '#0A84FF'], ['del', 'Delivered', '#0FA958']];
+      const funnel = { total: fmt$(totV), segs: FC.map(([k, label, color]) => ({ label, color, w: (totV ? (fB[k] || 0) / totV * 100 : 0) + '%', v: fmt$(fB[k] || 0), p: pct(fB[k] || 0, totV), lines: fmtN(live.filter(l => bucketOf(l) === k).length) + ' lines' })) };
+      const AB = [['0–30 days', 0, 30], ['31–60 days', 31, 60], ['61–90 days', 61, 90], ['91–180 days', 91, 180], ['Over 180 days', 181, 1e9]];
+      const ageRows = AB.map(([label, a, b]) => { const ls = pendL.map(x => x.l).filter(l => l.rd && days(l.rd, T) >= a && days(l.rd, T) <= b); return { label, ls }; }).concat([{ label: 'Request date not available', ls: pendL.map(x => x.l).filter(l => !l.rd) }]).filter(x => x.ls.length);
+      const ageMax = Math.max(1, ...ageRows.map(x => sum(x.ls, l => l.amt)));
+      const ageing = ageRows.map(x => { const v = sum(x.ls, l => l.amt); return { label: x.label, v: fmt$(v), n: fmtN(x.ls.length) + ' lines', segs: FC.slice(0, 3).map(([k, lab, color]) => { const s = sum(x.ls.filter(l => bucketOf(l) === k), l => l.amt); return { color, w: (s / ageMax * 100) + '%', title: lab + ' · ' + fmt$(s) }; }).filter(s => s.w !== '0%') }; });
+      const IA = {}; pendL.forEach(({ l }) => { const k = l.code || l.desc || 'not available'; const a = IA[k] = IA[k] || { k, code: l.code || 'not available', desc: l.desc || 'not available', v: 0, q: 0, n: 0, cs: new Set() }; a.v += l.amt; a.q += u(l); a.n++; a.cs.add(l.c); });
+      const itAll = Object.values(IA).sort((a, b) => b.v - a.v), itMax = itAll.length ? itAll[0].v : 1;
+      const topItems = itAll.slice(0, 10).map((a, i) => ({ sn: i + 1, code: a.code, desc: a.desc, v: fmt$(a.v), q: fmtN(a.q), n: fmtN(a.n), cs: a.cs.size === 1 ? data.cn[[...a.cs][0]].name : a.cs.size + ' countries', w: (a.v / itMax * 100) + '%', bg: boI === a.k ? '#EAF3FB' : '#fff', pick: () => this.setState({ boI: boI === a.k ? '' : a.k, boLim: 100 }) }));
+      const pass = l => (!boC || l.c === boC) && (!boS || supK(l) === boS) && (!boQ || qOf(boQ).test(l)) && (!boI || (l.code || l.desc || 'not available') === boI);
+      const selG = groups.filter(g => g.pend.some(pass)).sort((a, b) => b.rV - a.rV);
       const sel = selG.flatMap(g => g.pend.map(l => ({ l, g })));
       const flat = selG.flatMap((g, gi) => g.ls.slice().sort((a, b) => (isDel(a) ? 1 : 0) - (isDel(b) ? 1 : 0) || b.amt - a.amt).map((l, j) => ({ l, g, gi, first: j === 0 })));
       const rows = flat.slice(0, this.state.exportAll ? Infinity : boLim).map(({ l, g, gi, first }, i) => { const f = refsOf(l), b = bucketOf(l), q = u(l), sr = splitRem(l.rem), cell = k => b === k ? fmtN(q) : '';
@@ -1551,9 +1704,9 @@ class Component extends DCLogic {
           src: l.hub || SRC[l.src].label, chan: chan(l), ship: /^\(no/.test(l.ref || '') ? 'not available' : (l.ref || 'not available'),
           why: b === 'del' ? (l.ata ? 'Arrived ' + fd(l.ata) : 'Delivered') : l.j.detail,
           open: () => this.setState({ openLine: l.i }) }; });
-      const fl = [boC && data.cn[boC].name, boS && boS.split('|')[0]].filter(Boolean);
-      return { kpis, countries, suppliers, rows, note: fmtN(Math.min(boLim, flat.length)) + ' of ' + fmtN(flat.length) + ' lines · ' + fmtN(selG.length) + ' request items with pending quantity, every line of each item shown (delivered lines in green)' + (fl.length ? ' · ' + fl.join(' · ') : '') + ' · largest pending value first · click a line for full detail', hasFilter: fl.length > 0, clear: () => this.setState({ boC: '', boS: '' }), more: flat.length > boLim, showMore: () => this.setState({ boLim: boLim + 200 }),
-        exportCsv: () => { const H = ['SN','Item group','Country','OR Ref','SR Ref','PO No.','Item code','Item','Ordered (line)','Not yet available','Available, not shipped','In transit','Delivered','Pending','Pending value USD','WHO Shipping Status','Days since last recorded date','Hub / supplier','Channel','Shipment ref','Why pending (as recorded)','Supply remark']; const rs = [H, ...flat.map(({ l, gi }, i) => { const f = refsOf(l), b = bucketOf(l), q = u(l), sd = l.ready || l.commit || l.poDate || l.rd; return [i + 1, gi + 1, data.cn[l.c].name, f.orRef, f.srRef, f.poNum, l.code, l.desc, q, b === 'na' ? q : '', b === 'av' ? q : '', b === 'tr' ? q : '', b === 'del' ? q : '', b === 'del' ? 0 : q, b === 'del' ? 0 : l.amt, l.stRaw, b === 'del' || !sd ? '' : days(sd, T), l.hub || SRC[l.src].label, chan(l), l.ref, b === 'del' ? '' : l.j.detail, splitRem(l.rem).cause.join(' · ')]; })]; const csv = rs.map(r => r.map(v => '"' + String(v ?? '').replace(/"/g, '""') + '"').join(',')).join('\n'); const a = document.createElement('a'); a.href = URL.createObjectURL(new Blob(['\ufeff' + csv], { type: 'text/csv' })); a.download = 'ebola-back-orders.csv'; a.click(); } };
+      const fl = [boC && data.cn[boC].name, boS && boS.split('|')[0], boQ && qOf(boQ).label, boI && (IA[boI] ? IA[boI].desc : boI)].filter(Boolean);
+      return { kpis, countries, suppliers, rows, queues, funnel, ageing, topItems, note: fmtN(Math.min(boLim, flat.length)) + ' of ' + fmtN(flat.length) + ' lines · ' + fmtN(selG.length) + ' request items with pending quantity, every line of each item shown (delivered lines in green)' + (fl.length ? ' · ' + fl.join(' · ') : '') + ' · largest pending value first · click a line for full detail', hasFilter: fl.length > 0, clear: () => this.setState({ boC: '', boS: '', boQ: '', boI: '' }), more: flat.length > boLim, showMore: () => this.setState({ boLim: boLim + 200 }),
+        exportCsv: () => { const H = ['Item #','Country','OR Ref','SR Ref','PO No.','Item code','Item','Ordered (line)','Not yet available','Available, not shipped','In transit','Delivered','Pending','Pending value USD','WHO Shipping Status','Days since last recorded date','Hub / supplier','Channel','Shipment ref','Why pending (as recorded)','Supply remark']; const rs = [H, ...flat.map(({ l, gi }, i) => { const f = refsOf(l), b = bucketOf(l), q = u(l), sd = l.ready || l.commit || l.poDate || l.rd; return [gi + 1, data.cn[l.c].name, f.orRef, f.srRef, f.poNum, l.code, l.desc, q, b === 'na' ? q : '', b === 'av' ? q : '', b === 'tr' ? q : '', b === 'del' ? q : '', b === 'del' ? 0 : q, b === 'del' ? 0 : l.amt, l.stRaw, b === 'del' || !sd ? '' : days(sd, T), l.hub || SRC[l.src].label, chan(l), l.ref, b === 'del' ? '' : l.j.detail, splitRem(l.rem).cause.join(' · ')]; })]; const csv = rs.map(r => r.map(v => '"' + String(v ?? '').replace(/"/g, '""') + '"').join(',')).join('\n'); const a = document.createElement('a'); a.href = URL.createObjectURL(new Blob(['\ufeff' + csv], { type: 'text/csv' })); a.download = 'ebola-back-orders.csv'; a.click(); } };
     })();
     const { lsort, ldir, ssort, sdir, page } = this.state;
     const cmp = (col, dir) => (a, b) => { const x = col.get(a), y = col.get(b); return (typeof x === 'number' && typeof y === 'number' ? x - y : String(x || '').localeCompare(String(y || ''))) * dir; };
@@ -1775,7 +1928,27 @@ class Component extends DCLogic {
     const dq = { rows: Object.values(dqG).sort((a, b) => b.n - a.n).map((a, i) => ({ sn: i + 1, field: DQ_LABEL[a.k] || a.k, v: a.v, why: a.why, n: fmtN(a.n), src: [...a.src].join(', '), refs: fmtN(a.refs.size) + ' shipment refs' })), total: fmtN(DQ.length), none: DQ.length === 0,
       exportCsv: () => { const H = ['Field','Value as recorded','Issue','Shipment ref','Request','Country','Source','Item code','Item']; const rs = [H, ...DQ.map(x => [DQ_LABEL[x.k] || x.k, x.v, x.why, x.l.ref, x.l.or, x.l.c, SRC[x.l.src] ? SRC[x.l.src].label : x.l.src, x.l.code, x.l.desc])]; const csv = rs.map(r => r.map(v => '"' + String(v ?? '').replace(/"/g, '""') + '"').join(',')).join('\n'); const a = document.createElement('a'); a.href = URL.createObjectURL(new Blob(['\ufeff' + csv], { type: 'text/csv' })); a.download = 'ebola-data-inconsistencies.csv'; a.click(); } };
     const srcProfile = Object.entries(SRC_FILL).sort((a, b) => b[1].n - a[1].n).map(([k, a]) => ({ label: SRC[k] ? SRC[k].label : k, n: fmtN(a.n), cells: PF.map(([f]) => { const p = Math.round(a[f] * 100); return { v: p + '%', fg: p >= 50 ? '#087F3B' : p >= 10 ? '#B54708' : '#C92A2A', bg: p >= 50 ? '#fff' : p >= 10 ? '#FFF8E6' : '#FDEBE2' }; }) }));
-    return { ...base, dq, bo, srcProfile, srcHead: PF.map(([, label]) => ({ label })), chartRef: this.chartRef, dos, it, hasLine, qv, lt, sh, crit, proc, cs, cg, ov, pres, briefCols: (() => { const w = window.innerWidth, side = w < 1200 ? 230 : 290, list = w < 1200 ? 190 : 230; return present ? 'minmax(0,1fr) ' + side + 'px' : list + 'px minmax(0,1fr) ' + side + 'px'; })(), bkLegend: BK.map(b => ({ label: b.label, color: b.color })),
+    const kits = (() => {
+      const KL = this.fLines({ all: true }).filter(l => l.st !== 'canceled'), isD = l => l.st === 'arrived' || l.st === 'received';
+      const agg = {}; let other = 0, otherV = 0; const otherSet = new Set();
+      KL.forEach(l => { const k = kitRule(l); if (k) { const a = agg[k.id] = agg[k.id] || { k, mD: 0, mP: 0, vD: 0, vP: 0, ls: [], cs: new Set() }; if (isD(l)) { a.mD += l.qty || 0; a.vD += l.amt || 0; } else { a.mP += l.qty || 0; a.vP += l.amt || 0; } a.ls.push(l); a.cs.add(l.c); } else if (KIT_ANY.test(l.code || '') || /^\((kit |tesk|iehk|ncdk|mhk|cttk|trk)/i.test((l.desc || '').trim())) { other++; otherV += l.amt || 0; otherSet.add(l.code || l.desc); } });
+      const D = (this.state.dataAll || data).cn;
+      const rows = KITR.filter(k => agg[k.id]).map((k, i) => { const a = agg[k.id]; const cs = [...a.cs].map(c => (D[c] || {}).name || c);
+        return { sn: i + 1, fam: KITF.find(x => x.f === k.f).name, label: k.label, basis: k.basis, src: k.src, unit: k.unit, per: fmtN(k.per),
+          mD: fmtN(a.mD), mP: fmtN(a.mP), bD: fmtN(a.mD * k.per), bP: fmtN(a.mP * k.per), v: fmt$(a.vD + a.vP), nLines: a.ls.length, countries: cs.length === 1 ? cs[0] : cs.length + ' countries', cTitle: cs.join(', '), codes: [...new Set(a.ls.map(l => l.code || 'not available'))].join(', ') }; });
+      const grp = (title, sub, pick) => ({ title, sub, rows: KITR.filter(k => agg[k.id] && pick(k)).map(k => { const a = agg[k.id]; return { fam: KITF.find(x => x.f === k.f).name, unit: k.unit, basis: k.basis, d: fmtN(a.mD * k.per), p: fmtN(a.mP * k.per), v: fmt$(a.vD + a.vP), mods: fmtN(a.mD) + ' delivered · ' + fmtN(a.mP) + ' in pipeline' }; }) });
+      const panels = [grp('Expressed in people', 'Catchment population covered for about 3 months, not patients', k => KIT_PEOPLE.has(k.id)), grp('Expressed in patients', 'Patients or cases the medicines can treat', k => !KIT_PEOPLE.has(k.id) && !KIT_TESTS.has(k.id)), grp('Expressed in samples', 'Cholera samples collected and tested', k => KIT_TESTS.has(k.id))].filter(p => p.rows.length);
+      const cards = KITF.map(F => { const rs = KITR.filter(k => k.f === F.f && agg[k.id]); if (!rs.length) return null;
+        const v = rs.reduce((s, k) => s + agg[k.id].vD + agg[k.id].vP, 0);
+        const lines = rs.map(k => ({ unit: k.unit, d: fmtN(agg[k.id].mD * k.per), p: fmtN(agg[k.id].mP * k.per), mods: fmtN(agg[k.id].mD) + ' delivered · ' + fmtN(agg[k.id].mP) + ' pipeline', sub: k.label }));
+        return { name: F.name, v: fmt$(v), kindLabel: F.kind === 'c' ? 'Catchment population (people), not patients' : 'Patients / cases', kindBg: F.kind === 'c' ? '#E6F2FA' : '#EAF6EF', kindFg: F.kind === 'c' ? '#0062CC' : '#087F3B', lines };
+      }).filter(Boolean);
+      const em = this.emEff(), emL = em === 'all' ? 'All emergency tags' : em === 'ebola' ? 'All Ebola / Marburg / VHF tags' : em;
+      return { rows, cards, panels, empty: rows.length === 0, tot: fmt$(Object.values(agg).reduce((s, a) => s + a.vD + a.vP, 0)), nMods: fmtN(Object.values(agg).reduce((s, a) => s + a.mD + a.mP, 0)),
+        sub: emL + ' · ' + (country && D[country] ? D[country].name : 'all countries') + ' · ' + fmtN(rows.reduce((s, r) => s + r.nLines, 0)) + ' kit module lines counted · canceled lines excluded',
+        other: other ? fmtN(other) + ' other kit lines (' + fmt$(otherV) + ', ' + otherSet.size + ' items) are renewables, equipment, instruments, laboratory sub-modules or kit versions without a published WHO beneficiary figure per module. They support the counted modules and are not counted separately, so nothing is double-counted.' : '' };
+    })();
+    return { ...base, dq, bo, kits, srcProfile, srcHead: PF.map(([, label]) => ({ label })), chartRef: this.chartRef, dos, it, hasLine, qv, lt, sh, crit, proc, cs, cg, ov, pres, briefCols: (() => { const w = window.innerWidth, side = w < 1200 ? 230 : 290, list = w < 1200 ? 190 : 230; return present ? 'minmax(0,1fr) ' + side + 'px' : list + 'px minmax(0,1fr) ' + side + 'px'; })(), bkLegend: BK.map(b => ({ label: b.label, color: b.color })),
       countryOpts: (tab === 'proc' && this.state.dataAll ? this.state.dataAll : data).countries.slice().sort((a,b) => a.name.localeCompare(b.name)).map(c => ({ v: c.iso, label: c.name })),
       kpis, srcBars, stageBars, countryRows, orders, essItems,
       offMapNote: 'Geneva HQ stock, HQ/OSL stock and direct supplier POs ship from outside the region and are not drawn as lines.',
