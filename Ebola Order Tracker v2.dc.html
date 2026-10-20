@@ -13,9 +13,9 @@
 <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
 <script src="https://unpkg.com/d3@7.9.0/dist/d3.min.js" integrity="sha384-CjloA8y00+1SDAUkjs099PVfnY2KmDC2BZnws9kh8D/lX1s46w6EPhpXdqMfjK6i" crossorigin="anonymous"></script>
 <script src="https://unpkg.com/topojson-client@3.1.0/dist/topojson-client.min.js" integrity="sha384-Ukv1p/xTma6P4/2bY5KzWBw+ydSpXmhCMtyciIQVDJ1RmOxtCYNMF1uXT9T63H67" crossorigin="anonymous"></script>
-<style>body{margin:0;background:#F3F5F7;color:#14212E;font-family:'IBM Plex Sans',system-ui,sans-serif;-webkit-font-smoothing:antialiased}a{color:#0071B8}a:hover{color:#00508A}*{box-sizing:border-box}button,input,select{font-family:inherit}</style>
+<style>body{margin:0;background:#F3F5F7;color:#14212E;font-family:'IBM Plex Sans',system-ui,sans-serif;-webkit-font-smoothing:antialiased}a{color:#0071B8}a:hover{color:#00508A}*{box-sizing:border-box}button,input,select{font-family:inherit}@media print{@page{size:A3 landscape;margin:8mm}[data-noprint]{display:none!important}[data-print-root]{height:auto!important;overflow:visible!important}[data-export-root]{overflow:visible!important;padding:0!important}[data-export-root] *{max-height:none!important}[data-export-root] div{overflow:visible!important}body{background:#fff;-webkit-print-color-adjust:exact;print-color-adjust:exact}}</style>
 </helmet>
-<div style="height:100vh;display:flex;flex-direction:column;overflow:hidden">
+<div data-print-root="1" style="height:100vh;display:flex;flex-direction:column;overflow:hidden">
   <header style="background:#FFFFFF;border-bottom:1px solid #DDE3E9;flex:none">
     <div style="height:3px;background:#009ADE"></div>
     <div style="padding:10px 24px 0;display:flex;flex-wrap:wrap;align-items:flex-end;gap:8px 28px;justify-content:space-between">
@@ -24,19 +24,20 @@
         <h1 style="margin:0;font-size:19px;font-weight:600;letter-spacing:-.01em">Ebola Preparedness · Order Request Tracker</h1>
       </div>
       <sc-if value="{{ pres.off }}" hint-placeholder-val="{{ true }}">
-        <nav style="display:flex;gap:2px;overflow-x:auto;flex:1 1 auto;justify-content:center">
+        <nav data-noprint="1" style="display:flex;gap:2px;overflow-x:auto;flex:1 1 auto;justify-content:center">
           <sc-for list="{{ tabs }}" as="t" hint-placeholder-count="6">
             <button onClick="{{ t.pick }}" style="cursor:pointer;border:0;background:transparent;padding:10px 12px 9px;font-size:14px;white-space:nowrap;color:{{ t.fg }};font-weight:{{ t.weight }};border-bottom:3px solid {{ t.border }}">{{ t.label }}</button>
           </sc-for>
         </nav>
       </sc-if>
       <div style="display:flex;align-items:center;gap:14px;padding-bottom:10px">
-        <span style="font-size:12px;color:#536271;white-space:nowrap">Data as of <strong style="color:#14212E;font-weight:600">{{ asOf }}</strong></span>
+        <span style="font-size:12px;color:#536271;white-space:nowrap">Data as of <strong style="color:#14212E;font-weight:600">{{ asOf }}</strong> · <span>{{ tabName }}</span></span>
+        <sc-if value="{{ pres.off }}" hint-placeholder-val="{{ true }}"><div data-noprint="1" style="display:flex;gap:6px"><button onClick="{{ exportPdf }}" title="Export this page to PDF (choose Save as PDF in the print dialog)" style="cursor:pointer;font-size:12px;font-weight:600;padding:6px 12px;border-radius:6px;border:1px solid #CBD4DC;background:#fff;color:#14212E;white-space:nowrap" style-hover="background:#F3F8FC">PDF</button><button onClick="{{ exportXlsx }}" title="Export every table on this page to Excel, all rows" style="cursor:pointer;font-size:12px;font-weight:600;padding:6px 12px;border-radius:6px;border:1px solid #CBD4DC;background:#fff;color:#087F3B;white-space:nowrap" style-hover="background:#F4FAF6">{{ xlsxLabel }}</button></div></sc-if>
         <sc-if value="{{ pres.off }}" hint-placeholder-val="{{ true }}"><button onClick="{{ pres.start }}" style="cursor:pointer;display:flex;align-items:center;gap:8px;font-size:13px;font-weight:600;padding:7px 14px;border-radius:6px;border:0;background:#14212E;color:#fff;white-space:nowrap"><span style="width:0;height:0;border-left:8px solid #fff;border-top:5px solid transparent;border-bottom:5px solid transparent"></span>Present</button></sc-if>
       </div>
     </div>
     <sc-if value="{{ pres.off }}" hint-placeholder-val="{{ true }}">
-    <div style="padding:8px 24px;border-top:1px solid #EEF2F5;background:#FBFCFD;display:flex;flex-wrap:wrap;gap:8px;align-items:center">
+    <div data-noprint="1" style="padding:8px 24px;border-top:1px solid #EEF2F5;background:#FBFCFD;display:flex;flex-wrap:wrap;gap:8px;align-items:center">
       <input value="{{ q }}" onChange="{{ onQ }}" placeholder="Search request, shipment, AWB, PO or item" style="flex:1 1 180px;max-width:320px;font-size:13px;padding:6px 10px;border:1px solid #CBD4DC;border-radius:6px;background:#fff;color:#14212E;min-width:0">
       <select value="{{ country }}" onChange="{{ onCountry }}" style="font-size:13px;padding:6px 10px;border:1px solid #CBD4DC;border-radius:6px;background:#fff;color:#14212E">
         <option value="">All countries</option>
@@ -71,7 +72,7 @@
     </sc-if>
   </header>
 
-  <div style="flex:1;min-height:0;overflow:auto;width:100%;padding:16px 24px;display:flex;flex-direction:column;gap:16px">
+  <div data-export-root="1" style="flex:1;min-height:0;overflow:auto;width:100%;padding:16px 24px;display:flex;flex-direction:column;gap:16px">
 
     <sc-if value="{{ tabVisuals }}" hint-placeholder-val="{{ true }}">
       <div style="flex:1;min-height:600px;display:grid;grid-template-columns:minmax(0,1.3fr) minmax(0,1fr) minmax(0,1fr);grid-template-rows:auto minmax(0,1fr);gap:16px">
@@ -1134,6 +1135,36 @@ class Component extends DCLogic {
     });
   }
 
+  withAll(fn) { this.setState({ exportAll: true }, () => setTimeout(() => { try { fn(); } finally { this.setState({ exportAll: false }); } }, 120)); }
+  tabLabel() { const T = { visuals:'Overview', countries:'Country brief', lines:'Line details', ships:'Shipment info', proc:'Procurement', critical:'Critical items', backorders:'Back orders', impact:'Beneficiaries & risk', glossary:'Glossary' }; return T[this.state.tab] || 'Dashboard'; }
+  exportPdf() { const t = document.title; const dd = this.state.data; document.title = 'Ebola Order Tracker - ' + this.tabLabel() + ' - ' + (dd && dd.today ? dd.today : 'as-of not available'); this.withAll(() => { window.print(); document.title = t; }); }
+  loadXlsx() { if (window.XLSX) return Promise.resolve(window.XLSX); return new Promise((ok, no) => { const s = document.createElement('script'); s.src = 'https://cdn.sheetjs.com/xlsx-0.20.3/package/dist/xlsx.full.min.js'; s.onload = () => ok(window.XLSX); s.onerror = () => no(new Error('Excel library failed to load')); document.head.appendChild(s); }); }
+  scrapeTables() {
+    const root = document.querySelector('[data-export-root]'); if (!root) return [];
+    const grids = []; root.querySelectorAll('*').forEach(el => { if (el.style && el.style.gridTemplateColumns === 'subgrid' && el.parentElement && !grids.includes(el.parentElement)) grids.push(el.parentElement); });
+    root.querySelectorAll('table').forEach(t => grids.push(t));
+    const title = el => { for (let a = el; a && a !== root; a = a.parentElement) { for (let p = a.previousElementSibling; p; p = p.previousElementSibling) { const hd = p.matches('h1,h2,h3') ? p : p.querySelector('h1,h2,h3'); if (hd && hd.textContent.trim()) return hd.textContent.trim(); } } return 'Table'; };
+    const cellV = s => { const t = s.replace(/\s+/g, ' ').trim(); return /^-?[\d,]+(\.\d+)?$/.test(t) && /\d/.test(t) ? Number(t.replace(/,/g, '')) : t; };
+    return grids.map(g => {
+      const rows = g.tagName === 'TABLE' ? [...g.rows].map(tr => [...tr.cells].map(c => cellV(c.textContent))) : [...g.children].filter(c => c.style && c.style.gridTemplateColumns === 'subgrid').map(rw => [...rw.children].map(c => cellV(c.textContent)));
+      return { name: title(g), rows: rows.filter(r => r.some(v => v !== '')) };
+    }).filter(t => t.rows.length > 1);
+  }
+  exportXlsx() {
+    this.setState({ xBusy: true });
+    this.loadXlsx().then(X => this.withAll(() => {
+      const S = this.state, d = S.data, tabs = this.scrapeTables(), wb = X.utils.book_new(), used = {};
+      const info = [['Ebola Preparedness · Order Request Tracker'], ['Page', this.tabLabel()], ['Data as of', d && d.today ? fd(d.today) : 'not available'], ['Exported', new Date().toLocaleString()],
+        ['Search', S.q || 'none'], ['Country', S.country && d && d.cn[S.country] ? d.cn[S.country].name : 'All countries'], ['Source', S.src || 'All sources'], ['Stage', S.stage || 'All'], ['Type', S.type || 'All'], ['Emergency', this.emEff()], ['Date from', S.dFrom || 'none'], ['Date to', S.dTo || 'none'], ['Issues only', S.issuesOnly ? 'yes' : 'no'], [], ['Tables in this file', tabs.length]];
+      X.utils.book_append_sheet(wb, X.utils.aoa_to_sheet(info), 'Filters');
+      if (!tabs.length) { const root = document.querySelector('[data-export-root]'); const lines = (root ? root.innerText : '').split('\n').map(s => s.trim()).filter(Boolean).map(s => [s]); X.utils.book_append_sheet(wb, X.utils.aoa_to_sheet([['Page content as shown'], ...lines]), 'Content'); }
+      tabs.forEach(t => { let n = t.name.replace(/[\[\]:*?\/\\]/g, ' ').slice(0, 28).trim() || 'Table'; const k = n.toLowerCase(); used[k] = (used[k] || 0) + 1; if (used[k] > 1) n = n.slice(0, 26) + ' ' + used[k];
+        const ws = X.utils.aoa_to_sheet(t.rows); ws['!cols'] = t.rows[0].map((_, ci) => ({ wch: Math.min(60, Math.max(6, ...t.rows.slice(0, 500).map(r => String(r[ci] ?? '').length))) })); ws['!freeze'] = { xSplit: 0, ySplit: 1 }; ws['!autofilter'] = { ref: X.utils.encode_range({ s: { r: 0, c: 0 }, e: { r: t.rows.length - 1, c: t.rows[0].length - 1 } }) };
+        X.utils.book_append_sheet(wb, ws, n); });
+      X.writeFile(wb, 'Ebola Order Tracker - ' + this.tabLabel().replace(/&/g, 'and') + ' - ' + (d && d.today ? d.today : 'as-of not available') + '.xlsx');
+      this.setState({ xBusy: false });
+    })).catch(e => { this.setState({ xBusy: false }); alert(e.message); });
+  }
   renderVals() {
     const { data, q, country, src, stage, type, grp, issuesOnly, open, openLine, limit } = this.state;
     const set = (k, v) => this.setState({ [k]: v, limit: 25, page: 0 });
@@ -1146,6 +1177,7 @@ class Component extends DCLogic {
       anyFilter: !!(q || country || src || stage || type || issuesOnly || this.state.dFrom || this.state.dTo), clearAll: () => this.setState({ q:'', country:'', src:'', stage:'', type:'', grp:'', issuesOnly:false, dFrom:'', dTo:'', limit:25, page:0 }),
       showF: this.state.showF, toggleF: () => this.setState(s => ({ showF: !s.showF })), fLabel: (this.state.showF ? 'Fewer filters' : 'More filters') + ([src, stage, type, this.state.dFrom, this.state.dTo].filter(Boolean).length ? ' (' + [src, stage, type, this.state.dFrom, this.state.dTo].filter(Boolean).length + ')' : ''),
       dFrom: this.state.dFrom, dTo: this.state.dTo, onFrom: e => set('dFrom', e.target.value), onTo: e => set('dTo', e.target.value),
+      exportPdf: () => this.exportPdf(), exportXlsx: () => this.exportXlsx(), xlsxLabel: this.state.xBusy ? 'Exporting…' : 'Excel', tabName: this.tabLabel(),
       tabs: [['visuals','Overview'],['countries','Country brief'],['lines','Line details'],['ships','Shipment info'],['proc','Procurement'],['critical','Critical items'],['backorders','Back orders'],['impact','Beneficiaries & risk'],['glossary','Glossary']].map(([k, label]) => ({ label, pick: () => this.setState({ tab: k, page: 0 }), fg: tab === k ? '#0071B8' : '#536271', border: tab === k ? '#0071B8' : 'transparent', weight: tab === k ? 600 : 500 })),
       tabVisuals: tab === 'visuals', tabCountries: tab === 'countries', tabLines: tab === 'lines', tabShips: tab === 'ships', tabProc: tab === 'proc', tabCritical: tab === 'critical', tabBack: tab === 'backorders', tabGlossary: tab === 'glossary', tabImpact: tab === 'impact',
       impactPick: v => set('country', v), impactPrio: (() => { const p = (this.props.priorityCountries || '').split(/[ ,]+/).filter(Boolean).map(x => x.toUpperCase()); return p.length ? p : PRIORITY; })(), cfrNo: this.props.cfrNo ?? 0.482, cfrCare: this.props.cfrCare ?? 0.30, pcrRunSize: this.props.pcrRunSize ?? 32, pcrControls: this.props.pcrControls ?? 2, avgStay: this.props.avgStay ?? 7, defaultBeds: this.props.defaultBeds ?? 20, horizonDays: this.props.horizonDays ?? 90,
@@ -1195,7 +1227,7 @@ class Component extends DCLogic {
 
     const sortBy = this.props.sortBy ?? 'attention';
     const sorted = [...ords].sort(sortBy === 'value' ? (a,b) => b.value - a.value : sortBy === 'newest' ? (a,b) => (b.rd || '').localeCompare(a.rd || '') : (a,b) => b.sev - a.sev || (b.rd || '').localeCompare(a.rd || ''));
-    const orders = sorted.slice(0, limit).map(o => {
+    const orders = sorted.slice(0, this.state.exportAll ? Infinity : limit).map(o => {
       const st = o.pct >= 0.999 ? { label: 'Delivered', bg: '#D3EBDD', fg: '#087F3B' } : SG(o.stage);
       const i0 = o.issues[0], nMore = o.issues.filter(i => i.sev >= 1).length - 1;
       return { id: o.id, typeShort: TYPE[o.t].short, typeBg: TYPE[o.t].bg, typeFg: TYPE[o.t].fg, cname: o.cname, rd: fd(o.rd), ships: plural(o.shipments.length, 'shipment'), nLines: plural(o.lines.length, 'line'), value: fmt$(o.value),
@@ -1508,7 +1540,7 @@ class Component extends DCLogic {
       const selG = groups.filter(g => g.pend.some(l => (!boC || l.c === boC) && (!boS || supK(l) === boS))).sort((a, b) => b.rV - a.rV);
       const sel = selG.flatMap(g => g.pend.map(l => ({ l, g })));
       const flat = selG.flatMap((g, gi) => g.ls.slice().sort((a, b) => (isDel(a) ? 1 : 0) - (isDel(b) ? 1 : 0) || b.amt - a.amt).map((l, j) => ({ l, g, gi, first: j === 0 })));
-      const rows = flat.slice(0, boLim).map(({ l, g, gi, first }, i) => { const f = refsOf(l), b = bucketOf(l), q = u(l), sr = splitRem(l.rem), cell = k => b === k ? fmtN(q) : '';
+      const rows = flat.slice(0, this.state.exportAll ? Infinity : boLim).map(({ l, g, gi, first }, i) => { const f = refsOf(l), b = bucketOf(l), q = u(l), sr = splitRem(l.rem), cell = k => b === k ? fmtN(q) : '';
         const sinceD = l.ready || l.commit || l.poDate || l.rd;
         return { sn: i + 1, grp: gi + 1, top: first ? '2px solid #8A97A3' : '1px solid #DDE3E9', bg: b === 'del' ? '#F4FAF6' : '#fff',
           country: data.cn[l.c].name, orRef: f.orRef, srRef: f.srRef, poNum: f.poNum, code: l.code || 'not available', desc: l.desc,
@@ -1526,7 +1558,7 @@ class Component extends DCLogic {
     const { lsort, ldir, ssort, sdir, page } = this.state;
     const cmp = (col, dir) => (a, b) => { const x = col.get(a), y = col.get(b); return (typeof x === 'number' && typeof y === 'number' ? x - y : String(x || '').localeCompare(String(y || ''))) * dir; };
     const lcol = LC.find(c => c.k === lsort && !c.sn) || LC.find(c => c.k === 'rd');
-    const sortedL = [...L].sort(cmp(lcol, ldir)), PS = 50, pages = Math.max(1, Math.ceil(sortedL.length / PS)), pg = Math.min(page, pages - 1);
+    const sortedL = [...L].sort(cmp(lcol, ldir)), PS = this.state.exportAll ? 1e9 : 50, pages = Math.max(1, Math.ceil(sortedL.length / PS)), pg = Math.min(page, pages - 1);
     const lt = {
       kpis: [{ label:'Line items', value: fmtN(L.length), sub: fmtN(new Set(L.map(l => l.okey)).size) + ' requests · ' + fmtN(new Set(L.map(l => l.code)).size) + ' distinct items' }, { label:'Total value (USD)', value: '$' + fmtN(tot), sub: fmtN(live.length) + ' active lines' }, { label:'Delivered', value: '$' + fmtN(v3.dl), sub: pct(v3.dl, tot) + ' · arrived or received', color:'#087F3B' }, { label:'In transit', value: '$' + fmtN(v3.tr), sub: pct(v3.tr, tot) + ' · shipped or at transit hub', color:'#0062CC' }, { label:'Not ready', value: '$' + fmtN(v3.nr), sub: pct(v3.nr, tot) + ' · planned, at hub/supplier, greenlight', color:'#C92A2A' }, { label:'Canceled', value: fmtN(L.filter(l => l.st === 'canceled').length), sub: '$' + fmtN(sum(L.filter(l => l.st === 'canceled'), l => l.amt)) + ' not counted', color:'#536271' }],
       head: LC.map(c => ({ label: c.label, arrow: lsort === c.k ? (ldir > 0 ? '↑' : '↓') : '', align: c.num ? 'flex-end' : 'flex-start', pick: c.sn ? () => {} : () => this.setState(s => ({ lsort: c.k, ldir: s.lsort === c.k ? -s.ldir : (c.num ? -1 : 1), page: 0 })) })),
