@@ -186,6 +186,7 @@
 <script type="text/x-dc" data-dc-script data-props="{&quot;cfrNo&quot;:{&quot;editor&quot;:&quot;range&quot;,&quot;default&quot;:0.482,&quot;min&quot;:0.2,&quot;max&quot;:0.9,&quot;step&quot;:0.005,&quot;tsType&quot;:&quot;number&quot;,&quot;section&quot;:&quot;Assumptions&quot;},&quot;cfrCare&quot;:{&quot;editor&quot;:&quot;range&quot;,&quot;default&quot;:0.3,&quot;min&quot;:0.05,&quot;max&quot;:0.8,&quot;step&quot;:0.005,&quot;tsType&quot;:&quot;number&quot;,&quot;section&quot;:&quot;Assumptions&quot;},&quot;avgStay&quot;:{&quot;editor&quot;:&quot;int&quot;,&quot;default&quot;:7,&quot;min&quot;:3,&quot;max&quot;:21,&quot;tsType&quot;:&quot;number&quot;,&quot;section&quot;:&quot;Assumptions&quot;},&quot;defaultBeds&quot;:{&quot;editor&quot;:&quot;int&quot;,&quot;default&quot;:20,&quot;min&quot;:1,&quot;max&quot;:200,&quot;tsType&quot;:&quot;number&quot;,&quot;section&quot;:&quot;Assumptions&quot;},&quot;horizonDays&quot;:{&quot;editor&quot;:&quot;int&quot;,&quot;default&quot;:90,&quot;min&quot;:7,&quot;max&quot;:365,&quot;tsType&quot;:&quot;number&quot;,&quot;section&quot;:&quot;Assumptions&quot;},&quot;includePipeline&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Assumptions&quot;},&quot;occupancy&quot;:{&quot;editor&quot;:&quot;range&quot;,&quot;default&quot;:1,&quot;min&quot;:0.05,&quot;max&quot;:1,&quot;step&quot;:0.005,&quot;tsType&quot;:&quot;number&quot;,&quot;section&quot;:&quot;Assumptions&quot;},&quot;confirmedShare&quot;:{&quot;editor&quot;:&quot;range&quot;,&quot;default&quot;:1,&quot;min&quot;:0.01,&quot;max&quot;:1,&quot;step&quot;:0.01,&quot;tsType&quot;:&quot;number&quot;,&quot;section&quot;:&quot;Assumptions&quot;}}">
 class Component extends DCLogic {
   state = { d: null, country: '', pipe: null, start: null, beds: {}, bedsAll: null };
+  componentDidUpdate() { if (this.props.onSummary && this._sum) { const s = JSON.stringify(this._sum); if (s !== this._sumS) { this._sumS = s; this.props.onSummary(this._sum); } } }
   componentDidMount() { fetch('data/impact.json').then(r => r.json()).then(d => this.setState({ d })); }
   renderVals() {
     const P = this.props, S = this.state, d = S.d;
@@ -254,6 +255,7 @@ class Component extends DCLogic {
         hubT: ls.filter(l => l.f === 'pcr').reduce((o, l) => (o[l.hub] = (o[l.hub] || 0) + l.units * pcrF, o), {}) };
     };
     const all = CS.map(calc);
+    this._sum = { beds: bedsAll, pipe, rows: Object.fromEntries(all.map(x => [x.c.iso, { has: x.has, days: x.has ? x.bind.days : 0, id: x.bind.id, beds: x.beds }])) };
     const sel = C ? all.filter(x => x.c.iso === C) : all;
     const tot = k => sel.reduce((a, x) => a + x[k], 0);
     const popM = sel.reduce((a, x) => a + x.c.popM, 0);
