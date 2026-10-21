@@ -115,7 +115,7 @@
           </div>
           <div style="background:#fff;border:1px solid #DDE3E9;border-radius:8px;overflow:hidden;display:flex;flex-direction:column">
             <div style="background:#0071B8;color:#fff;padding:12px 16px;display:flex;justify-content:space-between;gap:10px;align-items:flex-start;flex-wrap:wrap">
-              <div style="display:flex;flex-direction:column;gap:2px"><span style="font-size:20px;font-weight:700">{{ brief.c.name }}</span><span style="font-size:12px;color:#D6E9F7">{{ brief.c.iso }}</span></div>
+              <div style="display:flex;align-items:center;gap:10px"><sc-if value="{{ brief.c.flag }}" hint-placeholder-val="{{ false }}"><span style="display:block;width:44px;height:44px;background-image:url({{ brief.c.flag }});background-size:contain;background-repeat:no-repeat;background-position:center;filter:drop-shadow(0 2px 4px rgba(0,0,0,.35))"></span></sc-if><div style="display:flex;flex-direction:column;gap:2px"><span style="font-size:20px;font-weight:700">{{ brief.c.name }}</span><span style="font-size:12px;color:#D6E9F7">{{ brief.c.iso }}</span></div></div>
               <button onClick="{{ brief.c.goOps }}" style="cursor:pointer;font-size:12px;font-weight:600;padding:6px 12px;border:1px solid #fff;border-radius:6px;background:transparent;color:#fff;white-space:nowrap">Open lines in Operations</button>
             </div>
             <div style="padding:10px 16px;border-bottom:1px solid #DDE3E9;display:flex;flex-direction:column;gap:1px"><span style="font-size:14px;font-weight:700;color:{{ brief.c.epiFg }}">{{ brief.c.epi }}</span><span style="font-size:11px;color:#536271">{{ brief.c.epiSrc }}</span></div>
@@ -263,9 +263,10 @@
     <sc-if value="{{ tabCountries }}" hint-placeholder-val="{{ false }}">
       <div style="flex:1;display:flex;flex-direction:column;gap:16px;min-height:0">
       <div data-dossier="1" style="flex:1;min-height:600px;display:grid;grid-template-columns:minmax(0,1fr) minmax(240px,340px);grid-template-rows:auto minmax(0,1fr);gap:16px">
-        <div style="background:#14212E;color:#fff;border-radius:12px;padding:12px 16px;display:flex;flex-direction:column;gap:10px;min-width:0">
+        <div style="position:relative;isolation:isolate;overflow:hidden;background:#14212E;color:#fff;border-radius:12px;padding:12px 16px;display:flex;flex-direction:column;gap:10px;min-width:0">
+          <sc-if value="{{ cs.flag }}" hint-placeholder-val="{{ false }}"><div aria-hidden="true" style="position:absolute;inset:0;z-index:-1;pointer-events:none;overflow:hidden;border-radius:inherit"><div style="position:absolute;right:-70px;top:50%;width:300px;height:300px;transform:translateY(-50%);background-image:url({{ cs.flag }});background-size:contain;background-repeat:no-repeat;background-position:center;opacity:.2;filter:saturate(.9)"></div><div style="position:absolute;inset:0;background:radial-gradient(circle at 100% 50%,rgba(20,33,46,0) 0%,rgba(20,33,46,.35) 45%,rgba(20,33,46,0) 70%)"></div></div></sc-if>
           <div style="display:flex;flex-direction:column;gap:4px;min-width:0">
-            <span style="display:flex;align-items:baseline;gap:6px 14px;flex-wrap:wrap"><span style="font-size:26px;font-weight:600;letter-spacing:-.02em;line-height:1.1">{{ cs.name }}</span><span style="font-size:12px;color:#C9D3DC">{{ cs.headline }}</span></span>
+            <span style="display:flex;align-items:baseline;gap:6px 14px;flex-wrap:wrap"><sc-if value="{{ cs.flag }}" hint-placeholder-val="{{ false }}"><span aria-hidden="true" style="flex:none;align-self:center;width:40px;height:40px;background-image:url({{ cs.flag }});background-size:contain;background-repeat:no-repeat;background-position:center;filter:drop-shadow(0 2px 4px rgba(0,0,0,.35))"></span></sc-if><span style="font-size:26px;font-weight:600;letter-spacing:-.02em;line-height:1.1">{{ cs.name }}</span><span style="font-size:12px;color:#C9D3DC">{{ cs.headline }}</span></span>
             <div style="display:flex;height:10px;border-radius:5px;overflow:hidden;background:#2A3A4A;margin-top:4px"><sc-for list="{{ cs.bar }}" as="s" hint-placeholder-count="0"><span title="{{ s.label }}" style="width:{{ s.w }};background:{{ s.color }}"></span></sc-for></div>
           </div>
           <div style="display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:8px">
@@ -411,9 +412,10 @@
 
     <sc-if value="{{ tabProc }}" hint-placeholder-val="{{ false }}">
       <div style="display:flex;flex-direction:column;gap:16px">
-        <div style="background:#14212E;color:#fff;border-radius:14px;padding:18px 22px;display:flex;flex-direction:column;gap:16px">
+        <div style="position:relative;isolation:isolate;overflow:hidden;background:#14212E;color:#fff;border-radius:14px;padding:18px 22px;display:flex;flex-direction:column;gap:16px">
+          <sc-if value="{{ proc.flag }}" hint-placeholder-val="{{ false }}"><div aria-hidden="true" style="position:absolute;inset:0;z-index:-1;pointer-events:none;overflow:hidden;border-radius:inherit"><div style="position:absolute;right:-70px;top:50%;width:300px;height:300px;transform:translateY(-50%);background-image:url({{ proc.flag }});background-size:contain;background-repeat:no-repeat;background-position:center;opacity:.2;filter:saturate(.9)"></div><div style="position:absolute;inset:0;background:radial-gradient(circle at 100% 50%,rgba(20,33,46,0) 0%,rgba(20,33,46,.35) 45%,rgba(20,33,46,0) 70%)"></div></div></sc-if>
           <div style="display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;align-items:flex-start">
-            <div style="display:flex;flex-direction:column;gap:3px;min-width:0"><span style="font-size:11px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:#7CC4EC">Procurement &amp; supply</span><span style="font-size:24px;font-weight:600;letter-spacing:-.01em;line-height:1.15;overflow-wrap:anywhere">{{ proc.title }}</span><span style="font-size:12px;color:#C9D3DC">{{ proc.where }}</span></div>
+            <div style="display:flex;flex-direction:column;gap:3px;min-width:0"><span style="font-size:11px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:#7CC4EC">Procurement &amp; supply</span><span style="display:flex;align-items:center;gap:12px"><sc-if value="{{ proc.flag }}" hint-placeholder-val="{{ false }}"><span aria-hidden="true" style="flex:none;align-self:center;width:38px;height:38px;background-image:url({{ proc.flag }});background-size:contain;background-repeat:no-repeat;background-position:center;filter:drop-shadow(0 2px 4px rgba(0,0,0,.35))"></span></sc-if><span style="font-size:24px;font-weight:600;letter-spacing:-.01em;line-height:1.15;overflow-wrap:anywhere">{{ proc.title }}</span></span><span style="font-size:12px;color:#C9D3DC">{{ proc.where }}</span></div>
             <div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap">
               <div style="display:flex;border:1px solid #2F4152;border-radius:6px;overflow:hidden"><button onClick="{{ proc.mV.pick }}" style="cursor:pointer;border:0;padding:6px 12px;font-size:12px;font-weight:600;background:{{ proc.mV.bg }};color:{{ proc.mV.fg }}">Value</button><button onClick="{{ proc.mN.pick }}" style="cursor:pointer;border:0;padding:6px 12px;font-size:12px;font-weight:600;background:{{ proc.mN.bg }};color:{{ proc.mN.fg }}">Lines</button></div>
               <button onClick="{{ proc.exportCsv }}" style="cursor:pointer;border:0;background:#009ADE;color:#fff;border-radius:6px;padding:7px 12px;font-size:12px;font-weight:600">Export CSV</button>
@@ -1207,6 +1209,9 @@ const EBOLA_TAGS = new Set(['G013','Ebola DRC','Ebola UGA 25','Ebola preparednes
 const emLabel = k => k === 'G013' ? '2026-G013 DRC Ituri Ebola Bundibugyo' : k;
 const emPass = (l, em) => !em || em === 'G013' ? l.em === 'G013' : em === 'all' ? true : em === 'ebola' ? EBOLA_TAGS.has(l.em) : l.em === em;
 const PRIORITY = ['UGA','SSD','RWA','BDI','TZA','KEN','CAF','COG','AGO','ZMB','NGA'];
+const ISO2 = {"KEN":"ke","COD":"cd","SOM":"so","CAF":"cf","UGA":"ug","MUS":"mu","NER":"ne","SEN":"sn","NPL":"np","ERI":"er","TGO":"tg","NGA":"ng","MDG":"mg","MOZ":"mz","SSD":"ss","GIN":"gn","AGO":"ao","MLI":"ml","TCD":"td","COG":"cg","DZA":"dz","BDI":"bi","ETH":"et","RWA":"rw","SLE":"sl","TZA":"tz","ZMB":"zm","GHA":"gh","LBR":"lr","GNQ":"gq","MWI":"mw","COM":"km","CMR":"cm","BFA":"bf","CPV":"cv","ITA":"it","ZAF":"za","MRT":"mr","GNB":"gw","GMB":"gm","GAB":"ga","BEN":"bj","BWA":"bw","ZWE":"zw","CIV":"ci","NAM":"na","STP":"st","SWZ":"sz","LSO":"ls","SYC":"sc"};
+const FLAGS = new Set(["AGO","BDI","BEN","BFA","BWA","CAF","CIV","CMR","COD","COG","COM","CPV","DJI","DZA","EGY","ERI","ETH","GAB","GHA","GIN","GMB","GNB","GNQ","ITA","KEN","LBR","LBY","LSO","MAR","MDG","MLI","MOZ","MRT","MUS","MWI","NAM","NER","NGA","NPL","RWA","SDN","SEN","SLE","SOM","SSD","STP","SWZ","SYC","TCD","TGO","TZA","UGA","ZAF","ZMB","ZWE"]);
+const flagUrl = iso => FLAGS.has(iso) ? 'flags/' + iso + '.png' : '';
 const BRIEF = ['COD', ...PRIORITY], BRIEF_DEFAULT = 'UGA';
 const MB_SCALES = {
   ful: { label: 'Fulfilment % · delivered ÷ requested value', breaks: [20, 40, 60, 80], colors: ['#E6F2FA', '#A9D2EE', '#5BA8DB', '#1F7FC0', '#0B4F82'], legend: ['under 20%', '20–39%', '40–59%', '60–79%', '80% or more'] },
@@ -1772,7 +1777,7 @@ class Component extends DCLogic {
         reqF, reqOpts: reqKeys.map(k => { const o = ordM[k]; return { v: k, label: TYPE[o.t].short + ' · ' + o.id }; }), onReq: e => this.setState({ reqF: e.target.value }),
         dLabel: 'Delayed only (' + nDel + ')', toggleD: () => this.setState(s => ({ dOnly: !s.dOnly })), dBg: dOnly ? '#FDEBE2' : '#fff', dFg: dOnly ? '#C92A2A' : '#14212E', dBorder: dOnly ? '#E8590C' : '#CBD4DC',
         crit, noCrit: crit.length === 0, reqCols,
-        name: data.cn[effC].name,
+        name: data.cn[effC].name, flag: flagUrl(effC),
         kanban: BK.map(b => { const a = m[b.k] || { v:0, n:0, ls:[] }; const all = [...a.ls].sort((x, y) => y.j.delayed - x.j.delayed || y.amt - x.amt); const open = !!(this.state.expand || {})[b.k]; const lim = 6;
           return { label: b.label, sub: b.sub, color: b.color, bg: b.bg, fg: b.fg, value: fmt$(a.v), n: plural(a.n, 'item'), empty: a.n === 0,
             cards: (open ? all : all.slice(0, lim)).map(l => ({ name: itemName(l), desc: l.desc, qty: fmtN(l.qty) + ' × ' + l.uom, value: fmt$(l.amt), src: SRCS[l.src], srcColor: SRC[l.src].color, req: TYPE[l.t].short + ' ' + l.or, delayed: !!l.j.delayed, delayText: l.j.delayText || '', status: l.j.label, open: () => this.setState({ openLine: l.i }) })),
@@ -2118,6 +2123,7 @@ class Component extends DCLogic {
     const proc = {
       stats, dSt, dTy, line: lineC, reqBars, hasReqBars: reqBars.length > 0, reqMore: oE.length > 8 ? '+' + (oE.length - 8) + ' more requests in the item list' : '',
       active, hasActive: active.length > 0, clearAll: () => this.setState({ pf: '', pty: '', preq: '', plim: 100 }),
+      flag: flagUrl(preq ? ((ordIx[preq] || {}).c || '') : (country || '')),
       title: preq ? ordIx[preq].id : pty || 'All supply types', where: preq ? ordIx[preq].cname + ' · requested ' + fd(ordIx[preq].rd) : (country ? dataP.cn[country].name : plural(new Set(LP.map(l => l.c)).size, 'country')) + ' · ' + fmtN(LP.length) + ' lines',
       mV: { ...tg(pmet, 'v', true), pick: () => this.setState({ pmet: 'v' }) }, mN: { ...tg(pmet, 'n', true), pick: () => this.setState({ pmet: 'n' }) },
       tCum: { ...tg(ptm, 'cum'), pick: () => this.setState({ ptm: 'cum' }) }, tWk: { ...tg(ptm, 'wk'), pick: () => this.setState({ ptm: 'wk' }) },
@@ -2215,7 +2221,7 @@ class Component extends DCLogic {
       const shipG = {}; X.pend.filter(l => bk(l) === 'tr').forEach(l => { const k = l.ref || 'not available'; const a = shipG[k] = shipG[k] || { ref: k, mode: l.mode || 'not available', eta: l.eta, v: 0, n: 0, hub: l.hub || SRC[l.src].label }; a.v += l.amt; a.n++; if (l.eta && (!a.eta || l.eta < a.eta)) a.eta = l.eta; });
       const since = l => l.ready || l.commit || l.poDate || l.rd;
       const CQ = [['Available, not shipped · 14+ days', '#B54708', l => bk(l) === 'av' && since(l) && days(since(l), T) >= 14], ['Not yet available · 30+ days since request', '#C92A2A', l => bk(l) === 'na' && l.rd && days(l.rd, T) >= 30], ['In transit · ETA passed, no ATA', '#0062CC', l => bk(l) === 'tr' && l.eta && l.eta < T && !l.ata], ['No WHO Shipping Status recorded', '#3F4B57', l => !l.stRaw || /^oo/i.test(l.stRaw)]];
-      const c = { iso: selI, name: name(selI), outbreak: selI === 'COD',
+      const c = { iso: selI, name: name(selI), flag: flagUrl(selI), outbreak: selI === 'COD',
         epi: K ? fmtN(K.confirmed) + ' confirmed cases · ' + fmtN(K.deaths) + ' deaths' : 'No confirmed cases reported by WHO', epiSrc: K ? K.src + ' · as of ' + fd(K.asOf) + (K.note ? ' · ' + K.note : '') : 'WHO Disease Outbreak News', epiFg: K && K.confirmed ? '#C92A2A' : '#087F3B',
         ind: [{ label: 'Essential items delivered', v: X.req.length ? X.essD + ' of ' + X.req.length : 'none requested', sub: 'essential items with any quantity Arrived or Received' },
               { label: 'Delivered share of ordered value', v: pct(X.by.del, X.V), sub: fmt$(X.by.del) + ' of ' + fmt$(X.V) },
