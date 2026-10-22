@@ -13,32 +13,49 @@
 <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
 <script src="https://unpkg.com/d3@7.9.0/dist/d3.min.js" integrity="sha384-CjloA8y00+1SDAUkjs099PVfnY2KmDC2BZnws9kh8D/lX1s46w6EPhpXdqMfjK6i" crossorigin="anonymous"></script>
 <script src="https://unpkg.com/topojson-client@3.1.0/dist/topojson-client.min.js" integrity="sha384-Ukv1p/xTma6P4/2bY5KzWBw+ydSpXmhCMtyciIQVDJ1RmOxtCYNMF1uXT9T63H67" crossorigin="anonymous"></script>
-<style>body{margin:0;background:#F3F5F7;color:#14212E;font-family:'IBM Plex Sans',system-ui,sans-serif;-webkit-font-smoothing:antialiased}a{color:#0071B8}a:hover{color:#00508A}*{box-sizing:border-box}button,input,select{font-family:inherit}@media print{@page{size:A3 landscape;margin:8mm}[data-noprint]{display:none!important}[data-print-root]{height:auto!important;overflow:visible!important}[data-export-root]{overflow:visible!important;padding:0!important}[data-export-root] *{max-height:none!important}[data-export-root] div{overflow:visible!important}body{background:#fff;-webkit-print-color-adjust:exact;print-color-adjust:exact}}</style>
+<style>body{margin:0;background:#F3F5F7;color:#14212E;font-family:'IBM Plex Sans',system-ui,sans-serif;-webkit-font-smoothing:antialiased}a{color:#0071B8}a:hover{color:#00508A}*{box-sizing:border-box}button,input,select{font-family:inherit}@media print{@page{size:A3 landscape;margin:10mm 10mm 14mm;@bottom-right{content:"Page " counter(page) " of " counter(pages);font:9px 'IBM Plex Sans',sans-serif;color:#6B7884}}
+[data-noprint],[data-screen-header]{display:none!important}[data-printonly]{display:block!important}[data-printfoot]{display:none!important}
+[data-print-root]{height:auto!important;overflow:visible!important}[data-export-root]{overflow:visible!important;padding:0!important;gap:12px!important}
+[data-export-root] *{max-height:none!important}[data-export-root] div{overflow:visible!important}[data-export-root] [data-clip]{overflow:hidden!important}[data-export-root] [data-bmap]{height:620px!important;break-inside:avoid}
+[data-export-root] [style*="sticky"]{position:static!important}
+[data-export-root] span{text-overflow:clip!important}
+[data-export-root] [style*="border-radius:8px"],[data-export-root] [style*="border-radius:10px"],[data-export-root] [style*="border-radius:12px"],[data-export-root] [style*="border-radius:14px"]{break-inside:avoid-page}
+[data-export-root] [style*="grid-template-columns:subgrid"]{break-inside:avoid}
+[data-export-root] h2,[data-export-root] h3{break-after:avoid}
+body{background:#fff;-webkit-print-color-adjust:exact;print-color-adjust:exact}}</style>
 <link href="https://api.mapbox.com/mapbox-gl-js/v3.7.0/mapbox-gl.css" rel="stylesheet">
 <script src="https://api.mapbox.com/mapbox-gl-js/v3.7.0/mapbox-gl.js"></script>
+<link href="https://unpkg.com/maplibre-gl@4.7.1/dist/maplibre-gl.css" rel="stylesheet">
+<script src="https://unpkg.com/maplibre-gl@4.7.1/dist/maplibre-gl.js"></script>
 </helmet>
 <div data-print-root="1" style="height:100vh;display:flex;flex-direction:column;overflow:hidden">
-  <header style="background:#FFFFFF;border-bottom:1px solid #DDE3E9;flex:none">
-    <div style="height:3px;background:#009ADE"></div>
-    <div style="padding:10px 24px 0;display:flex;flex-wrap:wrap;align-items:flex-end;gap:8px 28px;justify-content:space-between">
-      <div style="display:flex;flex-direction:column;gap:2px;padding-bottom:10px">
-        <div style="font-size:11px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:#0071B8">WHO AFRO · Nairobi Hub · 2026-G013 Ebola (Bundibugyo)</div>
-        <h1 style="margin:0;font-size:19px;font-weight:600;letter-spacing:-.01em">Ebola Preparedness · Order Request Tracker</h1>
+  <header data-screen-header="1" style="background:#FFFFFF;border-bottom:1px solid #DDE3E9;flex:none">
+    <div style="background:#00205B;color:#fff">
+      <div style="padding:10px 24px;display:flex;flex-wrap:wrap;align-items:center;gap:10px 24px;justify-content:space-between">
+        <div style="display:flex;align-items:center;gap:14px;min-width:0">
+          <img src="assets/who-afro.png" alt="World Health Organization African Region" style="width:46px;height:46px;flex:none;display:block;border-radius:50%;background:#FFFFFF;box-shadow:0 0 0 2px #FFFFFF">
+          <span style="width:1px;height:34px;background:rgba(255,255,255,.28);flex:none"></span>
+          <div style="display:flex;flex-direction:column;gap:2px;min-width:0">
+            <div style="font-size:11px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:#8FD3F4">WHO AFRO · Health Emergencies · 2026-G013 Ebola (Bundibugyo)</div>
+            <h1 style="margin:0;font-size:19px;font-weight:600;letter-spacing:-.01em;color:#fff">Ebola Preparedness · Order Request Tracker</h1>
+          </div>
+        </div>
+        <div style="display:flex;align-items:center;gap:12px;flex-wrap:wrap">
+          <span style="font-size:12px;color:#C7D3E6;white-space:nowrap">Data as of <strong style="color:#fff;font-weight:600">{{ asOf }}</strong> · <span>{{ tabName }}</span></span>
+          <sc-if value="{{ pres.off }}" hint-placeholder-val="{{ true }}"><div data-noprint="1" style="display:flex;border:1px solid rgba(255,255,255,.35);border-radius:6px;overflow:hidden"><sc-for list="{{ modeTabs }}" as="t" hint-placeholder-count="2"><button onClick="{{ t.pick }}" style="cursor:pointer;flex:none;white-space:nowrap;font-size:12px;font-weight:600;padding:6px 12px;border:0;background:{{ t.hbg }};color:{{ t.hfg }}">{{ t.label }}</button></sc-for></div></sc-if>
+          <sc-if value="{{ pres.off }}" hint-placeholder-val="{{ true }}"><div data-noprint="1" style="display:flex;gap:6px"><button onClick="{{ exportPdf }}" title="Export this page to PDF (choose Save as PDF in the print dialog)" style="cursor:pointer;flex:none;white-space:nowrap;font-size:12px;font-weight:600;padding:6px 12px;border-radius:6px;border:1px solid rgba(255,255,255,.35);background:transparent;color:#fff" style-hover="background:rgba(255,255,255,.12)">PDF</button><button onClick="{{ exportXlsx }}" title="Export every table on this page to Excel, all rows" style="cursor:pointer;flex:none;white-space:nowrap;font-size:12px;font-weight:600;padding:6px 12px;border-radius:6px;border:1px solid rgba(255,255,255,.35);background:transparent;color:#fff" style-hover="background:rgba(255,255,255,.12)">{{ xlsxLabel }}</button></div></sc-if>
+          <sc-if value="{{ pres.off }}" hint-placeholder-val="{{ true }}"><button onClick="{{ pres.start }}" style="cursor:pointer;display:flex;align-items:center;gap:8px;font-size:12px;font-weight:600;padding:7px 14px;border-radius:6px;border:0;background:#009ADE;color:#fff;white-space:nowrap"><span style="width:0;height:0;border-left:8px solid #fff;border-top:5px solid transparent;border-bottom:5px solid transparent"></span>Present</button></sc-if>
+        </div>
       </div>
-      <sc-if value="{{ opsUi }}" hint-placeholder-val="{{ true }}">
-        <nav data-noprint="1" style="display:flex;gap:2px;overflow-x:auto;flex:1 1 auto;justify-content:center">
-          <sc-for list="{{ tabs }}" as="t" hint-placeholder-count="6">
-            <button onClick="{{ t.pick }}" style="cursor:pointer;border:0;background:transparent;padding:10px 12px 9px;font-size:14px;white-space:nowrap;color:{{ t.fg }};font-weight:{{ t.weight }};border-bottom:3px solid {{ t.border }}">{{ t.label }}</button>
-          </sc-for>
-        </nav>
-      </sc-if>
-      <div style="display:flex;align-items:center;gap:14px;padding-bottom:10px">
-        <span style="font-size:12px;color:#536271;white-space:nowrap">Data as of <strong style="color:#14212E;font-weight:600">{{ asOf }}</strong> · <span>{{ tabName }}</span></span>
-        <sc-if value="{{ pres.off }}" hint-placeholder-val="{{ true }}"><div data-noprint="1" style="display:flex"><sc-for list="{{ modeTabs }}" as="t" hint-placeholder-count="2"><button onClick="{{ t.pick }}" style="cursor:pointer;flex:none;white-space:nowrap;font-size:12px;font-weight:600;padding:6px 12px;border:1px solid {{ t.bd }};background:{{ t.bg }};color:{{ t.fg }};margin-right:-1px">{{ t.label }}</button></sc-for></div></sc-if>
-        <sc-if value="{{ pres.off }}" hint-placeholder-val="{{ true }}"><div data-noprint="1" style="display:flex;gap:6px"><button onClick="{{ exportPdf }}" title="Export this page to PDF (choose Save as PDF in the print dialog)" style="cursor:pointer;font-size:12px;font-weight:600;padding:6px 12px;border-radius:6px;border:1px solid #CBD4DC;background:#fff;color:#14212E;white-space:nowrap" style-hover="background:#F3F8FC">PDF</button><button onClick="{{ exportXlsx }}" title="Export every table on this page to Excel, all rows" style="cursor:pointer;font-size:12px;font-weight:600;padding:6px 12px;border-radius:6px;border:1px solid #CBD4DC;background:#fff;color:#087F3B;white-space:nowrap" style-hover="background:#F4FAF6">{{ xlsxLabel }}</button></div></sc-if>
-        <sc-if value="{{ pres.off }}" hint-placeholder-val="{{ true }}"><button onClick="{{ pres.start }}" style="cursor:pointer;display:flex;align-items:center;gap:8px;font-size:13px;font-weight:600;padding:7px 14px;border-radius:6px;border:0;background:#14212E;color:#fff;white-space:nowrap"><span style="width:0;height:0;border-left:8px solid #fff;border-top:5px solid transparent;border-bottom:5px solid transparent"></span>Present</button></sc-if>
-      </div>
+      <div style="height:3px;background:#009ADE"></div>
     </div>
+    <sc-if value="{{ opsUi }}" hint-placeholder-val="{{ true }}">
+      <nav data-noprint="1" style="display:flex;gap:2px;overflow-x:auto;padding:0 16px">
+        <sc-for list="{{ tabs }}" as="t" hint-placeholder-count="6">
+          <button onClick="{{ t.pick }}" style="cursor:pointer;border:0;background:transparent;padding:10px 12px 9px;font-size:14px;white-space:nowrap;color:{{ t.fg }};font-weight:{{ t.weight }};border-bottom:3px solid {{ t.border }}">{{ t.label }}</button>
+        </sc-for>
+      </nav>
+    </sc-if>
     <sc-if value="{{ opsUi }}" hint-placeholder-val="{{ true }}">
     <div data-noprint="1" style="padding:8px 24px;border-top:1px solid #EEF2F5;background:#FBFCFD;display:flex;flex-wrap:wrap;gap:8px;align-items:center">
       <input value="{{ q }}" onChange="{{ onQ }}" placeholder="Search request, shipment, AWB, PO or item" style="flex:1 1 180px;max-width:320px;font-size:13px;padding:6px 10px;border:1px solid #CBD4DC;border-radius:6px;background:#fff;color:#14212E;min-width:0">
@@ -76,6 +93,29 @@
   </header>
 
   <div data-export-root="1" style="flex:1;min-height:0;overflow:auto;width:100%;padding:16px 24px;display:flex;flex-direction:column;gap:16px">
+    <div data-printonly="1" style="display:none">
+      <div style="display:flex;align-items:stretch;border-radius:8px;overflow:hidden;margin-bottom:14px">
+        <div style="background:#00205B;color:#fff;padding:14px 20px;display:flex;align-items:center;gap:16px;flex:1">
+          <img src="assets/who-afro.png" alt="" style="width:62px;height:62px;display:block;border-radius:50%;background:#FFFFFF;box-shadow:0 0 0 2px #FFFFFF">
+          <span style="width:1px;align-self:stretch;background:rgba(255,255,255,.3)"></span>
+          <div style="display:flex;flex-direction:column;gap:3px">
+            <span style="font-size:11px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:#8FD3F4">WHO Regional Office for Africa · Health Emergencies Programme</span>
+            <span style="font-size:24px;font-weight:600;letter-spacing:-.01em">Ebola Preparedness · Supply Chain Report</span>
+            <span style="font-size:15px;font-weight:600;color:#C7D3E6">{{ printInfo.page }}</span>
+          </div>
+        </div>
+        <div style="background:#009ADE;color:#fff;padding:14px 20px;display:grid;grid-template-columns:max-content max-content;gap:4px 14px;align-content:center;font-size:12px">
+          <span style="opacity:.85">Data as of</span><strong>{{ asOf }}</strong>
+          <span style="opacity:.85">Exported</span><strong>{{ printInfo.at }}</strong>
+          <span style="opacity:.85">Source</span><strong>OSL export · Shipping_Info</strong>
+        </div>
+      </div>
+      <div style="display:flex;flex-wrap:wrap;gap:6px;margin-bottom:14px;font-size:11px">
+        <sc-for list="{{ printInfo.chips }}" as="c" hint-placeholder-count="3"><span style="border:1px solid #CBD4DC;border-radius:999px;padding:3px 10px;color:#3F4B57"><span style="color:#6B7884">{{ c.k }}:</span> <strong style="color:#14212E;font-weight:600">{{ c.v }}</strong></span></sc-for>
+      </div>
+    </div>
+    <div data-printonly="1" data-printfoot="1" style="display:none;font-size:9px;color:#6B7884;justify-content:space-between;border-top:1px solid #DDE3E9;padding-top:4px"><span>WHO AFRO · Ebola Preparedness Supply Chain · {{ printInfo.page }} · data as of {{ asOf }}</span><span>For internal WHO use</span></div>
+
     <sc-if value="{{ showChooser }}" hint-placeholder-val="{{ false }}">
       <div style="position:fixed;inset:0;z-index:50;background:rgba(20,33,46,.55);display:flex;align-items:center;justify-content:center;padding:24px">
         <div style="background:#fff;border-radius:10px;max-width:760px;width:100%;padding:24px;display:flex;flex-direction:column;gap:16px">
@@ -111,12 +151,13 @@
                 <sc-if value="{{ mb.undated }}" hint-placeholder-val="{{ false }}"><span style="font-size:11px;color:#536271;text-wrap:pretty">Requested value placed by Request Date, delivered value by ATA. {{ mb.undated }}</span></sc-if>
               </div>
             </sc-if>
-            <sc-if value="{{ mb.off }}" hint-placeholder-val="{{ true }}"><div data-noprint="1" style="border-top:1px solid #DDE3E9;padding:8px 14px;font-size:11px;color:#536271">Add a Mapbox public token in Tweaks (Executive brief map) to switch to the terrain map with the weekly timeline.</div></sc-if>
+            <sc-if value="{{ mb.off }}" hint-placeholder-val="{{ true }}"><div data-noprint="1" style="border-top:1px solid #DDE3E9;padding:8px 14px;font-size:11px;color:#536271">The terrain map library did not load; showing the simple map. Check the internet connection.</div></sc-if>
           </div>
           <div style="background:#fff;border:1px solid #DDE3E9;border-radius:8px;overflow:hidden;display:flex;flex-direction:column">
-            <div style="background:#0071B8;color:#fff;padding:12px 16px;display:flex;justify-content:space-between;gap:10px;align-items:flex-start;flex-wrap:wrap">
-              <div style="display:flex;align-items:center;gap:10px"><sc-if value="{{ brief.c.flag }}" hint-placeholder-val="{{ false }}"><span style="display:block;width:44px;height:44px;background-image:url({{ brief.c.flag }});background-size:contain;background-repeat:no-repeat;background-position:center;filter:drop-shadow(0 2px 4px rgba(0,0,0,.35))"></span></sc-if><div style="display:flex;flex-direction:column;gap:2px"><span style="font-size:20px;font-weight:700">{{ brief.c.name }}</span><span style="font-size:12px;color:#D6E9F7">{{ brief.c.iso }}</span></div></div>
-              <button onClick="{{ brief.c.goOps }}" style="cursor:pointer;font-size:12px;font-weight:600;padding:6px 12px;border:1px solid #fff;border-radius:6px;background:transparent;color:#fff;white-space:nowrap">Open lines in Operations</button>
+            <div data-clip="1" style="position:relative;isolation:isolate;overflow:hidden;background:#0071B8;color:#fff;padding:14px 16px;display:flex;justify-content:space-between;gap:10px;align-items:center;flex-wrap:wrap">
+              <sc-if value="{{ brief.c.flag }}" hint-placeholder-val="{{ false }}"><div data-clip="1" aria-hidden="true" style="position:absolute;inset:0;z-index:-1;pointer-events:none;overflow:hidden"><div style="position:absolute;right:-60px;top:50%;width:240px;height:240px;transform:translateY(-50%);background-image:url({{ brief.c.flag }});background-size:contain;background-repeat:no-repeat;background-position:center;opacity:.28;filter:saturate(.9)"></div><div style="position:absolute;inset:0;background:radial-gradient(circle at 100% 50%,rgba(0,113,184,0) 0%,rgba(0,113,184,.3) 45%,rgba(0,113,184,0) 70%)"></div></div></sc-if>
+              <div style="display:flex;align-items:center;gap:12px"><sc-if value="{{ brief.c.flag }}" hint-placeholder-val="{{ false }}"><span aria-hidden="true" style="flex:none;width:42px;height:42px;background-image:url({{ brief.c.flag }});background-size:contain;background-repeat:no-repeat;background-position:center;filter:drop-shadow(0 2px 4px rgba(0,0,0,.35))"></span></sc-if><div style="display:flex;flex-direction:column;gap:2px"><span style="font-size:24px;font-weight:600;letter-spacing:-.02em;line-height:1.1">{{ brief.c.name }}</span><span style="font-size:12px;color:#D6E9F7">{{ brief.c.iso }}</span></div></div>
+              <button onClick="{{ brief.c.goOps }}" style="cursor:pointer;font-size:12px;font-weight:600;padding:6px 12px;border:1px solid rgba(255,255,255,.45);border-radius:6px;background:rgba(0,113,184,.35);color:#fff;white-space:nowrap" style-hover="background:rgba(255,255,255,.12)">Open lines in Operations</button>
             </div>
             <div style="padding:10px 16px;border-bottom:1px solid #DDE3E9;display:flex;flex-direction:column;gap:1px"><span style="font-size:14px;font-weight:700;color:{{ brief.c.epiFg }}">{{ brief.c.epi }}</span><span style="font-size:11px;color:#536271">{{ brief.c.epiSrc }}</span></div>
             <div style="display:grid;grid-template-columns:repeat(3,minmax(0,1fr));border-bottom:1px solid #DDE3E9">
@@ -263,8 +304,8 @@
     <sc-if value="{{ tabCountries }}" hint-placeholder-val="{{ false }}">
       <div style="flex:1;display:flex;flex-direction:column;gap:16px;min-height:0">
       <div data-dossier="1" style="flex:1;min-height:600px;display:grid;grid-template-columns:minmax(0,1fr) minmax(240px,340px);grid-template-rows:auto minmax(0,1fr);gap:16px">
-        <div style="position:relative;isolation:isolate;overflow:hidden;background:#14212E;color:#fff;border-radius:12px;padding:12px 16px;display:flex;flex-direction:column;gap:10px;min-width:0">
-          <sc-if value="{{ cs.flag }}" hint-placeholder-val="{{ false }}"><div aria-hidden="true" style="position:absolute;inset:0;z-index:-1;pointer-events:none;overflow:hidden;border-radius:inherit"><div style="position:absolute;right:-70px;top:50%;width:300px;height:300px;transform:translateY(-50%);background-image:url({{ cs.flag }});background-size:contain;background-repeat:no-repeat;background-position:center;opacity:.2;filter:saturate(.9)"></div><div style="position:absolute;inset:0;background:radial-gradient(circle at 100% 50%,rgba(20,33,46,0) 0%,rgba(20,33,46,.35) 45%,rgba(20,33,46,0) 70%)"></div></div></sc-if>
+        <div data-clip="1" style="position:relative;isolation:isolate;overflow:hidden;background:#14212E;color:#fff;border-radius:12px;padding:12px 16px;display:flex;flex-direction:column;gap:10px;min-width:0">
+          <sc-if value="{{ cs.flag }}" hint-placeholder-val="{{ false }}"><div data-clip="1" aria-hidden="true" style="position:absolute;inset:0;z-index:-1;pointer-events:none;overflow:hidden;border-radius:inherit"><div style="position:absolute;right:-70px;top:50%;width:300px;height:300px;transform:translateY(-50%);background-image:url({{ cs.flag }});background-size:contain;background-repeat:no-repeat;background-position:center;opacity:.2;filter:saturate(.9)"></div><div style="position:absolute;inset:0;background:radial-gradient(circle at 100% 50%,rgba(20,33,46,0) 0%,rgba(20,33,46,.35) 45%,rgba(20,33,46,0) 70%)"></div></div></sc-if>
           <div style="display:flex;flex-direction:column;gap:4px;min-width:0">
             <span style="display:flex;align-items:baseline;gap:6px 14px;flex-wrap:wrap"><sc-if value="{{ cs.flag }}" hint-placeholder-val="{{ false }}"><span aria-hidden="true" style="flex:none;align-self:center;width:40px;height:40px;background-image:url({{ cs.flag }});background-size:contain;background-repeat:no-repeat;background-position:center;filter:drop-shadow(0 2px 4px rgba(0,0,0,.35))"></span></sc-if><span style="font-size:26px;font-weight:600;letter-spacing:-.02em;line-height:1.1">{{ cs.name }}</span><span style="font-size:12px;color:#C9D3DC">{{ cs.headline }}</span></span>
             <div style="display:flex;height:10px;border-radius:5px;overflow:hidden;background:#2A3A4A;margin-top:4px"><sc-for list="{{ cs.bar }}" as="s" hint-placeholder-count="0"><span title="{{ s.label }}" style="width:{{ s.w }};background:{{ s.color }}"></span></sc-for></div>
@@ -412,8 +453,8 @@
 
     <sc-if value="{{ tabProc }}" hint-placeholder-val="{{ false }}">
       <div style="display:flex;flex-direction:column;gap:16px">
-        <div style="position:relative;isolation:isolate;overflow:hidden;background:#14212E;color:#fff;border-radius:14px;padding:18px 22px;display:flex;flex-direction:column;gap:16px">
-          <sc-if value="{{ proc.flag }}" hint-placeholder-val="{{ false }}"><div aria-hidden="true" style="position:absolute;inset:0;z-index:-1;pointer-events:none;overflow:hidden;border-radius:inherit"><div style="position:absolute;right:-70px;top:50%;width:300px;height:300px;transform:translateY(-50%);background-image:url({{ proc.flag }});background-size:contain;background-repeat:no-repeat;background-position:center;opacity:.2;filter:saturate(.9)"></div><div style="position:absolute;inset:0;background:radial-gradient(circle at 100% 50%,rgba(20,33,46,0) 0%,rgba(20,33,46,.35) 45%,rgba(20,33,46,0) 70%)"></div></div></sc-if>
+        <div data-clip="1" style="position:relative;isolation:isolate;overflow:hidden;background:#14212E;color:#fff;border-radius:14px;padding:18px 22px;display:flex;flex-direction:column;gap:16px">
+          <sc-if value="{{ proc.flag }}" hint-placeholder-val="{{ false }}"><div data-clip="1" aria-hidden="true" style="position:absolute;inset:0;z-index:-1;pointer-events:none;overflow:hidden;border-radius:inherit"><div style="position:absolute;right:-70px;top:50%;width:300px;height:300px;transform:translateY(-50%);background-image:url({{ proc.flag }});background-size:contain;background-repeat:no-repeat;background-position:center;opacity:.2;filter:saturate(.9)"></div><div style="position:absolute;inset:0;background:radial-gradient(circle at 100% 50%,rgba(20,33,46,0) 0%,rgba(20,33,46,.35) 45%,rgba(20,33,46,0) 70%)"></div></div></sc-if>
           <div style="display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;align-items:flex-start">
             <div style="display:flex;flex-direction:column;gap:3px;min-width:0"><span style="font-size:11px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:#7CC4EC">Procurement &amp; supply</span><span style="display:flex;align-items:center;gap:12px"><sc-if value="{{ proc.flag }}" hint-placeholder-val="{{ false }}"><span aria-hidden="true" style="flex:none;align-self:center;width:38px;height:38px;background-image:url({{ proc.flag }});background-size:contain;background-repeat:no-repeat;background-position:center;filter:drop-shadow(0 2px 4px rgba(0,0,0,.35))"></span></sc-if><span style="font-size:24px;font-weight:600;letter-spacing:-.01em;line-height:1.15;overflow-wrap:anywhere">{{ proc.title }}</span></span><span style="font-size:12px;color:#C9D3DC">{{ proc.where }}</span></div>
             <div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap">
@@ -1373,6 +1414,7 @@ class Component extends DCLogic {
   setMode(m) { try { history.replaceState(null, '', '#' + m); } catch (e) {} this.setState({ mode: m }, () => { if (m === 'brief') setTimeout(() => this.drawBrief(), 60); else setTimeout(() => this.drawMap(), 60); }); }
   pickBrief(iso) { this.setState({ bC: iso }, () => this.drawBrief()); }
   mbToken() { return (this.props.mapboxToken || '').trim(); }
+  useGL() { return !!(window.maplibregl || (this.mbToken() && window.mapboxgl)); }
   mbTimeline() {
     const D = this.state.dataAll; if (!D) return null;
     const T = this.state.data.today, LS = this.fLines({ all: true, noCountry: true }).filter(l => l.st !== 'canceled');
@@ -1405,21 +1447,23 @@ class Component extends DCLogic {
     M.setPaintProperty('ct-fill', 'fill-opacity', ['case', ['==', ['feature-state', 'v'], null], 0, 0.72]); }
   mbSelect() { const M = this.mb; if (!M || !M.getLayer('ct-sel')) return; const sel = this.state.bC || BRIEF_DEFAULT; M.setFilter('ct-sel', ['==', ['get', 'iso'], sel]);
     const f = this.mbFeats && this.mbFeats.find(x => x.properties.iso === sel); if (!f) return; const c = window.d3.geoCentroid(f);
-    if (!this.mbMarker) this.mbMarker = new mapboxgl.Marker({ color: '#0071B8' }); this.mbMarker.setLngLat(c).addTo(M); }
+    if (!this.mbMarker) this.mbMarker = new this.GL.Marker({ color: '#0071B8' }); this.mbMarker.setLngLat(c).addTo(M); }
   async initMapbox(el) {
     const tok = this.mbToken(), D = this.state.dataAll, topojson = window.topojson;
-    if (!window.mapboxgl || !topojson || !D) return; this.bdrawing = true;
+    const GL = tok && window.mapboxgl ? window.mapboxgl : window.maplibregl; this.GL = GL;
+    if (!GL || !topojson || !D) return; this.bdrawing = true;
     try { if (!this.topo) { if (!this.topoP) this.topoP = fetch('https://cdn.jsdelivr.net/npm/world-atlas@2.0.2/countries-110m.json').then(r => r.json()); this.topo = await this.topoP; } } catch (e) { this.topoP = null; this.bdrawing = false; return; }
     const byId = Object.fromEntries(D.countries.map(c => [c.id, c]));
     this.mbFeats = topojson.feature(this.topo, this.topo.objects.countries).features.map(f => { const c = byId[+f.id]; return c ? { type: 'Feature', geometry: f.geometry, properties: { iso: c.iso, name: c.name } } : null; }).filter(Boolean);
     this.tl = this.mbTimeline(); el.innerHTML = '';
-    mapboxgl.accessToken = tok;
-    const M = this.mb = new mapboxgl.Map({ container: el, style: 'mapbox://styles/mapbox/outdoors-v12', center: [22, 0], zoom: 2.9, pitch: 45, bearing: -8, projection: 'mercator' });
-    this.mbEl = el; M.addControl(new mapboxgl.NavigationControl({ visualizePitch: true }), 'top-right');
+    const isMB = GL === window.mapboxgl && !!tok; if (isMB) GL.accessToken = tok;
+    const M = this.mb = new GL.Map({ container: el, style: isMB ? 'mapbox://styles/mapbox/outdoors-v12' : 'https://tiles.openfreemap.org/styles/liberty', center: [22, 0], zoom: 2.7, pitch: 45, bearing: -8, preserveDrawingBuffer: true, attributionControl: isMB ? true : { compact: true }, ...(isMB ? { projection: 'mercator' } : {}) });
+    this.mbEl = el; M.addControl(new GL.NavigationControl({ visualizePitch: true }), 'top-right');
     M.on('error', e => { const m = String((e && e.error && (e.error.message || e.error.status)) || ''); if (/401|403|token|Unauthorized|Forbidden/i.test(m)) this.setState({ mbErr: 'Mapbox rejected the token. Check it in Tweaks (Executive brief map).' }); });
     M.on('load', () => {
-      M.addSource('mapbox-dem', { type: 'raster-dem', url: 'mapbox://mapbox.mapbox-terrain-dem-v1', tileSize: 512, maxzoom: 14 });
-      M.setTerrain({ source: 'mapbox-dem', exaggeration: 1.4 });
+      if (isMB) { M.addSource('dem', { type: 'raster-dem', url: 'mapbox://mapbox.mapbox-terrain-dem-v1', tileSize: 512, maxzoom: 14 }); M.setTerrain({ source: 'dem', exaggeration: 1.4 }); }
+      else { M.addSource('dem', { type: 'raster-dem', url: 'https://demotiles.maplibre.org/terrain-tiles/tiles.json', tileSize: 256 }); M.addSource('hs', { type: 'raster-dem', url: 'https://demotiles.maplibre.org/terrain-tiles/tiles.json', tileSize: 256 });
+        const firstSym = (M.getStyle().layers.find(l => l.type === 'symbol') || {}).id; M.addLayer({ id: 'hillshade', type: 'hillshade', source: 'hs', paint: { 'hillshade-shadow-color': '#3F4B57', 'hillshade-exaggeration': .35 } }, firstSym); M.setTerrain({ source: 'dem', exaggeration: 1.4 }); }
       M.addSource('ct', { type: 'geojson', data: { type: 'FeatureCollection', features: this.mbFeats }, promoteId: 'iso' });
       const before = (M.getStyle().layers.find(l => l.type === 'symbol') || {}).id;
       M.addLayer({ id: 'ct-fill', type: 'fill', source: 'ct', paint: { 'fill-color': 'rgba(0,0,0,0)', 'fill-opacity': 0 } }, before);
@@ -1436,7 +1480,7 @@ class Component extends DCLogic {
     this.setState({ mbPlaying: true }); this.mbFrame(i);
     this.mbTimer = setInterval(() => { i++; if (i >= TL.N) { clearInterval(this.mbTimer); this.mbTimer = null; this.setState({ mbPlaying: false }); return; } this.mbFrame(i); }, step); }
   async drawBrief() {
-    if (this.mbToken()) { const el = document.querySelector('[data-bmap]'); if (!el) return; if (this.mb && this.mbEl === el && el.isConnected) { this.mb.resize(); this.mbSelect(); return; } if (this.mb) { try { this.mb.remove(); } catch (e) {} this.mb = null; this.mbMarker = null; } return this.initMapbox(el); }
+    if (this.useGL()) { const el = document.querySelector('[data-bmap]'); if (!el) return; if (this.mb && this.mbEl === el && el.isConnected) { this.mb.resize(); this.mbSelect(); return; } if (this.mb) { try { this.mb.remove(); } catch (e) {} this.mb = null; this.mbMarker = null; } return this.initMapbox(el); }
     const d3 = window.d3, topojson = window.topojson, D = this.state.dataAll, el = document.querySelector('[data-bmap]');
     if (!d3 || !topojson || !D || !el) return;
     this.bdrawing = true;
@@ -1519,7 +1563,18 @@ class Component extends DCLogic {
 
   withAll(fn) { this.setState({ exportAll: true }, () => setTimeout(() => { try { fn(); } finally { this.setState({ exportAll: false }); } }, 120)); }
   tabLabel() { const T = { fulfil:'Fulfilment', visuals:'Overview', countries:'Country brief', lines:'Line details', ships:'Shipment info', proc:'Procurement', critical:'Critical items', backorders:'Back orders', impact:'Beneficiaries & risk', glossary:'Glossary' }; return this.state.mode === 'brief' ? 'Executive brief' : (T[this.state.tab] || 'Dashboard'); }
-  exportPdf() { const t = document.title; const dd = this.state.data; document.title = 'Ebola Order Tracker - ' + this.tabLabel() + ' - ' + (dd && dd.today ? dd.today : 'as-of not available'); this.withAll(() => { window.print(); document.title = t; }); }
+  fitForPrint() { const root = document.querySelector('[data-export-root]'); if (!root) return () => {}; const W = 1500, undo = [];
+    root.querySelectorAll('[style*="text-overflow"]').forEach(el => { undo.push([el, 'maxWidth', el.style.maxWidth], [el, 'whiteSpace', el.style.whiteSpace]); el.style.maxWidth = 'none'; });
+    const cand = [...root.querySelectorAll('div,table')].filter(el => /max-content/.test(el.style.width) || el.tagName === 'TABLE');
+    cand.forEach(el => { const w = el.scrollWidth; if (w > W) { undo.push([el, 'zoom', el.style.zoom]); el.style.zoom = String(Math.max(.45, W / w)); } });
+    return () => undo.reverse().forEach(([el, k, v]) => { el.style[k] = v; }); }
+  exportPdf() { const t = document.title, dd0 = this.state.data, pg = this.state.mode === 'brief' ? 'Executive brief' : this.tabLabel();
+    let st = document.getElementById('pdf-foot'); if (!st) { st = document.createElement('style'); st.id = 'pdf-foot'; document.head.appendChild(st); }
+    const esc = s => String(s).replace(/["\\]/g, '');
+    st.textContent = '@media print{@page{@bottom-left{content:"' + esc('WHO AFRO · Ebola Preparedness Supply Chain · ' + pg + ' · data as of ' + (dd0 && dd0.today ? fd(dd0.today) : 'not available')) + '";font:9px sans-serif;color:#6B7884}@bottom-center{content:"For internal WHO use";font:9px sans-serif;color:#6B7884}}}';
+    if (this.mb) { try { this.mb.resize(); this.mb.triggerRepaint(); } catch (e) {} } const dd = this.state.data; document.title = 'WHO AFRO - Ebola Preparedness - ' + this.tabLabel() + ' - data as of ' + (dd && dd.today ? dd.today : 'not available');
+    this.setState({ printAt: new Date().toLocaleString('en-GB', { day: 'numeric', month: 'short', year: 'numeric', hour: '2-digit', minute: '2-digit' }) });
+    this.withAll(() => { const undo = this.fitForPrint(); try { window.print(); } finally { undo(); document.title = t; } }); }
   loadXlsx() { if (window.XLSX) return Promise.resolve(window.XLSX); return new Promise((ok, no) => { const s = document.createElement('script'); s.src = 'https://cdn.sheetjs.com/xlsx-0.20.3/package/dist/xlsx.full.min.js'; s.onload = () => ok(window.XLSX); s.onerror = () => no(new Error('Excel library failed to load')); document.head.appendChild(s); }); }
   scrapeTables() {
     const root = document.querySelector('[data-export-root]'); if (!root) return [];
@@ -1562,21 +1617,24 @@ class Component extends DCLogic {
       anyFilter: !!(q || country || src || stage || type || issuesOnly || this.state.dFrom || this.state.dTo), clearAll: () => this.setState({ q:'', country:'', src:'', stage:'', type:'', grp:'', issuesOnly:false, dFrom:'', dTo:'', limit:25, page:0 }),
       showF: this.state.showF, toggleF: () => this.setState(s => ({ showF: !s.showF })), fLabel: (this.state.showF ? 'Fewer filters' : 'More filters') + ([src, stage, type, this.state.dFrom, this.state.dTo].filter(Boolean).length ? ' (' + [src, stage, type, this.state.dFrom, this.state.dTo].filter(Boolean).length + ')' : ''),
       dFrom: this.state.dFrom, dTo: this.state.dTo, onFrom: e => set('dFrom', e.target.value), onTo: e => set('dTo', e.target.value),
-      mb: (() => { const k = this.state.mbMetric || 'ful', S = MB_SCALES[k], TL = this.tl, on = !!this.mbToken();
+      mb: (() => { const k = this.state.mbMetric || 'ful', S = MB_SCALES[k], TL = this.tl, on = this.useGL();
         return { on, off: !on, err: this.state.mbErr || '', label: S.label, legend: S.legend.map((t, i) => ({ t, c: S.colors[i] })), playLabel: this.state.mbPlaying ? 'Pause' : 'Play', play: () => this.mbPlay(),
           max: TL ? TL.N - 1 : 0, scrub: e => { if (this.mbTimer) { clearInterval(this.mbTimer); this.mbTimer = null; this.setState({ mbPlaying: false }); } this.mbFrame(+e.target.value); },
           undated: TL && TL.undated.n ? fmt$(TL.undated.v) + ' delivered on ' + fmtN(TL.undated.n) + ' lines without an arrival date is not placed in time; the final step shows totals as recorded.' : '',
           metrics: [['ful', 'Fulfilment %'], ['del', 'Delivered value'], ['pend', 'Pending value'], ['last', 'Days since last arrival']].map(([m, label]) => ({ label, pick: () => this.setState({ mbMetric: m }), bg: k === m ? '#0071B8' : '#fff', fg: k === m ? '#fff' : '#14212E', bd: k === m ? '#0071B8' : '#CBD4DC' })) }; })(),
       isBrief: mode === 'brief', opsUi: mode !== 'brief' && !this.state.present, showChooser: !mode, onRunway: s => this.setState({ runway: s }), briefList: BRIEF,
-      modeTabs: [['brief', 'Executive brief'], ['ops', 'Operations']].map(([k, label]) => { const on = (mode || 'ops') === k; return { label, pick: () => this.setMode(k), bg: on ? '#14212E' : '#fff', fg: on ? '#fff' : '#14212E', bd: on ? '#14212E' : '#CBD4DC' }; }),
+      modeTabs: [['brief', 'Executive brief'], ['ops', 'Operations']].map(([k, label]) => { const on = (mode || 'ops') === k; return { label, pick: () => this.setMode(k), bg: on ? '#14212E' : '#fff', fg: on ? '#fff' : '#14212E', bd: on ? '#14212E' : '#CBD4DC', hbg: on ? '#fff' : 'transparent', hfg: on ? '#00205B' : '#fff' }; }),
       pickBriefMode: () => this.setMode('brief'), pickOpsMode: () => this.setMode('ops'),
       impEtc: (this.state.impView || 'etc') === 'etc', impKits: this.state.impView === 'kits',
       impTabs: [['etc', 'Ebola treatment capacity'], ['kits', 'Emergency health kits']].map(([k, label]) => { const on = (this.state.impView || 'etc') === k; return { label, pick: () => this.setState({ impView: k }), bg: on ? '#0071B8' : '#fff', fg: on ? '#fff' : '#14212E', bd: on ? '#0071B8' : '#CBD4DC' }; }),
+      printInfo: (() => { const S = this.state, d = this.state.dataAll || data, em = this.emEff(); const chips = [{ k: 'Emergency', v: em === 'all' ? 'All emergency tags' : em === 'ebola' ? 'All Ebola / Marburg / VHF tags' : em }, { k: 'Country', v: S.country && d && d.cn[S.country] ? d.cn[S.country].name : 'All countries' }];
+        if (S.src) chips.push({ k: 'Source', v: S.src }); if (S.stage) chips.push({ k: 'Stage', v: S.stage }); if (S.type) chips.push({ k: 'Type', v: S.type }); if (S.q) chips.push({ k: 'Search', v: S.q }); if (S.dFrom || S.dTo) chips.push({ k: 'Request dates', v: (S.dFrom ? fd(S.dFrom) : 'start') + ' – ' + (S.dTo ? fd(S.dTo) : fd(data ? data.today : '')) }); if (S.issuesOnly) chips.push({ k: 'Issues only', v: 'yes' });
+        return { page: mode === 'brief' ? 'Executive brief' : this.tabLabel(), at: S.printAt || new Date().toLocaleString('en-GB', { day: 'numeric', month: 'short', year: 'numeric', hour: '2-digit', minute: '2-digit' }), chips }; })(),
       exportPdf: () => this.exportPdf(), exportXlsx: () => this.exportXlsx(), xlsxLabel: this.state.xBusy ? 'Exporting…' : 'Excel', tabName: this.tabLabel(),
-      tabs: [['visuals','Overview'],['countries','Country brief'],['lines','Line details'],['ships','Shipment info'],['proc','Procurement'],['critical','Critical items'],['fulfil','Fulfilment'],['backorders','Back orders'],['impact','Beneficiaries & risk'],['glossary','Glossary']].map(([k, label]) => ({ label, pick: () => this.setState({ tab: k, page: 0 }), fg: tab === k ? '#0071B8' : '#536271', border: tab === k ? '#0071B8' : 'transparent', weight: tab === k ? 600 : 500 })),
+      tabs: [['visuals','Overview'],['countries','Country brief'],['lines','Line details'],['ships','Shipment info'],['proc','Procurement'],['critical','Critical items'],['fulfil','Fulfilment'],['backorders','Back orders'],['impact','Beneficiaries & risk'],['glossary','Glossary']].map(([k, label]) => ({ label, pick: () => this.setState({ tab: k, page: 0 }), fg: tab === k ? '#00205B' : '#536271', border: tab === k ? '#0071B8' : 'transparent', weight: tab === k ? 600 : 500 })),
       tabVisuals: tab === 'visuals', tabCountries: tab === 'countries', tabLines: tab === 'lines', tabShips: tab === 'ships', tabProc: tab === 'proc', tabCritical: tab === 'critical', tabBack: tab === 'backorders', tabFulfil: tab === 'fulfil', tabGlossary: tab === 'glossary', tabImpact: tab === 'impact',
       impactPick: v => set('country', v), impactPrio: (() => { const p = (this.props.priorityCountries || '').split(/[ ,]+/).filter(Boolean).map(x => x.toUpperCase()); return p.length ? p : PRIORITY; })(), cfrNo: this.props.cfrNo ?? 0.482, cfrCare: this.props.cfrCare ?? 0.30, pcrRunSize: this.props.pcrRunSize ?? 32, pcrControls: this.props.pcrControls ?? 2, avgStay: this.props.avgStay ?? 7, defaultBeds: this.props.defaultBeds ?? 20, horizonDays: this.props.horizonDays ?? 90,
-      dq: { rows: [] }, srcProfile: [], srcHead: [], chartRef: this.chartRef, qv: {}, lt: {}, sh: {}, crit: { rows: [] }, bo: { kpis: [], countries: [], suppliers: [], rows: [], queues: [], funnel: { segs: [] }, ageing: [], topItems: [] }, ful: { kpis: [], countries: [], cats: [], items: [], matrix: { cats: [], rows: [] }, dims: [], sorts: [] }, brief: { kpis: [], rows: [], c: { ess: [], ship: [], cond: [], ind: [], segs: [], time: [] } }, kits: { rows: [], cards: [], panels: [], sub: 'Loading…', other: '', tot: '—', nMods: '—' }, proc: { stAll: [], stats: [], dSt: { segs: [], legend: [] }, dTy: { segs: [], legend: [] }, line: { series: [], yTicks: [], xTicks: [] }, reqBars: [], active: [], reqOpts: [], items: [], mV: {}, mN: {}, tCum: {}, tWk: {} }, cs: {}, cg: [], bkLegend: [], ov: { total: '—', scope: 'Loading…', bar: [], legend: [], alerts: [], att: [], attAll: [], bnCards: [], tiles: [], cats: [], sk: { links: [], l: [], r: [] } }, pres: { off: true, on: false, dots: [] },
+      dq: { rows: [] }, srcProfile: [], srcHead: [], chartRef: this.chartRef, qv: {}, lt: {}, sh: {}, crit: { rows: [] }, bo: { kpis: [], countries: [], suppliers: [], rows: [], queues: [], funnel: { segs: [] }, ageing: [], topItems: [] }, ful: { kpis: [], countries: [], cats: [], items: [], matrix: { cats: [], rows: [] }, dims: [], sorts: [] }, printInfo: { page: '', at: '', chips: [] }, brief: { kpis: [], rows: [], c: { ess: [], ship: [], cond: [], ind: [], segs: [], time: [] } }, kits: { rows: [], cards: [], panels: [], sub: 'Loading…', other: '', tot: '—', nMods: '—' }, proc: { stAll: [], stats: [], dSt: { segs: [], legend: [] }, dTy: { segs: [], legend: [] }, line: { series: [], yTicks: [], xTicks: [] }, reqBars: [], active: [], reqOpts: [], items: [], mV: {}, mN: {}, tCum: {}, tWk: {} }, cs: {}, cg: [], bkLegend: [], ov: { total: '—', scope: 'Loading…', bar: [], legend: [], alerts: [], att: [], attAll: [], bnCards: [], tiles: [], cats: [], sk: { links: [], l: [], r: [] } }, pres: { off: true, on: false, dots: [] },
       em: this.emEff(), onEm: e => set('em', e.target.value), emOpts: [{ v:'ebola', label:'All Ebola / Marburg / VHF tags' }, { v:'all', label:'All emergency tags in export' }, ...((data && data.ems) || []).filter(x => x.k !== 'G013').map(x => ({ v: x.k, label: x.k + ' (' + fmtN(x.n) + ')' }))],
       type, onType: e => set('type', e.target.value), typeOpts: [{ v:'sr', label:'Stock releases (SR)' }, { v:'or', label:'Order requests (OR)' }],
       ovMode: !country, cMode: !!country, backToAll: () => this.setState({ country:'', grp:'' }), closeLine: () => this.setState({ openLine: null }), hasLine: false, it: {}, dos: {},
